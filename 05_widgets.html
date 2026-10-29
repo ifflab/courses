@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Widgets and Animations</title>
+<meta name="description" content="Class 5 of the CCPP-I Python course: ipywidgets sliders and play buttons in Jupyter Lab, Matplotlib animations and GIF files, a particle in a box set with sliders, a 2D harmonic oscillator as a 3D surface.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="course.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="course.js"></script>
+<style>
+  .eq { font-size: 1.15em; }
+  /* ipywidgets look-alikes */
+  .ipw { display: grid; gap: .35rem; margin: .2rem 0 .5rem; font-size: .9rem; justify-content: start; }
+  .ipw .row { display: flex; align-items: center; gap: .6rem; border-radius: 4px; }
+  .ipw .desc { width: 5.5em; text-align: right; }
+  .ipw input[type=range] { width: 11rem; accent-color: #2196f3; }
+  .ipw output { font-family: var(--mono); min-width: 3.5em; }
+  .ipw select { font: inherit; padding: .1rem .3rem; min-width: 11rem; }
+  .ipw .play { display: inline-flex; }
+  .ipw .play button { font: inherit; font-size: .8rem; width: 2.6em; height: 1.9em; border: 1px solid var(--border); background: var(--bg); color: var(--fg); cursor: pointer; }
+  .ipw .play button + button { border-left: 0; }
+  .ipw .play button.on { background: var(--accent-bg); }
+  /* the player made by anim.to_jshtml() */
+  .jsplay { display: grid; justify-items: center; gap: .35rem; max-width: 32rem; margin: .3rem 0 .6rem; }
+  .jsplay input[type=range] { width: 60%; accent-color: #2196f3; }
+  .jsplay .btns { display: flex; gap: 2px; }
+  .jsplay .btns button { font: inherit; font-size: .8rem; min-width: 2.2em; height: 1.8em; border: 1px solid var(--border); background: var(--bg); color: var(--fg); cursor: pointer; border-radius: 3px; }
+  .jsplay .btns button.on { background: var(--accent-bg); }
+  .jsplay .fr { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+  .gif { display: block; max-width: 24rem; width: 100%; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <a class="home" href="index.html" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3.5 21 11"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></a>
+  <span class="sep"></span>
+  <select id="nav" aria-label="Go to section"></select>
+  <span class="sep"></span>
+  <button id="fs-minus" type="button" title="Smaller text">A−</button><span class="fs" id="fs-size">19px</span><button id="fs-plus" type="button" title="Larger text">A+</button>
+  <span class="sep"></span>
+  <button id="theme" type="button">theme: auto</button>
+</div>
+<main>
+<header class="doc">
+  <div class="caption">CCPP-I · Class 05</div>
+  <h1>Widgets and animations</h1>
+  <p class="keys"><kbd>J</kbd>/<kbd>K</kbd> or <kbd>→</kbd>/<kbd>←</kbd> jump between sections</p>
+</header>
+
+<!-- ============================================================ -->
+<section class="step" id="setup" data-nav="Widgets in Jupyter Lab">
+  <h2>Widgets in Jupyter Lab</h2>
+  <p class="lead"><code>ipywidgets</code> and ipykernel 6, both in the environment that runs Jupyter Lab.</p>
+  <ol class="steps">
+    <li>
+      <strong>Stop Jupyter Lab</strong>
+      <p><kbd>Ctrl</kbd>+<kbd>C</kbd> in its terminal, then <kbd>y</kbd>. Or File → Shut Down in Jupyter Lab.</p>
+    </li>
+    <li>
+      <strong>Install</strong>
+      <p>In that terminal (Windows: <em>Anaconda Prompt</em>):</p>
+<pre class="code"><code>conda activate pytccm
+conda install -c conda-forge ipywidgets "ipykernel&lt;7"
+conda list ipykernel</code></pre>
+      <p>The last command must show a version starting with <code>6</code>.</p>
+    </li>
+    <li>
+      <strong>Start Jupyter Lab again</strong>
+      <p>From the same terminal:</p>
+<pre class="code"><code>jupyter lab</code></pre>
+    </li>
+    <li>
+      <strong>Check</strong>
+      <p>Run this cell. A slider must appear.</p>
+<pre class="code" data-src>
+from ipywidgets import IntSlider
+IntSlider()
+</pre>
+      <div class="ipw" id="w-check"></div>
+    </li>
+  </ol>
+  <h3>If it does not work</h3>
+  <details>
+    <summary>The cell prints the text <code>IntSlider(value=0)</code></summary>
+    <p>Jupyter Lab runs from another environment, for example from Anaconda Navigator. Close it and repeat step 3 after <code>conda activate pytccm</code>.</p>
+  </details>
+  <details>
+    <summary><code>ModuleNotFoundError: No module named 'ipywidgets'</code></summary>
+    <p><code>ipywidgets</code> went into another environment. Repeat step 2: the prompt must start with <code>(pytccm)</code>.</p>
+  </details>
+  <details>
+    <summary><code>Error displaying widget: model not found</code></summary>
+    <p>A saved notebook was reopened: the kernel that made the widget is gone. Run the cell again.</p>
+  </details>
+  <details>
+    <summary>The slider moves, but the plot stays the same</summary>
+    <p>ipykernel 7.0–7.3 sometimes leaves a slider change unanswered. <code>conda list ipykernel</code> must show 6.x; if not, repeat step 2 and restart Jupyter Lab.</p>
+  </details>
+</section>
+
+<!-- ============================================================ -->
+<section class="step" id="interactive" data-nav="interactive">
+  <h2><code>interactive</code>: a function and its sliders</h2>
+  <p class="lead">Every slider move calls the function again with the new values. Example: the Morse potential of H₂. Hover a slider.</p>
+  <p>All imports for today, in one cell:</p>
+<pre class="code" data-src>
+import numpy as np
+import matplotlib.pyplot as plt
+from ipywidgets import interactive, IntSlider, FloatSlider, Dropdown, Play, jslink, HBox
+from matplotlib.animation import FuncAnimation
+from IPython.display import HTML, display
+</pre>
+  <div class="viz">
+<pre class="code"><code><span class="kw">def</span> plot_morse(<span data-g="m-de">De</span>, <span data-g="m-a">a</span>, <span data-g="m-re">re</span>):
+    r = np.linspace(<span class="num">0.3</span>, <span class="num">4</span>, <span class="num">200</span>)                   <span class="cmt"># Å</span>
+    plt.plot(r, <span data-g="m-de">De</span> * (<span class="num">1</span> - np.exp(-<span data-g="m-a">a</span> * (r - <span data-g="m-re">re</span>)))**<span class="num">2</span>)
+    plt.ylim(<span class="num">0</span>, <span class="num">8</span>)
+    plt.xlabel(<span class="str">'r / Å'</span>)
+    plt.ylabel(<span class="str">'E / eV'</span>)
+
+interactive(plot_morse,
+            <span data-g="m-de">De=FloatSlider(value=<span class="num">4.75</span>, min=<span class="num">1</span>, max=<span class="num">6</span>, step=<span class="num">0.05</span>, description=<span class="str">'De / eV'</span>)</span>,
+            <span data-g="m-a">a=FloatSlider(value=<span class="num">1.94</span>, min=<span class="num">0.5</span>, max=<span class="num">4</span>, step=<span class="num">0.02</span>, description=<span class="str">'a / Å⁻¹'</span>)</span>,
+            <span data-g="m-re">re=FloatSlider(value=<span class="num">0.74</span>, min=<span class="num">0.5</span>, max=<span class="num">2</span>, step=<span class="num">0.01</span>, description=<span class="str">'re / Å'</span>)</span>)</code></pre>
+    <div>
+      <div class="ipw"><div data-g="m-de" id="w-de"></div><div data-g="m-a" id="w-a"></div><div data-g="m-re" id="w-re"></div></div>
+      <div id="f-morse"></div>
+    </div>
+  </div>
+</section>
+
+<section class="step" id="molecule" data-nav="A molecule">
+  <h2>A molecule to play with</h2>
+  <p class="lead"><code>Molecule</code> is <code>plot_molecule</code> as a class. <code>rotated(angle, axis)</code> returns a new <code>Molecule</code> with coordinates <code>coordinates @ R.T</code>:</p>
+  <div class="eq" data-tex="R_x(\theta) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta \\ 0 & \sin\theta & \cos\theta \end{pmatrix}"></div>
+  <details>
+    <summary>The whole cell: <code>parse_file</code>, <code>rotation_matrix</code>, <code>Molecule</code></summary>
+<pre class="code" data-src>
+import copy
+
+COLORS_DICT = {'C': 'lime', 'N': 'blue', 'H': 'grey', 'Fe': 'black', 'O': 'red'}
+
+def parse_file(filename):
+    raw_data = np.loadtxt(filename, skiprows=2, dtype=str)
+    elements = raw_data[:,0]
+    coordinates = raw_data[:,1:].astype(float)
+    return elements, coordinates
+
+def rotation_matrix(angle_deg, axis):
+    t = np.radians(angle_deg)
+    c, s = np.cos(t), np.sin(t)
+    if axis == 'x':
+        return np.array([[1, 0,  0],
+                         [0, c, -s],
+                         [0, s,  c]])
+    if axis == 'y':
+        return np.array([[ c, 0, s],
+                         [ 0, 1, 0],
+                         [-s, 0, c]])
+    if axis == 'z':
+        return np.array([[c, -s, 0],
+                         [s,  c, 0],
+                         [0,  0, 1]])
+    raise ValueError(f'Unknown axis {axis}')
+
+class Molecule:
+    def __init__(self, filename):
+        self.elements, self.coordinates = parse_file(filename)
+        self.coordinates = self.coordinates - self.coordinates.mean(axis=0)
+        self.colors = [COLORS_DICT[element] for element in self.elements]
+        self.size = np.abs(self.coordinates).max() + 0.5
+
+    def rotated(self, angle_deg, axis='z'):
+        new = copy.copy(self)
+        new.coordinates = self.coordinates @ rotation_matrix(angle_deg, axis).T
+        return new
+
+    def plot(self, x_axis=0, y_axis=1):
+        xyz = self.coordinates
+        plt.scatter(xyz[:,x_axis], xyz[:,y_axis], c=self.colors, zorder=2)
+        for i, atom1 in enumerate(xyz):
+            for atom2 in xyz[i+1:]:
+                if np.linalg.norm(atom1 - atom2) &lt; 1.6:
+                    plt.plot([atom1[x_axis], atom2[x_axis]],
+                             [atom1[y_axis], atom2[y_axis]],
+                             c='black', lw=1, zorder=1)
+        plt.xlim(-self.size, self.size)
+        plt.ylim(-self.size, self.size)
+        plt.gca().set_aspect('equal')
+        plt.xlabel('xyz'[x_axis])
+        plt.ylabel('xyz'[y_axis])
+</pre>
+  </details>
+  <div class="viz">
+<pre class="code" data-src>
+heme = Molecule('heme.xyz')
+heme.rotated(45, 'x').plot(0, 1)
+</pre>
+    <div id="f-step3"></div>
+  </div>
+</section>
+
+<section class="step" id="slider" data-nav="Slider + dropdown">
+  <h2>A slider and a dropdown</h2>
+  <p class="lead"><code>interactive</code> with an <code>IntSlider</code> for the angle and a <code>Dropdown</code> for the axis.</p>
+  <div class="viz">
+<pre class="code" data-src>
+angle = IntSlider(value=0, min=0, max=360, step=5, description='Angle')
+axis = Dropdown(options=['x', 'y', 'z'], value='x', description='Axis')
+
+def update(angle, axis):
+    heme.rotated(angle, axis).plot(0, 1)
+
+interactive(update, angle=angle, axis=axis)
+</pre>
+    <div>
+      <div class="ipw" id="w-step4"></div>
+      <div id="f-step4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section class="step" id="play" data-nav="Play">
+  <h2>A play button</h2>
+  <p class="lead"><code>Play</code> counts from <code>min</code> to <code>max</code>, one <code>step</code> every <code>interval</code> ms. <code>jslink</code> copies its value into the slider. Press ▶.</p>
+  <div class="viz">
+<pre class="code"><code>n = IntSlider(value=<span class="num">0</span>, min=<span class="num">0</span>, max=<span class="num">10</span>, description=<span class="str">'n'</span>)
+<span data-g="p-play">play</span> = Play(value=<span class="num">0</span>, min=<span class="num">0</span>, max=<span class="num">10</span>, step=<span class="num">1</span>, <span data-tip="milliseconds between steps">interval=<span class="num">500</span></span>)
+<span data-tip="The link lives in the browser: no Python runs while the button plays.">jslink</span>((<span data-g="p-play">play</span>, <span class="str">'value'</span>), (<span data-g="p-n">n</span>, <span class="str">'value'</span>))
+HBox([<span data-g="p-play">play</span>, <span data-g="p-n">n</span>])</code></pre>
+    <div class="ipw"><div class="row"><span data-g="p-play" id="w-playbox"></span><span data-g="p-n" id="w-n"></span></div></div>
+  </div>
+  <p class="muted">▶ plays (and becomes ⏸), ■ stops and goes back to <code>min</code>, ↻ repeats from <code>min</code> after <code>max</code>.</p>
+</section>
+
+<section class="step" id="playrot" data-nav="Play the rotation">
+  <h2>Play the rotation</h2>
+  <p class="lead">New sliders, linked to a <code>Play</code>: ▶ turns the molecule. The plot above keeps its own sliders.</p>
+  <div class="viz">
+<pre class="code" data-src>
+angle = IntSlider(value=0, min=0, max=360, step=5, description='Angle')
+axis = Dropdown(options=['x', 'y', 'z'], value='x', description='Axis')
+play = Play(value=0, min=0, max=360, step=5, interval=100)
+jslink((play, 'value'), (angle, 'value'))
+display(play)
+interactive(update, angle=angle, axis=axis)
+</pre>
+    <div>
+      <div class="ipw" id="w-step5"></div>
+      <div id="f-step5"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section class="step" id="anim" data-nav="FuncAnimation">
+  <h2><code>FuncAnimation</code>: frames into a player or a GIF</h2>
+  <p class="lead"><code>FuncAnimation</code> calls <code>frame(angle)</code> for every angle and records the figure: 72 frames, 0°, 5°, …, 355° about y. Hover the code.</p>
+  <div class="viz">
+<pre class="code"><code><span data-g="a-fig">fig</span> = plt.figure()
+
+<span class="kw">def</span> <span data-g="a-frame">frame</span>(<span data-g="a-i">angle</span>):
+    plt.cla()                       <span class="cmt"># clear the previous frame</span>
+    heme.rotated(<span data-g="a-i">angle</span>, <span class="str">'y'</span>).plot(<span class="num">0</span>, <span class="num">1</span>)
+    plt.title(<span class="str">f'{<span data-g="a-i">angle</span>}°'</span>)
+
+anim = FuncAnimation(<span data-g="a-fig">fig</span>, <span data-g="a-frame">frame</span>, <span data-g="a-i" data-tip="frame(0), frame(5), …, frame(355)">frames=range(<span class="num">0</span>, <span class="num">360</span>, <span class="num">5</span>)</span>, <span data-tip="milliseconds between frames in the player">interval=<span class="num">50</span></span>)
+anim.<span data-tip="the same frames as a GIF file; the pillow writer comes with Matplotlib">save</span>(<span class="str">'heme.gif'</span>, writer=<span class="str">'pillow'</span>, fps=<span class="num">20</span>)
+html = anim.<span data-tip="all frames as pictures inside an HTML player">to_jshtml</span>()
+plt.<span data-tip="Last. frame() draws on the current figure; plt.close() also stops the cell showing it as a static picture.">close</span>()                         <span class="cmt"># last: frame() draws on the current figure</span>
+HTML(html)</code></pre>
+    <img class="gif" src="widgets_heme.gif" alt="heme.gif: heme turning about the y axis, angle in the title" width="640" height="480">
+  </div>
+  <table class="plain">
+    <tr><th>If the cell has</th><th>you see</th></tr>
+    <tr><td><code>anim</code> as the last line</td><td><code>&lt;matplotlib.animation.FuncAnimation at 0x…&gt;</code> and one empty figure</td></tr>
+    <tr><td><code>plt.close()</code> before <code>to_jshtml()</code></td><td>a blank player and a stray figure</td></tr>
+    <tr><td><code>plt.show()</code> inside <code>frame</code></td><td>one empty figure per frame</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<section class="step" id="box" data-nav="Particle in a box">
+  <h2>A particle in a box</h2>
+  <p class="lead">Box of length <i>L</i> = 1, ħ = <i>m</i> = 1. Eigenfunctions and energies:</p>
+  <div class="eq" data-tex="\psi_n(x) = \sqrt{2}\,\sin(n\pi x), \qquad E_n = \frac{n^2\pi^2}{2}"></div>
+  <div class="viz">
+<pre class="code" data-src>
+x = np.linspace(0, 1, 200)          # box of length L = 1
+
+def psi_n(x, n):
+    return np.sqrt(2) * np.sin(n * np.pi * x)
+
+def E(n):
+    return n**2 * np.pi**2 / 2
+
+T = 2 * np.pi / E(1)                # after T the density repeats
+
+for n in (1, 2, 3):
+    plt.plot(x, psi_n(x, n), label=f'$\\psi_{n}$')
+plt.legend()
+plt.show()
+</pre>
+    <div id="f-psin"></div>
+  </div>
+  <p>A mix of states changes with time:</p>
+  <div class="eq" data-tex="\Psi(x, t) = \frac{1}{\sqrt{N}} \sum_n c_n\,\psi_n(x)\,e^{-iE_nt}, \qquad N = \sum_n |c_n|^2"></div>
+  <p>After <i>T</i> = 2π/<i>E</i>₁ every phase factor is back to 1, so the density repeats:</p>
+  <div class="eq" data-tex="e^{-iE_nT} = e^{-2\pi i\, n^2} = 1"></div>
+</section>
+
+<section class="step" id="boxanim" data-nav="Sliders + animation">
+  <h2>Sliders and animation together</h2>
+  <p class="lead"><code>density(x, coeffs, t)</code> returns |Ψ(<i>x</i>, <i>t</i>)|² on the grid <code>x</code> for any number of coefficients <code>coeffs = (c1, c2, ...)</code>. It integrates to 1:</p>
+<pre class="code" data-src>
+def density(x, coeffs, t):
+    psi = sum(c * psi_n(x, n) * np.exp(-1j * E(n) * t)
+              for n, c in enumerate(coeffs, start=1))
+    norm = sum(abs(c)**2 for c in coeffs)
+    return np.abs(psi)**2 / norm
+
+dx = x[1] - x[0]
+print(np.sum(density(x, (1, 1, 0), 0.3)) * dx)
+</pre>
+<pre class="out">1.0</pre>
+  <p><code>animate_box</code> makes a 60-frame animation of one period <i>T</i>. <code>interactive</code> does not show what the function returns, so it calls <code>display(HTML(html))</code>. With <code>continuous_update=False</code> the animation is rebuilt when a slider is released.</p>
+  <div class="viz">
+<pre class="code" data-src>
+def animate_box(c1, c2, c3):
+    fig = plt.figure()
+
+    def frame(i):
+        plt.cla()
+        plt.plot(x, density(x, (c1, c2, c3), i / 60 * T))
+        plt.ylim(0, 5)
+        plt.xlabel('x / L')
+        plt.ylabel('$|\\Psi|^2$')
+        plt.title(f't = {i / 60:.2f} T')
+
+    anim = FuncAnimation(fig, frame, frames=60, interval=50)
+    html = anim.to_jshtml()
+    plt.close()
+    display(HTML(html))
+
+interactive(animate_box,
+            c1=FloatSlider(value=1, min=0, max=1, step=0.1, continuous_update=False),
+            c2=FloatSlider(value=1, min=0, max=1, step=0.1, continuous_update=False),
+            c3=FloatSlider(value=0, min=0, max=1, step=0.1, continuous_update=False))
+</pre>
+    <div>
+      <div class="ipw"><div id="w-c1"></div><div id="w-c2"></div><div id="w-c3"></div></div>
+      <div id="f-box"></div>
+      <div class="jsplay" id="p-box"></div>
+    </div>
+  </div>
+  <p>With one coefficient (for example <i>c</i>₂ = <i>c</i>₃ = 0) the density does not move: a stationary state.</p>
+</section>
+
+<section class="step" id="ho" data-nav="Oscillator in 3D">
+  <h2>A 2D harmonic oscillator in 3D</h2>
+  <p class="lead">ħ = <i>m</i> = ω = 1. 1D eigenfunctions with the Hermite polynomials <i>H<sub>n</sub></i> (<code>scipy.special.eval_hermite</code>):</p>
+  <div class="eq" data-tex="\phi_n(x) = \frac{H_n(x)\,e^{-x^2/2}}{\sqrt{2^n\,n!\,\sqrt{\pi}}}, \qquad E_n = n + \tfrac{1}{2}"></div>
+  <p>In 2D: products φ<sub><i>n<sub>x</sub></i></sub>(<i>x</i>) φ<sub><i>n<sub>y</sub></i></sub>(<i>y</i>), <i>E</i> = <i>n<sub>x</sub></i> + <i>n<sub>y</sub></i> + 1. A mix of five:</p>
+  <div class="eq" data-tex="\Psi(x, y, t) = \frac{1}{\sqrt{N}} \sum c_{n_x n_y}\, \phi_{n_x}(x)\,\phi_{n_y}(y)\, e^{-i(n_x + n_y + 1)t}, \qquad N = \sum |c_{n_x n_y}|^2"></div>
+  <p><code>fig.add_subplot(projection='3d')</code> makes 3D axes; <code>plot_surface(X, Y, Z)</code> needs the grids from <code>np.meshgrid</code>.</p>
+  <div class="viz">
+<pre class="code" data-src>
+from scipy.special import eval_hermite
+from math import factorial
+
+q = np.linspace(-4, 4, 60)
+X, Y = np.meshgrid(q, q)
+
+def phi(n, x):                      # 1D oscillator, ħ = m = ω = 1
+    return (eval_hermite(n, x) * np.exp(-x**2 / 2)
+            / np.sqrt(2**n * factorial(n) * np.sqrt(np.pi)))
+
+coeffs = {(0, 0): 1,                # (nx, ny): c
+          (1, 1): 1,
+          (2, 0): 1j,
+          (0, 3): 1,
+          (3, 1): 1}
+
+def density_2d(X, Y, coeffs, t):
+    psi = sum(c * phi(nx, X) * phi(ny, Y) * np.exp(-1j * (nx + ny + 1) * t)
+              for (nx, ny), c in coeffs.items())
+    norm = sum(abs(c)**2 for c in coeffs.values())
+    return np.abs(psi)**2 / norm
+
+ax = plt.figure().add_subplot(projection='3d')
+ax.plot_surface(X, Y, density_2d(X, Y, coeffs, 0), cmap='viridis')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+plt.show()
+</pre>
+    <img class="gif" src="widgets_ho.png" alt="|Ψ|² at t = 0 as a 3D surface" width="640" height="480">
+  </div>
+  <p>All energy differences are whole numbers, so the density repeats after <i>T</i> = 2π. Change <code>coeffs</code> for another pattern. <code>ax.cla()</code> clears the 3D axes, so the z limits are set in every frame.</p>
+  <div class="viz">
+<pre class="code" data-src>
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+
+def frame(i):
+    ax.cla()
+    Z = density_2d(X, Y, coeffs, i / 40 * 2 * np.pi)
+    ax.plot_surface(X, Y, Z, cmap='viridis')
+    ax.set_zlim(0, 0.3)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_title(f't = {i / 40:.2f} T')
+
+anim = FuncAnimation(fig, frame, frames=40, interval=50)
+html = anim.to_jshtml()
+plt.close()
+HTML(html)
+</pre>
+    <img class="gif" src="widgets_ho.gif" alt="|Ψ|² of five oscillator states over one period: lumps split and merge" width="640" height="480">
+  </div>
+</section>
+
+</main>
+
+<script>
+Course.init = function () {
+  if (window.katex) document.querySelectorAll('.eq').forEach(e => katex.render(e.dataset.tex, e, { displayMode: true, throwOnError: false }));
+  const C = Course, $ = C.$, el = C.el;
+  const NS = 'http://www.w3.org/2000/svg';
+  const S = (tag, a, txt) => { const e = document.createElementNS(NS, tag); for (const k in a || {}) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
+  let clipN = 0;
+
+  /* matplotlib-like axes. o = { xl: [a, b], yl: [a, b], xt, yt: tick values, dec, xlab, ylab, title, equal, off } */
+  function axes(o) {
+    const W = 460, H = o.H || 320, B = o.off ? 8 : 40, T = o.title != null ? 28 : 12;
+    let L = o.off ? 8 : 52, pw = W - L - 12, ph = H - T - B, top = T;
+    const dx = o.xl[1] - o.xl[0], dy = o.yl[1] - o.yl[0];
+    if (o.equal) { const s = Math.min(pw / dx, ph / dy); L += (pw - s * dx) / 2; top += (ph - s * dy) / 2; pw = s * dx; ph = s * dy; }
+    const X = v => L + (v - o.xl[0]) / dx * pw, Y = v => top + ph - (v - o.yl[0]) / dy * ph;
+    const svg = S('svg', { viewBox: `0 0 ${W} ${H}`, class: 'mpl' }), id = 'clip' + (++clipN);
+    const defs = S('defs'); const cp = S('clipPath', { id }); cp.append(S('rect', { x: L, y: top, width: pw, height: ph })); defs.append(cp); svg.append(defs);
+    const g = S('g', { 'clip-path': `url(#${id})` }); svg.append(g);
+    if (!o.off) {
+      svg.append(S('rect', { x: L, y: top, width: pw, height: ph, class: 'ax' }));
+      const fmt = (v, d) => v.toFixed(d).replace('-', '−');
+      o.xt.forEach(v => { const x = X(v); svg.append(S('line', { x1: x, x2: x, y1: top + ph, y2: top + ph + 3.5, class: 'tk' })); svg.append(S('text', { x, y: top + ph + 14, 'text-anchor': 'middle' }, fmt(v, o.dec[0]))); });
+      o.yt.forEach(v => { const y = Y(v); svg.append(S('line', { x1: L - 3.5, x2: L, y1: y, y2: y, class: 'tk' })); svg.append(S('text', { x: L - 6, y: y + 3.8, 'text-anchor': 'end' }, fmt(v, o.dec[1]))); });
+      svg.append(S('text', { x: L + pw / 2, y: top + ph + 30, 'text-anchor': 'middle' }, o.xlab));
+      svg.append(S('text', { x: L - 36, y: top + ph / 2, 'text-anchor': 'middle', transform: `rotate(-90 ${L - 36} ${top + ph / 2})` }, o.ylab));
+    }
+    const ttl = S('text', { x: L + pw / 2, y: top - 9, 'text-anchor': 'middle', class: 'ttl' }, o.title || ''); svg.append(ttl);
+    return { svg, g, X, Y, title: t => { ttl.textContent = t; } };
+  }
+  const range = (a, b, s) => { const r = []; for (let v = a; v <= b + 1e-9; v += s) r.push(+v.toFixed(6)); return r; };
+  const poly = (A, xs, ys, attrs) => A.g.append(S('polyline', Object.assign({ points: xs.map((x, i) => A.X(x).toFixed(1) + ',' + A.Y(ys[i]).toFixed(1)).join(' '), fill: 'none', stroke: '#1f77b4', 'stroke-width': 1.5 }, attrs)));
+
+  /* ---------- ipywidgets look-alikes ---------- */
+  function slider(host, o) {   // o: { desc, min, max, step, value, dec, release, on }
+    const row = el('div', 'row');
+    const inp = el('input'); Object.assign(inp, { type: 'range', min: o.min, max: o.max, step: o.step }); inp.value = o.value;
+    const out = el('output');
+    const show = () => { out.textContent = (+inp.value).toFixed(o.dec || 0); };
+    inp.addEventListener('input', show);   // the readout follows the drag
+    inp.addEventListener(o.release ? 'change' : 'input', () => o.on && o.on(+inp.value));   // release: continuous_update=False
+    row.append(el('span', 'desc', o.desc || ''), inp, out); host.append(row); show();
+    return { set: v => { inp.value = v; show(); o.on && o.on(+inp.value); } };
+  }
+  function dropdown(host, o) {
+    const row = el('div', 'row'), s = el('select');
+    o.options.forEach(v => { const op = el('option', '', v); op.value = v; s.append(op); });
+    s.value = o.value; s.onchange = () => o.on(s.value);
+    row.append(el('span', 'desc', o.desc), s); host.append(row);
+  }
+  function playWidget(host, o) {   // o: { min, max, step, interval, target: slider }
+    const box = el('span', 'play'), bp = el('button', '', '▶'), bs = el('button', '', '■'), br = el('button', '', '↻');
+    [bp, bs, br].forEach(b => { b.type = 'button'; box.append(b); });
+    bp.title = 'play'; bs.title = 'stop'; br.title = 'repeat';
+    let timer = null, v = o.min, rep = false;
+    const stop = () => { clearInterval(timer); timer = null; bp.textContent = '▶'; };
+    bp.onclick = () => {
+      if (timer) return stop();
+      if (v >= o.max) v = o.min;
+      bp.textContent = '⏸';
+      timer = setInterval(() => {
+        v += o.step;
+        if (v > o.max) { if (rep) v = o.min; else { v = o.max; stop(); return; } }
+        o.target.set(v);
+      }, o.interval);
+    };
+    bs.onclick = () => { stop(); v = o.min; o.target.set(v); };
+    br.onclick = () => { rep = !rep; br.classList.toggle('on', rep); };
+    host.append(box);
+  }
+
+  /* the HTML player of anim.to_jshtml() */
+  function jsplayer(host, n, interval, draw) {
+    const inp = el('input'); Object.assign(inp, { type: 'range', min: 0, max: n - 1, step: 1 }); inp.value = 0;
+    const btns = el('div', 'btns'), fr = el('span', 'fr');
+    const mk = (t, title, f) => { const b = el('button', '', t); b.type = 'button'; b.title = title; b.onclick = f; btns.append(b); return b; };
+    let i = 0, timer = null, dir = 1;
+    const go = k => { i = (k + n) % n; inp.value = i; fr.textContent = 'frame ' + i + ' / ' + (n - 1); draw(i); };
+    const stop = () => { clearInterval(timer); timer = null; bR.classList.remove('on'); bL.classList.remove('on'); };
+    const run = d => { stop(); dir = d; (d > 0 ? bR : bL).classList.add('on'); timer = setInterval(() => go(i + dir), interval); };
+    mk('⏮', 'first frame', () => { stop(); go(0); });
+    mk('◀|', 'previous frame', () => { stop(); go(i - 1); });
+    const bL = mk('◀', 'play backwards', () => run(-1));
+    mk('⏸', 'pause', stop);
+    const bR = mk('▶', 'play', () => run(1));
+    mk('|▶', 'next frame', () => { stop(); go(i + 1); });
+    mk('⏭', 'last frame', () => { stop(); go(n - 1); });
+    inp.addEventListener('input', () => { stop(); go(+inp.value); });
+    host.append(inp, btns, fr); go(0);
+    return { go, stop, get i() { return i; } };
+  }
+
+  /* ---------- setup check ---------- */
+  slider($('#w-check'), { desc: '', min: 0, max: 100, step: 1, value: 0 });
+
+  /* ---------- Morse ---------- */
+  {
+    const r = range(0.3, 4, 3.7 / 199), st = { De: 4.75, a: 1.94, re: 0.74 };
+    const draw = () => {
+      const A = axes({ xl: [0.115, 4.185], yl: [0, 8], xt: range(0.5, 4, 0.5), yt: range(0, 8, 1), dec: [1, 0], xlab: 'r / Å', ylab: 'E / eV' });
+      poly(A, r, r.map(v => st.De * (1 - Math.exp(-st.a * (v - st.re))) ** 2));
+      const f = $('#f-morse'); f.innerHTML = ''; f.append(A.svg);
+    };
+    slider($('#w-de'), { desc: 'De / eV', min: 1, max: 6, step: 0.05, value: 4.75, dec: 2, on: v => { st.De = v; draw(); } });
+    slider($('#w-a'), { desc: 'a / Å⁻¹', min: 0.5, max: 4, step: 0.02, value: 1.94, dec: 2, on: v => { st.a = v; draw(); } });
+    slider($('#w-re'), { desc: 're / Å', min: 0.5, max: 2, step: 0.01, value: 0.74, dec: 2, on: v => { st.re = v; draw(); } });
+    draw();
+  }
+
+  /* ---------- heme: Molecule.plot(0, 1) of rotated copies ---------- */
+  const MOL = [['C', -0.9101, 2.0232, 1.4662], ['C', 3.4809, 0.5372, 0.2312], ['C', 1.6319, -3.2288, -2.0358], ['C', -2.7221, -1.1048, -1.7118], ['C', 0.4569, 1.7702, 1.6082],
+    ['C', 1.3559, 2.8222, 1.9902], ['C', 2.5599, 2.5412, 1.4442], ['C', 2.4149, 1.2822, 0.7552], ['C', 3.9339, 3.1712, 1.7122], ['C', 1.0979, 3.8742, 3.0532],
+    ['C', 0.1379, 3.5602, 4.1812], ['C', -0.8851, 4.6502, 4.4742], ['O', -0.6521, 5.3842, 5.4632], ['O', -1.9311, 4.7932, 3.7762], ['C', 3.3379, -0.8278, -0.0578],
+    ['C', 4.4779, -1.6038, -0.4668], ['C', 3.9729, -2.6318, -1.1908], ['C', 2.5439, -2.4258, -1.3258], ['C', 5.9449, -1.3338, -0.0978], ['C', 4.6379, -3.7548, -1.6498],
+    ['C', 5.9199, -4.2138, -1.6788], ['C', 0.3169, -2.8288, -2.3438], ['C', -0.5691, -3.5678, -3.2038], ['C', -1.7781, -2.9788, -3.0898], ['C', -1.6481, -1.8888, -2.1618],
+    ['C', -0.1531, -4.7768, -4.0428], ['C', -2.9351, -3.1968, -3.8618], ['C', -2.9751, -3.5018, -5.1908], ['C', -2.6321, -0.2028, -0.6528], ['C', -3.7461, 0.5642, -0.1428],
+    ['C', -3.2401, 1.4582, 0.7362], ['C', -1.8141, 1.2452, 0.7622], ['C', -5.1741, 0.4092, -0.6888], ['C', -3.9701, 2.5782, 1.4582], ['C', -4.5001, 2.2062, 2.8262],
+    ['C', -5.5431, 3.1452, 3.3942], ['O', -6.6941, 2.7292, 3.5832], ['O', -5.2191, 4.3242, 3.6582], ['N', 1.1139, 0.8192, 0.8392], ['N', 2.1499, -1.3008, -0.6218],
+    ['N', -0.3721, -1.8488, -1.6528], ['N', -1.4311, 0.3002, -0.1958], ['Fe', 0.3419, -0.5028, -0.3978], ['H', -1.2804, 2.8681, 1.9288], ['H', 4.3858, 1.0010, 0.0552],
+    ['H', 1.9436, -4.1618, -2.3479], ['H', -3.6302, -1.2018, -2.1925], ['H', 3.8062, 4.0972, 2.2328], ['H', 4.4315, 3.3506, 0.7821], ['H', 4.5216, 2.5049, 2.3084],
+    ['H', 0.7192, 4.7401, 2.5515], ['H', 2.0430, 3.9797, 3.5435], ['H', 0.7112, 3.3949, 5.0694], ['H', -0.4193, 2.7010, 3.8709], ['H', 6.0074, -0.4373, 0.4829],
+    ['H', 6.5224, -1.2209, -0.9914], ['H', 6.3263, -2.1552, 0.4720], ['H', 3.9873, -4.4253, -2.0883], ['H', 6.6806, -3.6457, -1.2744], ['H', 6.1305, -5.1297, -2.1052],
+    ['H', 0.8881, -4.9731, -3.8938], ['H', -0.3330, -4.5718, -5.0775], ['H', -0.7235, -5.6315, -3.7442], ['H', -3.8415, -3.1182, -3.3747], ['H', -2.0975, -3.5925, -5.7261],
+    ['H', -3.8831, -3.6419, -5.6610], ['H', -5.2076, -0.4142, -1.3714], ['H', -5.4608, 1.3059, -1.1974], ['H', -5.8483, 0.2279, 0.1221], ['H', -4.7972, 2.8829, 0.8515],
+    ['H', -3.2530, 3.3572, 1.6125], ['H', -3.6735, 2.1809, 3.5051], ['H', -4.9870, 1.2608, 2.7074]];
+  const COLORS = { C: 'lime', N: 'blue', H: 'grey', Fe: 'black', O: 'red' }, SIZE = 7.1941;
+  function rmat(deg, axis) {
+    const t = deg * Math.PI / 180, c = Math.cos(t), s = Math.sin(t);
+    return axis === 'x' ? [[1, 0, 0], [0, c, -s], [0, s, c]] : axis === 'y' ? [[c, 0, s], [0, 1, 0], [-s, 0, c]] : [[c, -s, 0], [s, c, 0], [0, 0, 1]];
+  }
+  function molPlot(deg, axis) {
+    const R = rmat(deg, axis), P = MOL.map(a => R.map(row => row[0] * a[1] + row[1] * a[2] + row[2] * a[3]));
+    const A = axes({ xl: [-SIZE, SIZE], yl: [-SIZE, SIZE], xt: range(-6, 6, 2), yt: range(-6, 6, 2), dec: [0, 0], xlab: 'x', ylab: 'y', equal: true, H: 340 });
+    for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++)
+      if (Math.hypot(P[i][0] - P[j][0], P[i][1] - P[j][1], P[i][2] - P[j][2]) < 1.6)
+        A.g.append(S('line', { x1: A.X(P[i][0]), y1: A.Y(P[i][1]), x2: A.X(P[j][0]), y2: A.Y(P[j][1]), stroke: 'black', 'stroke-width': 1 }));
+    P.forEach((p, i) => A.g.append(S('circle', { cx: A.X(p[0]), cy: A.Y(p[1]), r: 3, fill: COLORS[MOL[i][0]] })));
+    return A.svg;
+  }
+  const put = (sel, node) => { const f = $(sel); f.innerHTML = ''; f.append(node); };
+  put('#f-step3', molPlot(45, 'x'));
+  function rotDemo(w, f, withPlay) {
+    const st = { angle: 0, axis: 'x' }, draw = () => put(f, molPlot(st.angle, st.axis));
+    const box = el('div', 'row'); if (withPlay) $(w).append(box);
+    const ang = slider($(w), { desc: 'Angle', min: 0, max: 360, step: 5, value: 0, on: v => { st.angle = v; draw(); } });
+    if (withPlay) playWidget(box, { min: 0, max: 360, step: 5, interval: 100, target: ang });
+    dropdown($(w), { desc: 'Axis', options: ['x', 'y', 'z'], value: 'x', on: v => { st.axis = v; draw(); } });
+    draw();
+  }
+  rotDemo('#w-step4', '#f-step4', false);
+  rotDemo('#w-step5', '#f-step5', true);
+
+  /* ---------- Play + IntSlider ---------- */
+  {
+    const n = slider($('#w-n'), { desc: 'n', min: 0, max: 10, step: 1, value: 0 });
+    playWidget($('#w-playbox'), { min: 0, max: 10, step: 1, interval: 500, target: n });
+  }
+
+  /* ---------- particle in a box ---------- */
+  {
+    const xs = range(0, 1, 1 / 199), E = n => n * n * Math.PI ** 2 / 2, T = 2 * Math.PI / E(1);
+    const psi = (n, x) => Math.SQRT2 * Math.sin(n * Math.PI * x), COL = ['#1f77b4', '#ff7f0e', '#2ca02c'];
+    {
+      const A = axes({ xl: [-0.05, 1.05], yl: [-1.556, 1.556], xt: range(0, 1, 0.2), yt: range(-1.5, 1.5, 0.5), dec: [1, 1], xlab: '', ylab: '' });
+      [1, 2, 3].forEach(n => poly(A, xs, xs.map(x => psi(n, x)), { stroke: COL[n - 1] }));
+      const lx = A.X(-0.05) + 8, ly = A.Y(-1.556) - 66;   // matplotlib puts it lower left
+      A.svg.append(S('rect', { x: lx, y: ly, width: 52, height: 58, class: 'legbox', rx: 3 }));
+      [1, 2, 3].forEach(n => {
+        A.svg.append(S('line', { x1: lx + 6, x2: lx + 26, y1: ly + 10 + 18 * (n - 1), y2: ly + 10 + 18 * (n - 1), stroke: COL[n - 1], 'stroke-width': 1.5 }));
+        A.svg.append(S('text', { x: lx + 31, y: ly + 14 + 18 * (n - 1) }, 'ψ' + '₁₂₃'[n - 1]));
+      });
+      put('#f-psin', A.svg);
+    }
+    const c = [1, 1, 0];
+    const draw = i => {
+      const t = i / 60 * T, norm = c[0] ** 2 + c[1] ** 2 + c[2] ** 2;
+      const A = axes({ xl: [-0.05, 1.05], yl: [0, 5], xt: range(0, 1, 0.2), yt: range(0, 5, 1), dec: [1, 0], xlab: 'x / L', ylab: '|Ψ|²', title: `t = ${(i / 60).toFixed(2)} T` });
+      if (norm) poly(A, xs, xs.map(x => {
+        let re = 0, im = 0;
+        c.forEach((cn, k) => { const p = cn * psi(k + 1, x), a = E(k + 1) * t; re += p * Math.cos(a); im -= p * Math.sin(a); });
+        return (re * re + im * im) / norm;
+      }));
+      put('#f-box', A.svg);
+    };
+    const P = jsplayer($('#p-box'), 60, 50, draw);
+    [0, 1, 2].forEach(k => slider($('#w-c' + (k + 1)), { desc: 'c' + (k + 1), min: 0, max: 1, step: 0.1, value: c[k], dec: 2, release: true, on: v => { c[k] = v; P.go(P.i); } }));
+  }
+};
+</script>
+</body>
+</html>
