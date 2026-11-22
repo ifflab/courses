@@ -1,0 +1,33 @@
+<!-- 12 · Are symmetry functions perfect? -->
+<section class="slide s12" id="s12">
+  <style>
+    .s12 .content { display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+    .s12 .top { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .s12 .top .imgs { display: flex; gap: 56px; align-items: center; }
+    .s12 .top img { height: 300px; width: auto; }
+    .s12 .sec { font-weight: 600; font-size: 34px; text-align: center; margin-bottom: 4px; }
+    .s12 .bot { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+    .s12 .bot .r { display: flex; align-items: center; gap: 72px; }
+    .s12 .bot img { height: 250px; width: auto; border: 1.5px solid var(--border); }
+    .s12 .katex-display { margin: 0; }
+    .s12 .bot .eqs { display: flex; flex-direction: column; gap: 8px; font-size: 36px; }
+  </style>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Are symmetry functions perfect?</h2></header>
+  <div class="content">
+    <div class="top">
+      <div class="sec">Fixed representations</div>
+      <div class="imgs"><img src="media/image36.png" alt="radial symmetry functions"><img src="media/image35.png" alt="angular symmetry functions"></div>
+    </div>
+    <div class="bot">
+      <div class="sec">Functions of distances (no directional information)</div>
+      <div class="r">
+        <img src="media/image40.png" alt="">
+        <div class="eqs">
+          <div>$$G^{rad}_{i,\mu}=\sum_{j\neq i}^{N_{atom}\in R_c} f^{rad}_\mu(R_{ij})\,f_c(R_{ij})$$</div>
+          <div>$$G^{ang}_{i,\mu}=\sum_{i,j,k} f^{ang}_\mu(R_{ij},R_{jk},R_{ik})\cdot f_c(R_{ij})\,f_c(R_{ik})$$</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="refs">Jörg Behler, <i>Chem. Rev.</i>, <b>2021</b>, <i>121</i> (16), 10037-10072</div>
+</section>

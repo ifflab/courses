@@ -1,0 +1,32 @@
+<!-- 38 · Simpler approach: ANI-MBIS -->
+<section class="slide s38" id="s38">
+  <style>
+    .s38 .content { display: grid; grid-template-columns: 1fr 600px; gap: 40px; }
+    .s38 .paper { display: flex; align-items: center; gap: 36px; margin-bottom: 8px; }
+    .s38 .paper { grid-column: 1 / -1; gap: 0; margin-bottom: 0; }
+    .s38 .paper img.logo { width: 453px; margin-right: 0; }
+    .s38 .dt { width: 348px; height: 74px; overflow: hidden; margin-left: 49px; }
+    .s38 .dt img { display: block; width: 348px; }
+    .s38 .dt.b img { margin-top: -74px; }
+    .s38 img.title { width: 1072px; margin: 0 0 4px; }
+    .s38 .eq { text-align: left; font-size: 38px; margin: 0 0 4px 40px; }
+    .s38 .eq .katex-display { margin: .2em 0; }
+    .s38 .eq2 { display: flex; gap: 70px; align-items: center; }
+    .s38 .plot { align-self: end; display: flex; align-items: flex-start; gap: 6px; }
+    .s38 .plot img.p { width: 520px; }
+    .s38 .plot img.yl { height: 278px; margin-top: 87px; }
+  </style>
+  <header><div class="kicker">02 · ML/MM · Physics-based embedding</div><h2>Simpler approach: ANI-MBIS</h2></header>
+  <div class="content">
+    <div class="paper"><img class="logo" src="media/image50.png" alt="JCIM"><div class="dt"><img src="media/image115.png" alt=""></div><div class="dt b"><img src="media/image115.png" alt=""></div></div>
+    <div>
+      <img class="title" src="media/image114.png" alt="Assessment of Embedding Schemes in a Hybrid ML/Classical Potentials (ML/MM) Approach">
+      <div>Assume atoms are point MBIS charges:</div>
+      <div class="eq">$$E_{static}=\sum_{i\in ML,\,j\in MM}\frac{q_i^{ML}(\boldsymbol{R}_{ML})\cdot q_j^{MM}}{r_{ij}}$$</div>
+      <div>Ignore interaction between induced dipoles:</div>
+      <div class="eq eq2">$$\boldsymbol{\mu}_i=\alpha_i\boldsymbol{E}_i$$ $$E_{induced}=\frac12\sum_{i\in ML}\alpha_i|\boldsymbol{E}_i|^2$$</div>
+    </div>
+    <div class="plot"><img class="yl" src="media/image118.png" alt=""><img class="p" src="media/image117.png" alt=""></div>
+  </div>
+  <div class="refs"><sup class="r">1</sup>Grassano et al., <i>J. Chem. Inf. Model.</i>, <b>2024</b>, 64, 10, 4047-4058</div>
+</section>

@@ -1,0 +1,43 @@
+<!-- 29 · Integrated QM/MM: pros and cons -->
+<section class="slide s29" id="s29">
+  <style>
+    .s29 .pic { position:absolute; right:-45px; top:-30px; width:860px; height:553px; }
+    .s29 .pic .im { position:absolute; inset:0; overflow:hidden; }
+    .s29 .pic .im img { position:absolute; left:0; top:-63.5px; width:860px; display:block; mix-blend-mode:multiply; }
+    .s29 .pic .lab { position:absolute; font-size:32px; line-height:1.2; text-align:center; }
+    .s29 .abs { position:absolute; }
+    .s29 .hd { font-size:32px; font-weight:700; margin:0 0 6px; }
+    .s29 ul { font-size:29px; margin:0; }
+    .s29 li { margin-bottom:.3em; }
+  </style>
+  <header><div class="kicker">02 · ML/MM · Integrated embedding</div><h2>Integrated QM/MM energy model</h2></header>
+  <div class="content">
+    <div class="abs" style="left:0; top:0; width:900px">
+      <div class="hd">Pros</div>
+      <ul class="pros"><li>Single model ⇒ Efficient</li><li>Learns the QM/MM energy directly ⇒ Arbitrarily precise</li></ul>
+    </div>
+    <div class="abs f" style="left:0; top:140px; width:900px">
+      <div class="hd">Cons</div>
+      <ul class="cons">
+        <li>MM environments vastly expand configurational space ⇒ more difficult to learn</li>
+        <li>Might not generalize well to completely different MM environments</li>
+        <li>Inherits QM/MM flaws</li>
+        <li>Implementations are mostly in-house</li>
+      </ul>
+    </div>
+    <div class="pic"><div class="im"><img src="media/image80.png"></div>
+      <div class="f" data-f="2">
+        <div class="lab" style="left:69.4%; top:72.3%; width:24%; font-size:62px; transform:translateY(-50%)">$G^l(\boldsymbol{R}_{ij})$</div>
+        <svg class="lab" style="left:71.3%; top:80.5%" width="30" height="70" viewBox="0 0 30 70"><path d="M15 68V6M6 16L15 4L24 16" fill="none" stroke="var(--fg)" stroke-width="3"/></svg>
+        <div class="lab" style="left:60%; top:94%; width:41%; font-size:30px">Multipole interaction coefficients</div>
+      </div>
+    </div>
+    <div class="f" data-f="2">
+      <div class="abs" style="left:960px; top:574px; font-size:36px; font-weight:700; width:700px; text-align:center">1000 ML atoms: ≈ 8.5 ns/day<br><span style="font-size:30px;font-weight:600">(0.5 fs step, H200 GPU)</span></div>
+      <div class="abs" style="left:951px; top:692px; font-size:34px; line-height:1.25; color:#0563c1; text-decoration:underline">https://github.com/<br>rinikerlab/amp_bms</div>
+      <img class="abs" src="media/image86.png" width="400" style="left:1284px; top:673px; mix-blend-mode:multiply">
+      <div class="abs" style="left:-53px; bottom:0; width:902px; background:#fff"><img src="media/image83_jacs.png" style="width:100%; display:block"></div>
+    </div>
+  </div>
+  <div class="refs">Thürlemann et al., <i>J. Am. Chem. Soc.</i>, <b>2026</b>, 148, 28133–28156</div>
+</section>

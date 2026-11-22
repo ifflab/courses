@@ -1,0 +1,33 @@
+<!-- 28 · Integrated QM/MM energy model -->
+<section class="slide s28" id="s28">
+  <style>
+    .s28 .pic { position:absolute; right:-45px; top:-30px; width:860px; height:553px; }
+    .s28 .pic .im { position:absolute; inset:0; overflow:hidden; }
+    .s28 .pic .im img { position:absolute; left:0; top:-63.5px; width:860px; display:block; mix-blend-mode:multiply; }
+    .s28 .lab { position:absolute; font-size:34px; line-height:1.2; transform:translateY(-50%); }
+    .s28 .eq26 { position:absolute; left:0; right:0; top:545px; display:flex; justify-content:center; align-items:flex-start; gap:.3em; font-size:44px; white-space:nowrap; }
+    .s28 .grp { position:relative; }
+    .s28 .under { position:absolute; left:0; right:0; top:100%; margin-top:2px; }
+  </style>
+  <header><div class="kicker">02 · ML/MM · Integrated embedding</div><h2>Integrated QM/MM energy model</h2></header>
+  <div class="content">
+    <ul style="font-size:38px; width:860px; margin-top:10px">
+      <li>Include representation of the MM environment of each atom into the feature vector passed to the model</li>
+      <li>Train directly on QM/MM energy</li>
+    </ul>
+    <div class="pic"><div class="im"><img src="media/image80.png"></div>
+      <div class="lab" style="left:-21.5%; top:82%; width:39%; text-align:right">MM point charges</div>
+      <div class="lab" style="left:67%; top:71.4%; width:35%; text-align:center">MM representation</div>
+    </div>
+    <div class="eq26">
+      <span>$E =$</span>
+      <span class="grp">$E_{QM}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM}) + E_{QM/MM}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM})$
+        <span class="f under">
+          <svg width="100%" height="26" viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0.5 2C0.5 12 2 14 25 14C42 14 46 16 50 24C54 16 58 14 75 14C98 14 99.5 12 99.5 2" fill="none" stroke="var(--fg)" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>
+          <span class="row" style="justify-content:center; gap:32px; white-space:nowrap">$E_{ML} = f(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM})$ <span style="font-size:30px">Learn both components with a single model</span></span>
+        </span>
+      </span>
+      <span>$+\, E_{MM}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM})$</span>
+    </div>
+  </div>
+</section>

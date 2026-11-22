@@ -1,0 +1,44 @@
+<!-- 36 · Generic EMLE model -->
+<section class="slide s36" id="s36">
+  <style>
+    .s36 .content { display: grid; grid-template-columns: 760px minmax(0,1fr); gap: 30px; }
+    .s36 .left { font-size: 28px; line-height: 1.2; display: flex; flex-direction: column; }
+    .s36 .left h3 { font-size: 30px; margin: 0 0 2px; color: var(--fg); }
+    .s36 .left ul { margin: 0 0 4px; }
+    .s36 .left li { margin: 0 0 2px; }
+    .s36 .strike { text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 4px; color: var(--muted); }
+    .s36 .gif { margin-top: auto; margin-bottom: 10px; width: 490px; height: 297px; flex: none; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .s36 .gif img { display: block; width: 490px; margin-top: -30px; }
+    .s36 .right { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .s36 .right img.mols { width: 100%; border: 1.5px solid var(--border); border-radius: 14px; }
+    .s36 table.data td { white-space: nowrap; }
+    .s36 table.data { font-size: 26px; width: 100%; }
+    .s36 table.data td, .s36 table.data th { padding: 10px 12px; }
+    .s36 .total { font-family: var(--mono); font-weight: 500; font-size: 36px; margin-top: 8px; }
+    .s36 .fn { position: absolute; left: 0; bottom: 0; font-size: 18px; color: var(--muted); }
+  </style>
+  <header><div class="kicker">02 · ML/MM · Physics-based embedding</div><h2>Generic EMLE model</h2></header>
+  <div class="content">
+    <div class="left">
+      <h3>Dataset:</h3>
+      <ul><li>QM7, 7165 molecules, up to 7 heavy atoms (C/N/O/S)<sup class="r">1</sup></li><li>80% training set / 20% test set</li></ul>
+      <h3>Reference data:</h3>
+      <div>B3LYP/cc-pVTZ (ORCA, <b>in vacuo</b>)</div>
+      <ul style="margin-top:4px"><li>Electronic density</li><li>Molecular polarizability</li><li class="strike">Energy</li></ul>
+      <h3>Model:</h3>
+      <ul><li>Sparse Gaussian Process Regression</li><li>Informative Vector Machine (IVM)</li></ul>
+      <div class="gif f"><img src="media/image107.gif" alt=""></div>
+    </div>
+    <div class="right">
+      <img class="mols" src="media/image106.png" alt="QM7 molecules">
+      <table class="data f">
+        <tr><th></th><th>H</th><th>C</th><th>N</th><th>O</th><th>S</th><th>Total</th></tr>
+        <tr class="hl"><td>Full QM7</td><td>61959</td><td>35761</td><td>6655</td><td>5978</td><td>297</td><td>110650</td></tr>
+        <tr><td>IVM (0.05 threshold)</td><td>92</td><td>155</td><td>99</td><td>75</td><td>24</td><td>445</td></tr>
+      </table>
+      <div class="total f">Total: 897 free parameters</div>
+    </div>
+  </div>
+  <div class="refs"><sup class="r">1</sup>http://quantum-machine.org/datasets/#qm7</div>
+  <!-- notes: TODO: instead list trainable parameters -->
+</section>

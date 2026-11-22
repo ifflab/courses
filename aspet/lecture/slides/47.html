@@ -1,0 +1,33 @@
+<!-- 47 · Take home messages -->
+<section class="slide s47" id="s47">
+  <style>
+    .s47 .content { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:28px 48px; align-content:start; }
+    .s47 .card { font-size:30px; line-height:1.28; padding:20px 30px; }
+    .s47 .card h3 { font-family:var(--sans); font-size:30px; font-weight:700; color:var(--fg); margin:0 0 10px; letter-spacing:0; }
+    .s47 .card ul { margin:0; }
+    .s47 .card li { margin-bottom:.3em; }
+    .s47 .card li:last-child { margin-bottom:0; }
+    .s47 .c3 { grid-column:1 / 3; width:calc(50% + 200px); justify-self:center; }
+  </style>
+  <header><div class="kicker">03 · Recap</div><h2>Take home messages</h2></header>
+  <div class="content">
+    <div class="card"><h3>MM embedding (fixed ML atomic charges):</h3><ul>
+      <li>Very fast</li>
+      <li>Great to avoid reparameterization of MM (drug binding, screening of large libraries)</li>
+      <li>Available in multiple MD codes</li>
+      <li>Accuracy comparable to tweaked MM</li>
+      <li>Not suitable for reactivity</li></ul></div>
+    <div class="card f up"><h3>Integrated ML/MM embedding (directly predict QM/MM energy):</h3><ul>
+      <li>Fast and accurate</li>
+      <li>Requires large datasets for training</li>
+      <li>May have low transferability to different MM environments</li>
+      <li>Inherits QM/MM issues</li>
+      <li>Software still limited</li></ul></div>
+    <div class="card c3 f up"><h3>Electrostatic ML embedding (physical response models):</h3><ul>
+      <li>More expensive</li>
+      <li>Less accurate than integrated approach</li>
+      <li>Small datasets enough for training</li>
+      <li>Very transferable</li>
+      <li>Available in <i>sander</i> and <i>OpenMM</i> through <i>emle-engine</i> package</li></ul></div>
+  </div>
+</section>

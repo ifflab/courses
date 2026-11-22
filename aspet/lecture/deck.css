@@ -1,0 +1,184 @@
+/* ML/MM lecture deck. Palette and type follow the IFFLab site and the PyTCCM course:
+   warm paper, blue-black ink, scientific teal, JetBrains Mono headings, Inter Tight body.
+   Every slide is a fixed 1920×1080 stage, scaled to the window by deck.js. */
+@import url("vendor/fonts/fonts.css");
+
+:root {
+  --sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --bg: oklch(0.985 0.006 85);
+  --fg: oklch(0.20 0.02 260);
+  --muted: oklch(0.48 0.015 260);
+  --accent: oklch(0.52 0.12 200);
+  --accent-2: oklch(0.42 0.12 200);
+  --accent-bg: oklch(0.94 0.035 200);
+  --border: oklch(0.88 0.008 260);
+  --card: oklch(0.965 0.007 85);
+  /* science colours, used identically on every slide */
+  --pos: oklch(0.52 0.16 255);      /* + charge, blue */
+  --neg: oklch(0.56 0.20 25);       /* − charge, red */
+  --ml: oklch(0.52 0.12 200);       /* ML region = accent teal */
+  --ml-bg: oklch(0.93 0.04 200);
+  --mm: oklch(0.55 0.05 70);        /* MM region, warm grey-ochre */
+  --mm-bg: oklch(0.94 0.025 80);
+  --good: oklch(0.52 0.13 150);
+  --good-bg: oklch(0.94 0.05 150);
+  --bad: oklch(0.55 0.18 28);
+  --bad-bg: oklch(0.94 0.04 28);
+  --warn: oklch(0.70 0.14 80);
+  --warn-bg: oklch(0.95 0.06 90);
+  --hl: oklch(0.92 0.10 95);        /* marker highlight */
+}
+
+* { box-sizing: border-box; font-variant-ligatures: none; }
+html, body { margin: 0; height: 100%; background: #111; overflow: hidden; }
+body { font-family: var(--sans); color: var(--fg); -webkit-font-smoothing: antialiased; }
+
+/* ---------- stage ---------- */
+#deck { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.slide {
+  position: absolute; inset: 0; background: var(--bg);
+  padding: 64px 104px 92px; display: flex; flex-direction: column;
+  font-size: 36px; line-height: 1.4;
+  opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s .25s;
+}
+.slide.active { opacity: 1; visibility: visible; transition: none; z-index: 1; }  /* incoming slide is opaque at once; the outgoing one fades beneath it (a plain crossfade dips to the dark page background) */
+
+.slide.snap, .slide.snap * { transition: none !important; }
+
+/* header: mono kicker + title + hairline */
+.slide > header { flex: none; margin-bottom: 40px; }
+.kicker { font-family: var(--mono); font-size: 20px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 500; }
+.kicker::before { content: "§ "; color: var(--muted); }
+.slide h2 { font-family: var(--mono); font-weight: 500; font-size: 54px; letter-spacing: -0.02em; line-height: 1.15; margin: 10px 0 0; padding-bottom: 22px; border-bottom: 1.5px solid var(--border); }
+.slide h3 { font-family: var(--mono); font-weight: 500; font-size: 34px; letter-spacing: -0.01em; margin: 0 0 18px; color: var(--accent-2); }
+.content { flex: 1; min-height: 0; position: relative; }
+
+/* persistent chrome drawn by deck.js */
+.chrome { position: absolute; left: 104px; right: 104px; bottom: 34px; display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 17px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); pointer-events: none; }
+.slide.no-chrome .chrome { display: none; }
+#progress { position: absolute; left: 0; bottom: 0; height: 5px; background: var(--accent); transition: width .3s ease; z-index: 5; }
+
+/* references: bottom of slide, above chrome */
+.refs { flex: none; margin-top: 18px; font-size: 18px; line-height: 1.35; color: var(--muted); }
+.refs i, .refs em { font-style: italic; }
+sup.r { font-size: .6em; color: var(--accent); font-weight: 600; }
+
+/* ---------- text primitives ---------- */
+p { margin: 0 0 .6em; }
+ul, ol { margin: 0; padding-left: 1.2em; }
+li { margin: 0 0 .45em; }
+li::marker { color: var(--accent); }
+ol li::marker { font-family: var(--mono); font-weight: 500; }
+ul.clean { list-style: none; padding: 0; }
+b, strong { font-weight: 600; }
+.muted { color: var(--muted); }
+.accent { color: var(--accent); }
+.small { font-size: 28px; }
+.xsmall { font-size: 22px; }
+.big { font-size: 46px; line-height: 1.25; }
+.mono { font-family: var(--mono); }
+.center { text-align: center; }
+.mark { background: linear-gradient(transparent 55%, var(--hl) 55%); padding: 0 .1em; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--accent); text-underline-offset: 4px; }
+.label { font-family: var(--mono); font-size: 18px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+
+/* ---------- layout ---------- */
+.row { display: flex; gap: 48px; align-items: center; }
+.row.top { align-items: flex-start; }
+.grow { flex: 1; min-width: 0; }
+.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.stack > * + * { margin-top: 24px; }
+.fill { height: 100%; }
+.vcenter { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.abs { position: absolute; }  /* free placement inside .content, use left/top in px */
+
+/* ---------- boxes ---------- */
+.card { background: var(--card); border: 1.5px solid var(--border); border-radius: 18px; padding: 28px 34px; }
+.card.accent { background: var(--accent-bg); border-color: color-mix(in oklch, var(--accent) 35%, transparent); }
+.callout { border-left: 6px solid var(--accent); background: var(--accent-bg); padding: 20px 30px; border-radius: 0 14px 14px 0; }
+.callout.warn { border-color: var(--warn); background: var(--warn-bg); }
+.callout.bad { border-color: var(--bad); background: var(--bad-bg); }
+.pros, .cons { list-style: none; padding: 0; }
+.pros li, .cons li { padding-left: 1.4em; position: relative; }
+.pros li::before, .cons li::before { position: absolute; left: 0; font-weight: 700; font-family: var(--mono); }
+.pros li::before { content: "+"; color: var(--good); }
+.cons li::before { content: "−"; color: var(--bad); }
+.pill { display: inline-block; font-family: var(--mono); font-size: .62em; letter-spacing: .06em; padding: .15em .7em; border-radius: 999px; background: var(--accent-bg); color: var(--accent-2); border: 1.5px solid color-mix(in oklch, var(--accent) 30%, transparent); vertical-align: .15em; }
+
+/* figures */
+figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+figure img, img.fig { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+figcaption { font-size: 24px; color: var(--muted); margin-top: 12px; text-align: center; }
+svg text { font-family: var(--sans); }
+
+/* tables */
+table.data { border-collapse: collapse; font-size: 28px; font-variant-numeric: tabular-nums; }
+table.data th { font-family: var(--mono); font-size: 18px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 500; text-align: right; padding: 10px 22px; border-bottom: 1.5px solid var(--fg); }
+table.data td { padding: 10px 22px; text-align: right; border-bottom: 1px solid var(--border); }
+table.data th:first-child, table.data td:first-child { text-align: left; }
+table.data tr.hl td { background: var(--accent-bg); }
+
+/* math */
+.katex { font-size: 1.05em; }
+.eq { font-size: 40px; text-align: center; }
+
+/* ---------- build steps ("fragments") ----------
+   .f            appears at its step (DOM order, or data-f="k")
+   data-f-out=m  disappears again at step m
+   .f.up / .f.left / .f.zoom / .f.draw  entrance flavours (default: fade)
+   .f.hl         not hidden; gets highlighted at its step */
+.f { opacity: 0; transition: opacity .45s ease, transform .45s ease, filter .45s ease; }
+.f.up { transform: translateY(24px); }
+.f.left { transform: translateX(-30px); }
+.f.zoom { transform: scale(.92); }
+.f.on { opacity: 1; transform: none; }
+.gone { opacity: 0 !important; pointer-events: none; }  /* also bare [data-f-out] */
+.f.hl { opacity: 1; transition: background-color .4s, color .4s, box-shadow .4s; border-radius: 8px; }
+.f.hl.on { background: var(--hl); box-shadow: 0 0 0 6px var(--hl); }
+/* SVG path drawing: give the path pathLength="1" */
+.f.draw { opacity: 1; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1s ease; }
+.f.draw.on { stroke-dashoffset: 0; }
+.dim-others.dim > :not(.on-focus) { opacity: .25; transition: opacity .4s; }
+
+/* blackout / whiteout */
+#blank { position: fixed; inset: 0; z-index: 50; display: none; }
+#blank.black { display: block; background: #000; }
+#blank.white { display: block; background: var(--bg); }
+#goto { position: fixed; right: 24px; top: 20px; z-index: 60; font: 500 22px var(--mono); color: #fff; background: #000a; padding: 6px 14px; border-radius: 8px; display: none; }
+
+/* overview (key o) */
+body.overview #deck { transform: none !important; position: static; width: auto; height: auto; display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; padding: 16px; overflow: auto; }
+body.overview { overflow: auto; }
+body.overview .slide { position: relative; opacity: 1; visibility: visible; zoom: .16; cursor: pointer; width: 1920px; height: 1080px; outline: 0 solid var(--accent); }
+body.overview .slide.active { outline-width: 24px; }
+body.overview .f { opacity: 1; transform: none; }
+
+/* print / PDF: one slide per page, all steps shown */
+@media print {
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { overflow: visible; height: auto; background: none; }
+  #deck { position: static; transform: none !important; }
+  .slide { position: relative; opacity: 1; visibility: visible; break-after: page; width: 1920px; height: 1080px; }
+  .f { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; }
+  .f.gone, [data-f-out] { display: none; }
+  #progress, #blank, #goto { display: none; }
+}
+
+/* MM point charges drawn by figs.js */
+.q circle { stroke-width: 2.5; }
+.q path { stroke: #fff; stroke-width: 3; stroke-linecap: round; }
+.q.pos circle { fill: var(--pos); stroke: color-mix(in oklch, var(--pos) 70%, black); }
+.q.neg circle { fill: var(--neg); stroke: color-mix(in oklch, var(--neg) 70%, black); }
+.ml-blob { fill: var(--ml-bg); stroke: var(--ml); stroke-width: 3; }
+
+/* screenshots (?shot): no transitions */
+body.no-anim *, body.no-anim *::before { transition: none !important; animation-duration: 0s !important; }
+
+/* KaTeX \vec / \hat emit .accent spans: keep them ink-coloured */
+.katex .accent { color: inherit; }
+/* pptx images have white/off-white backgrounds: let the paper show through */
+.slide img, .slide svg image { mix-blend-mode: multiply; }

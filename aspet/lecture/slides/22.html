@@ -1,0 +1,71 @@
+<!-- 22 · ML/MM? -->
+<section class="slide s22" id="s22" data-steps="1">
+  <style>
+    .s22 .content > * { position: absolute; }
+    .s22 svg.pic { left: 0; top: 0; overflow: visible; }
+    .s22 .lbl { font-size: 32px; line-height: 1.3; }
+    .s22 .eqw { left: 0; right: 0; top: 612px; text-align: center; }
+    .s22 .eqi { position: relative; display: inline-block; font-size: 40px; text-align: left; }
+    .s22 .lj { position: absolute; right: 0; top: 62px; font-size: 26px; color: var(--muted); }
+    .s22 .ml-blob { transition: none; }
+
+    .s22 .eml { left: 0; right: 0; top: 650px; }
+  </style>
+  <header><div class="kicker">02 · ML/MM · Motivation</div><h2>ML/MM?</h2></header>
+  <div class="content">
+    <svg class="pic" width="1712" height="640" viewBox="0 0 1712 640">
+      <defs><marker id="s22-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
+      <g class="charges" data-cx="1370" data-cy="330" data-r0="215" data-r1="330" data-n="34" data-seed="7" data-sy=".82" data-qr="14"></g>
+      <path class="ml-blob" d="M1120,330Z"/>
+      <path class="f0" fill="none" stroke="var(--ml)" stroke-width="3" stroke-dasharray="10 8" opacity="0"/>
+      <image style="mix-blend-mode:multiply" href="media/image64.png" x="1309" y="261" width="122" height="138"/>
+      <svg x="0" y="82" width="827" height="518" viewBox="0 0 1370 858"><image style="mix-blend-mode:multiply" href="media/image39.png" width="1598" height="858"/></svg>
+      <path d="M823,327.6 L1000,327.6" stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s22-arr)"/>
+      <g stroke="var(--neg)" stroke-width="16" stroke-linecap="round"><path d="M870,292.6 L940,362.6M940,292.6 L870,362.6"/></g>
+      <text x="905" y="270" text-anchor="middle" font-size="34" font-weight="600" fill="var(--fg)">No electrons</text>
+    </svg>
+    <div class="eqw"><div class="eqi">$E = E_{QM}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM}) + E_{QM/MM}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM}) + E_{MM}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM})$<div class="lj">(includes LJ)</div>
+      <div class="f eqa" style="position:absolute;left:112px;top:54px;white-space:nowrap">
+        <svg width="40" height="64" viewBox="0 0 40 64" style="position:absolute;left:0;top:0;overflow:visible"><path d="M20,62 L20,4" stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s22-arr)"/><path d="M12,26 L28,42M28,26 L12,42" stroke="var(--neg)" stroke-width="5" stroke-linecap="round"/></svg>
+        <div class="eml1" style="position:absolute;left:0;top:64px">$E_{ML} = f(\boldsymbol{R}_{QM})$</div>
+      </div></div></div>
+  </div>
+  <script>
+    (() => {
+      const s = document.getElementById('s22');
+      const place = () => {
+        const w = s.querySelector('.eqi'), a = s.querySelector('.eqa'), k = [...w.querySelectorAll('.katex-html > .base > .mord')].filter(n => n.textContent[0] === 'E')[1];
+        if (!k) return setTimeout(place, 200);
+        const e = k.firstElementChild.getBoundingClientRect(), r = w.getBoundingClientRect(), sc = r.width / w.offsetWidth;
+        a.style.left = ((e.left - r.left) / sc + e.width / 2 - 20) + 'px';
+        a.style.top = ((k.getBoundingClientRect().bottom - r.top) / sc + 2) + 'px';
+        a.querySelector('.eml1').style.left = '-6px';
+      };
+      setTimeout(place, 300); window.addEventListener('load', place);
+      const blob = s.querySelector('.ml-blob'), ghost = s.querySelector('.f0');
+      const CX = 1370, CY = 330, M = 96;
+      const base = th => { const c = Math.cos(th), si = Math.sin(th); return (1 / Math.hypot(c / 165, si / 112)) * (1 + .05 * Math.sin(3 * th + 1) + .03 * Math.cos(2 * th)); };
+      let qs = null, d = null, t = 0, raf = 0;
+      const field = () => {
+        qs = [...s.querySelectorAll('.q')].map(g => { const m = /translate\(([-\d.]+) ([-\d.]+)\)/.exec(g.getAttribute('transform')); return [+m[1], +m[2], g.classList.contains('pos') ? 1 : -1]; });
+        d = Array.from({ length: M }, (_, i) => {
+          const th = 2 * Math.PI * i / M, r = base(th), bx = CX + r * Math.cos(th), by = CY + r * Math.sin(th), nx = Math.cos(th), ny = Math.sin(th);
+          let f = 0; for (const [x, y, q] of qs) { const dx = x - bx, dy = y - by, l = Math.hypot(dx, dy); f += q * (dx * nx + dy * ny) / (l * l * l); }
+          return f;
+        });
+        const mx = Math.max(...d.map(Math.abs)); d = d.map(v => .32 * v / mx);
+        const sm = d.map((v, i) => (d[(i + M - 2) % M] + 2 * d[(i + M - 1) % M] + 3 * v + 2 * d[(i + 1) % M] + d[(i + 2) % M]) / 9); d = sm;
+      };
+      const path = k => 'M' + Array.from({ length: M }, (_, i) => { const th = 2 * Math.PI * i / M, r = base(th) * (1 + k * (d ? d[i] : 0)); return (CX + r * Math.cos(th)).toFixed(1) + ',' + (CY + r * Math.sin(th)).toFixed(1); }).join('L') + 'Z';
+      const draw = () => { if (!d) field(); blob.setAttribute('d', path(t)); ghost.setAttribute('d', path(0)); ghost.setAttribute('opacity', Math.min(1, t * 2) * (false ? 1 : 0)); };
+      s.addEventListener('step', e => {
+        if (!d) field();
+        const to = (false && e.detail.step >= 1) ? 1 : 0, from = t, t0 = performance.now();
+        cancelAnimationFrame(raf);
+        if (document.body.classList.contains('no-anim')) { t = to; draw(); return; }
+        const tick = now => { const u = Math.min(1, (now - t0) / 900), v = u * u * (3 - 2 * u); t = from + (to - from) * v; draw(); if (u < 1) raf = requestAnimationFrame(tick); };
+        raf = requestAnimationFrame(tick);
+      });
+    })();
+</script>
+</section>

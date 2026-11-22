@@ -1,0 +1,65 @@
+<!-- 01 · Title -->
+<section class="slide no-chrome title-slide">
+  <style>
+    .title-slide { padding: 0; flex-direction: row; }
+    .title-slide .tl { flex: 1; padding: 150px 0 110px 130px; display: flex; flex-direction: column; }
+    .title-slide h1 { font-family: var(--mono); font-weight: 500; font-size: 84px; letter-spacing: -0.03em; line-height: 1.05; margin: 26px 0 30px; }
+    .title-slide h1 .arrow { color: var(--accent); }
+    .title-slide .sub { font-size: 40px; line-height: 1.3; color: var(--fg); max-width: 1000px; }
+    .title-slide .who { margin-top: auto; font-size: 34px; }
+    .title-slide .who b { font-weight: 600; }
+    .title-slide .logos { display: flex; gap: 56px; align-items: center; margin-top: 46px; }
+    .title-slide .logos img { height: 92px; }
+    .title-slide .tr { width: 720px; position: relative; background: var(--accent-bg); }
+  </style>
+  <div class="tl">
+    <div class="kicker">EM-TCCM · Biochemistry and Drug Design · Aspet, 27 Nov 2026</div>
+    <h1>From QM/MM<br>to ML/MM</h1>
+    <div class="sub">Introduction to hybrid machine‑learning / molecular‑mechanics simulations</div>
+    <div class="who"><b>Kirill Zinovjev</b><br><span class="muted">Departament de Química Física, Universitat de València</span></div>
+    <div class="logos"><img src="media/uv-logo.png" alt="Universitat de València" style="height:96px"><img src="media/ifflab.svg" alt="IFFLab" style="height:80px"></div>
+  </div>
+  <div class="tr">
+    <svg viewBox="0 0 720 1080" width="720" height="1080">
+      <defs><filter id="t-blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter><mask id="t-feather" maskUnits="userSpaceOnUse" x="-20" y="-20" width="451" height="402"><rect x="12" y="12" width="387" height="338" fill="#fff" filter="url(#t-blur)"/></mask><clipPath id="t-clip"><circle cx="360" cy="540" r="330"/></clipPath></defs>
+      <circle cx="360" cy="540" r="330" fill="var(--bg)"/>
+      <g clip-path="url(#t-clip)"><g transform="translate(31.2 250.4) scale(1.6)">
+<defs>
+  <radialGradient id="fade01" cx=".5" cy=".5" r=".707"><stop offset="0" style="stop-color:var(--bg)"/><stop offset=".42" style="stop-color:var(--bg)"/><stop offset=".61" style="stop-color:var(--bg);stop-opacity:0"/></radialGradient>
+  <radialGradient id="glow01" cx=".5" cy=".5" r=".707"><stop offset="0" stop-color="#FFFFBE"/><stop offset=".67" style="stop-color:var(--bg)"/></radialGradient>
+</defs>
+<image href="media/image4.png" x="0" y="0" width="411" height="362" mask="url(#t-feather)"/>
+<ellipse cx="210" cy="192" rx="253" ry="233.5" fill="url(#fade01)"/>
+<image href="media/image5.svg" x="27" y="55" width="366" height="299"/>
+<path d="M184.0,124.8L246.6,124.8L309.2,194.5L246.6,264.2L184.0,264.2L121.4,229.4L121.4,159.7Z" fill="url(#glow01)" stroke="none" stroke-width="0.00"/>
+<path d="M150.0,175.0C150.0,180.4 145.7,184.8 140.2,184.8C134.8,184.8 130.4,180.4 130.4,175.0C130.4,169.6 134.8,165.2 140.2,165.2C145.7,165.2 150.0,169.6 150.0,175.0Z" fill="#E6E6E6" stroke="#000" stroke-width="3.00"/>
+<path d="M150.0,220.6C150.0,226.0 145.7,230.4 140.2,230.4C134.8,230.4 130.4,226.0 130.4,220.6C130.4,215.2 134.8,210.8 140.2,210.8C145.7,210.8 150.0,215.2 150.0,220.6Z" fill="#E6E6E6" stroke="#000" stroke-width="3.00"/>
+<path d="M195.7,152.1C195.7,157.5 191.3,161.9 185.9,161.9C180.5,161.9 176.1,157.5 176.1,152.1C176.1,146.7 180.5,142.3 185.9,142.3C191.3,142.3 195.7,146.7 195.7,152.1Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
+<path d="M195.7,197.8C195.7,203.2 191.3,207.6 185.9,207.6C180.5,207.6 176.1,203.2 176.1,197.8C176.1,192.4 180.5,188.0 185.9,188.0C191.3,188.0 195.7,192.4 195.7,197.8Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
+<path d="M195.7,243.5C195.7,248.9 191.3,253.2 185.9,253.2C180.5,253.2 176.1,248.9 176.1,243.5C176.1,238.0 180.5,233.7 185.9,233.7C191.3,233.7 195.7,238.0 195.7,243.5Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
+<path d="M241.4,152.1C241.4,157.5 237.0,161.9 231.6,161.9C226.1,161.9 221.8,157.5 221.8,152.1C221.8,146.7 226.1,142.3 231.6,142.3C237.0,142.3 241.4,146.7 241.4,152.1Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
+<path d="M241.4,197.8C241.4,203.2 237.0,207.6 231.6,207.6C226.1,207.6 221.8,203.2 221.8,197.8C221.8,192.4 226.1,188.0 231.6,188.0C237.0,188.0 241.4,192.4 241.4,197.8Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
+<path d="M241.4,243.5C241.4,248.9 237.0,253.2 231.6,253.2C226.1,253.2 221.8,248.9 221.8,243.5C221.8,238.0 226.1,233.7 231.6,233.7C237.0,233.7 241.4,238.0 241.4,243.5Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
+<path d="M287.0,197.8C287.0,203.2 282.6,207.6 277.2,207.6C271.8,207.6 267.4,203.2 267.4,197.8C267.4,192.4 271.8,188.0 277.2,188.0C282.6,188.0 287.0,192.4 287.0,197.8Z" fill="#A9E9AB" stroke="#000" stroke-width="3.00"/>
+<path d="M195.7,152.1L221.8,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M221.8,152.1L195.7,197.8L221.8,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M195.7,243.4L221.8,152.1" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M221.8,197.8L195.7,243.4L221.8,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M241.4,152.1L267.4,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M241.4,197.8L267.4,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M241.4,243.4L267.4,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M195.7,152.1L221.8,152.1" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M195.7,197.8L221.8,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M195.7,152.1L221.8,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M176.1,152.1L150.0,175.0L176.1,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M150.0,175.0L176.1,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M150.0,220.6L176.1,152.1" fill="none" stroke="#000000" stroke-width="1.50"/>
+<path d="M176.1,197.8L150.0,220.6L176.1,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
+<text x="67" y="74" font-family="var(--mono)" font-size="36" font-weight="700" fill="var(--fg)">MM</text>
+<text x="240" y="293" font-family="var(--mono)" font-size="36" font-weight="700" fill="var(--accent-2)">ML</text>
+
+      </g></g>
+      <circle cx="360" cy="540" r="330" fill="none" stroke="var(--accent)" stroke-width="3"/>
+    </svg>
+  </div>
+</section>

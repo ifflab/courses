@@ -1,0 +1,30 @@
+<!-- 09 · Atom-centered symmetry functions -->
+<section class="slide s09" id="s09">
+  <style>
+    .s09 .content img, .s09 .content .t, .s09 .content .e { position: absolute; }
+    .s09 .t { font-weight: 600; font-size: 30px; text-align: center; }
+    .s09 .e { font-size: 34px; }
+    .s09 svg.arr { position: absolute; left: 0; top: 0; overflow: visible; }
+  </style>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Atom-centered symmetry functions</h2></header>
+  <div class="content">
+    <img src="media/image39.png" style="left:0;top:0;width:700px" alt="">
+    <img src="media/image40.png" style="left:400px;top:430px;width:200px" alt="">
+    <div class="t" style="left:340px;top:640px;width:320px">Atomic environment</div>
+
+    <img src="media/image41.png" style="left:880px;top:0;width:832px" alt="">
+    <img src="media/image36.png" style="left:880px;top:150px;width:320px" alt="">
+    <div class="t" style="left:880px;top:358px;width:320px">Radial channels</div>
+    <div class="e" style="left:1230px;top:200px;width:482px">$$G^{\mathrm{rad}}_{i,\mu}=\sum_{j\neq i}^{N_{\mathrm{atom}}\in R_\mathrm{c}} f^{\mathrm{rad}}_{\mu}(R_{ij})\,f_\mathrm{c}(R_{ij})$$</div>
+
+    <img src="media/image35.png" style="left:880px;top:410px;width:320px" alt="">
+    <div class="t" style="left:880px;top:640px;width:320px">Angular channels</div>
+    <div class="e" style="left:1230px;top:440px;width:482px">$$\begin{aligned}G^{\mathrm{ang}}_{i,\mu}&=\sum_{i,j,k} f^{\mathrm{ang}}_{\mu}(R_{ij},R_{jk},R_{ik})\cdot\\&\quad f_\mathrm{c}(R_{ij})\,f_\mathrm{c}(R_{ik})\end{aligned}$$</div>
+
+    <svg class="arr" width="1712" height="700">
+      <defs><marker id="s09-ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
+      <g stroke="var(--fg)" stroke-width="5" fill="none"><path d="M630 520 L856 262" marker-end="url(#s09-ah)"/><path d="M630 520 L856 520" marker-end="url(#s09-ah)"/></g>
+    </svg>
+  </div>
+  <div class="refs">Behler and Parrinello, <i>Phys. Rev. Lett.</i>, <b>2007</b>, 98, 146401; Jörg Behler, <i>Chem. Rev.</i>, <b>2021</b>, <i>121</i> (16), 10037–10072</div>
+</section>

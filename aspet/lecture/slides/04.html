@@ -1,0 +1,30 @@
+<!-- 04 · Tough case: mechanism of Caspase-1 -->
+<section class="slide s04" id="s04">
+  <style>
+    .s04 .top { display: block; width: 1300px; margin: -10px auto 0; }
+    .s04 .bot { display: flex; gap: 56px; align-items: center; margin-top: 14px; }
+    .s04 ul { list-style: none; padding: 0; font-size: 36px; width: 520px; }
+    .s04 li { margin: 0 0 .25em; white-space: nowrap; }
+    .s04 li::before { content: "✗"; color: var(--bad); font-weight: 700; display: inline-block; width: 1.3em; }
+    .s04 li.ok { font-weight: 600; }
+    .s04 li.ok::before { content: "✓"; color: var(--good); }
+    .s04 .gif { height: 330px; width: auto; border-radius: 14px; }
+    .s04 .cost { font-size: 34px; text-align: center; }
+  </style>
+  <header><div class="kicker">01 · ML potentials · Motivation</div><h2>Tough case: mechanism of Caspase-1</h2></header>
+  <div class="content">
+    <img class="top" src="media/image11.png" alt="">
+    <div class="bot">
+      <ul>
+        <li class="f">AM1</li>
+        <li class="f">PM3</li>
+        <li class="f">PM6</li>
+        <li class="f">DFTB3</li>
+        <li class="f">GFN2-xTB</li>
+        <li class="f ok">B3LYP-D3/6-31G(d)</li>
+      </ul>
+      <img class="gif" src="media/image12.gif" alt="">
+      <div class="callout f cost grow">96 replicas × 24 cores × 6 days<br><b>≈ 330K CPU hours</b><br><span class="muted">(Deacylation only!)</span></div>
+    </div>
+  </div>
+</section>

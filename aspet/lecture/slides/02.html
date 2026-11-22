@@ -1,0 +1,18 @@
+<!-- 02 · Overview -->
+<section class="slide overview-slide">
+  <style>
+    .overview-slide ol.toc { list-style: none; padding: 0; counter-reset: s; font-size: 40px; }
+    .overview-slide ol.toc > li { counter-increment: s; margin-bottom: 34px; display: grid; grid-template-columns: 110px 1fr; }
+    .overview-slide ol.toc > li::before { content: "0" counter(s); font-family: var(--mono); color: var(--accent); font-weight: 500; }
+    .overview-slide ol.toc ul { grid-column: 2; font-size: 32px; color: var(--muted); list-style: none; padding: 0; margin-top: 10px; display: flex; gap: 38px; }
+    .overview-slide ol.toc ul li::before { content: "— "; color: var(--border); }
+  </style>
+  <header><div class="kicker">Outline</div><h2>Overview</h2></header>
+  <div class="content">
+    <ol class="toc">
+      <li><b>Intro to ML potentials</b><ul><li>Motivation</li><li>General idea</li><li>Examples</li></ul></li>
+      <li><b>ML/MM</b><ul><li>Motivation</li><li>Types of ML/MM embedding</li><li>Applications</li></ul></li>
+      <li><b>Recap and future directions</b></li>
+    </ol>
+  </div>
+</section>

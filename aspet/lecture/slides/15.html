@@ -1,0 +1,72 @@
+<!-- 15 · Equivariant message passing -->
+<section class="slide s15" id="s15">
+  <style>
+    .s15 .sub { font-weight:600; font-size:36px; margin-bottom:22px; }
+    .s15 .body { display:grid; grid-template-columns: 700px 907px; gap:38px; align-items:start; }
+    .s15 ol { padding-left:1.5em; font-size:36px; }
+    .s15 ol li { margin-bottom:.5em; line-height:1.35; }
+    .s15 .fig { position:relative; width:907px; height:456px; }
+    .s15 .fig svg { display:block; overflow:visible; }
+    .s15 .fig svg image { mix-blend-mode:normal; }
+    .s15 .halo { fill:#14186b; fill-opacity:.16; stroke:#14186b; stroke-width:4; }
+    .s15 .logo { position:relative; width:664px; height:172px; margin:60px 0 0 205px; }
+    .s15 .logo img { width:664px; height:172px; mix-blend-mode:multiply; }
+    .s15 .logo a { position:absolute; left:285px; top:96px; font-size:30px; }
+  </style>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Learning representation from the structure</h2></header>
+  <div class="content">
+    <div class="sub">Equivariant Message Passing Graph Neural Networks</div>
+    <div class="body">
+      <ol>
+        <li class="f up">First messages contain the interatomic vector and the element</li>
+        <li class="f up">Messages are passed to all the neighbors within a cutoff</li>
+        <li class="f up">An NN model gathers the received messages to create a new state of the node (atom)</li>
+        <li class="f up">The new state is passed to the neighbors again</li>
+        <li class="f up">When message passing is finished, the result is predicted from the final state by the readout NN</li>
+      </ol>
+      <div>
+        <div class="fig">
+          <!-- layers split from image57 by _work/split57.py; viewBox = image57 px -->
+          <svg width="907" height="456" viewBox="0 0 1703 855">
+            <image href="media/image57_base.png" width="1703" height="855"/>
+            <image class="f" data-f="1" href="media/image57_msg.png" width="1703" height="855"/>
+            <circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="2.5"/>
+            <circle class="f" data-f="2" data-f-out="5" cx="522.9" cy="527.5" r="162.7" fill="none" stroke="var(--pos)" stroke-width="7"/>
+            <circle class="f halo" data-f="3" data-f-out="5" cx="530" cy="527" r="46"/>
+            <g class="f" data-f="4" data-f-out="5">
+              <circle class="halo" cx="412" cy="493" r="44"/><circle class="halo" cx="605" cy="428" r="44"/>
+              <circle class="halo" cx="545" cy="322" r="44"/><circle class="halo" cx="418" cy="365" r="44"/>
+              <circle class="halo" cx="560" cy="614" r="30"/>
+            </g>
+            <g class="s15-msg"></g>
+            <image class="f" data-f="5" href="media/image57_cut.png" width="1703" height="855"/>
+            <image class="f" data-f="5" href="media/image57_read.png" width="1703" height="855"/>
+            <image class="f" data-f="1" href="media/image57_box.png" width="1703" height="855"/>
+          </svg>
+        </div>
+        <div class="logo"><img src="media/image58.png" alt="Euclidean Neural Networks"><a href="https://github.com/e3nn">https://github.com/e3nn</a></div>
+      </div>
+    </div>
+  </div>
+  <!-- notes: none -->
+  <script>
+  (() => {
+    const s = document.getElementById('s15'), g = s.querySelector('.s15-msg'), NS = 'http://www.w3.org/2000/svg';
+    // message arrows in image57 px (outer end, end at the central N atom)
+    const A = [[[447,404],[507,494]], [[420,545],[497,570]], [[527,627],[507,572]], [[622,477],[571,546]], [[535,378],[526,488]]];
+    const fly = (a, b, delay) => {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', 13); c.setAttribute('fill', '#14186b'); c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 3);
+      g.appendChild(c);
+      c.animate([{ transform: `translate(${a[0]}px,${a[1]}px)`, opacity: 0 }, { opacity: 1, offset: .15 },
+                 { opacity: 1, offset: .85 }, { transform: `translate(${b[0]}px,${b[1]}px)`, opacity: 0 }],
+                { duration: 900, delay, easing: 'ease-in-out', fill: 'both' }).onfinish = () => c.remove();
+    };
+    s.addEventListener('step', e => {
+      if (e.detail.dir <= 0 || document.body.classList.contains('no-anim') || !g.animate) return;
+      if (e.detail.step === 2) A.forEach(([o, i], k) => fly(o, i, 300 + k * 110));
+      if (e.detail.step === 4) A.forEach(([o, i], k) => fly(i, o, 300 + k * 110));
+    });
+  })();
+  </script>
+</section>

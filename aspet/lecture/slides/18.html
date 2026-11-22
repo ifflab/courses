@@ -1,0 +1,41 @@
+<!-- 18 · Charges + long-range physics -->
+<section class="slide s18" id="s18" data-steps="2">
+  <style>
+    .s18 .content > * { position:absolute; }
+    .s18 svg.pic { left:0; top:0; overflow:visible; }
+    .s18 .lab { transform:translate(-50%,-50%); line-height:1; white-space:nowrap; }
+    .s18 .eqc { left:1030px; width:350px; top:40px; text-align:center; font-size:34px; line-height:1.5; }
+    .s18 .eqc .m { font-size:24px; color:var(--muted); }
+    .s18 .ex { left:0; top:480px; width:1712px; }
+    .s18 .ex .label { margin-bottom:12px; }
+    .s18 .chips { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+    .s18 .chip { padding:16px 24px; font-size:22px; color:var(--muted); line-height:1.35; }
+    .s18 .chip b { display:block; font-family:var(--mono); font-weight:500; font-size:32px; color:var(--accent-2); margin-bottom:4px; }
+    .s18 .katex .accent { color:inherit; }
+  </style>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Charges and long-range physics</h2></header>
+  <div class="content">
+    <svg class="pic" width="1712" height="440" viewBox="0 0 1712 440">
+      <defs><marker id="s18-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#14186b"/></marker></defs>
+      <g transform="translate(0 -40) scale(.5)"><image href="media/image56.png" width="1274" height="764"/><rect x="1150" y="440" width="124" height="180" fill="var(--bg)"/></g>
+      <path d="M411,345 V292" stroke="var(--fg)" stroke-width="3.5" fill="none"/><polygon points="411,276 403,296 419,296" fill="var(--fg)"/>
+      <g class="f" data-f="1">
+        <g transform="translate(655 -40) scale(.5)"><image href="media/image57_base.png" width="1703" height="855"/><circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="5"/></g>
+        <g transform="translate(1757 -40) scale(-.5 .5)"><image href="media/image57_base.png" width="1703" height="855"/><circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="5"/></g>
+        <path d="M945,224 L1467,224" stroke="var(--fg)" stroke-width="4" fill="none"/>
+        <g class="q neg" transform="translate(920.5 224)"><circle r="14"/><path d="M-7 0H7"/></g><g class="q pos" transform="translate(935.5 266.5)"><circle r="14"/><path d="M-7 0H7M0 -7V7"/></g>
+        <g class="q neg" transform="translate(1491.5 224)"><circle r="14"/><path d="M-7 0H7"/></g><g class="q pos" transform="translate(1476.5 266.5)"><circle r="14"/><path d="M-7 0H7M0 -7V7"/></g>
+      </g>
+    </svg>
+    <div class="lab" style="left:607px;top:225px;font-size:60px;color:#14186b">$\boldsymbol{q}_i$</div>
+    <div class="lab" style="left:411px;top:372px;font-size:34px">$f_1,\ f_2,\ \dots\ f_n$</div>
+    <div class="eqc f" data-f="1">$E=E_\mathrm{local}+E_\mathrm{Coul}$<br>$E_\mathrm{Coul}=\sum_{i&lt;j}\dfrac{q_iq_j}{r_{ij}}$<br><span class="m">all pairs, no cutoff</span></div>
+    <div class="ex f" data-f="2"><div class="label">Examples</div><div class="chips">
+      <div class="card accent chip"><b>3G-HDNNP</b>Artrith, Morawietz, Behler, 2011</div>
+      <div class="card accent chip"><b>TensorMol</b>Yao et al., 2018</div>
+      <div class="card accent chip"><b>PhysNet</b>Unke, Meuwly, 2019</div>
+      <div class="card accent chip"><b>AIMNet2</b>Anstine, Zubatyuk, Isayev, 2025</div>
+    </div></div>
+  </div>
+  <div class="refs">Artrith et al., <i>Phys. Rev. B</i>, <b>2011</b>, 83, 153101; Yao et al., <i>Chem. Sci.</i>, <b>2018</b>, 9, 2261; Unke, Meuwly, <i>J. Chem. Theory Comput.</i>, <b>2019</b>, 15, 3678; Anstine et al., <i>Chem. Sci.</i>, <b>2025</b>, 16, 10228</div>
+</section>

@@ -1,0 +1,30 @@
+<!-- 16 · Learning representation from the structure: data efficiency -->
+<section class="slide s16" id="s16">
+  <style>
+    .s16 .wrap { display:grid; grid-template-columns: 1040px minmax(0,1fr); gap:64px; height:100%; align-items:center; }
+    .s16 .shots { display:flex; flex-direction:column; gap:70px; }
+    .s16 .shots img { width:1040px; border:1.5px solid var(--border); border-radius:12px; display:block; }
+    .s16 table.data { font-size:28px; width:100%; }
+    .s16 table.data td, .s16 table.data th { padding:10px 8px; }
+    .s16 table.data td:first-child { white-space:nowrap; }
+    .s16 table.data td:first-child { font-weight:600; }
+    .s16 table.data td.n { font-size:40px; font-family:var(--mono); font-weight:500; letter-spacing:-.02em; }
+    .s16 table.data th { text-transform:none; }
+    .s16 tr.hl td.n { color:var(--accent-2); }
+  </style>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Learning representation from the structure</h2></header>
+  <div class="content"><div class="wrap">
+    <div class="shots">
+      <img src="media/image59.png" alt="Batzner et al., E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials">
+      <img src="media/image60.png" alt="Batatia et al., MACE">
+    </div>
+    <div class="card" style="padding:24px 22px">
+      <table class="data">
+        <tr><th></th><th>structures</th><th>meV/Å</th></tr>
+        <tr><td>Symmetry functions</td><td class="n">1303</td><td class="n">120</td></tr>
+        <tr class="hl"><td>NequIP</td><td class="n">100</td><td class="n">123</td></tr>
+      </table>
+    </div>
+  </div></div>
+  <div class="refs">Batzner et al., <i>Nat. Commun.</i>, <b>2022</b>, 13, 1, 2453; Batatia et al., <i>Adv. NIPS</i>, <b>2022</b></div>
+</section>

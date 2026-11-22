@@ -1,0 +1,40 @@
+<!-- 24 · MM embedding -->
+<section class="slide s24" id="s24">
+  <style>
+    .s24 .diag { position:absolute; right:-20px; top:-30px; width:580px; height:527px; }
+    .s24 .paper { background:#fff; border:1.5px solid var(--border); border-radius:14px; padding:14px 18px; }
+    .s24 .paper img { display:block; }
+    .s24 .eq22 { position:absolute; left:0; top:470px; font-size:46px; display:flex; align-items:center; white-space:nowrap; }
+    .s24 .eq22 .t { position:relative; }
+    .s24 .eq22 .op { padding:0 .35em; }
+    .s24 .lab { position:absolute; left:50%; bottom:100%; transform:translateX(-50%); margin-bottom:40px; font-size:28px; font-weight:600; text-align:center; white-space:nowrap; }
+    .s24 .arr { position:absolute; left:50%; transform:translateX(-50%); }
+    .s24 .sum { position:absolute; left:50%; top:100%; transform:translateX(-50%); margin-top:44px; font-size:46px; display:flex; align-items:center; white-space:nowrap; }
+  </style>
+  <header><div class="kicker">02 · ML/MM · MM embedding</div><h2>MM embedding</h2></header>
+  <div class="content">
+    <svg class="diag" viewBox="-330 -300 660 600">
+      <g class="charges" data-r0="190" data-r1="300" data-n="34" data-seed="7" data-sy=".9"></g>
+      <path class="ml-blob" d="M-120,-40 C-110,-130 30,-150 110,-90 C170,-40 150,70 80,110 C10,150 -90,150 -125,90 C-140,60 -125,0 -120,-40 Z"/>
+      <text x="10" y="-55" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">1</tspan></text><text x="-62" y="5" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">2</tspan></text><text x="82" y="5" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">3</tspan></text><text x="10" y="5" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">4</tspan></text><text x="-62" y="65" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">5</tspan></text><text x="82" y="65" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">6</tspan></text><text x="10" y="65" text-anchor="middle" font-size="44" font-family="KaTeX_Math" font-style="italic" fill="var(--fg)">q<tspan font-size="28" dy="9">7</tspan></text>
+    </svg>
+    <ul style="font-size:40px; width:1100px; margin-top:20px">
+      <li>MM point charges are kept for the ML region</li>
+      <li>All the non-covalent interactions between MM and ML are treated at MM level</li>
+    </ul>
+    <div class="eq22">
+      <span>$E =$</span>&nbsp;
+      <span class="t">
+        <span class="lab">Replaced by a gas-phase MLP</span>
+        <svg class="arr" style="bottom:100%; margin-bottom:2px" width="30" height="34" viewBox="0 0 30 34"><path d="M15 2V28M6 20L15 30L24 20" fill="none" stroke="var(--fg)" stroke-width="3"/></svg>
+        $E_{QM(vac)}(\boldsymbol{R}_{QM})$
+      </span>
+      <span class="op">$+$</span>
+      <span class="t">$E^{emb}(\boldsymbol{R}_{QM},\boldsymbol{R}_{MM})$
+        <span class="f sum"><svg style="position:absolute; left:50%; bottom:100%; margin-bottom:-2px; transform:translateX(-50%)" width="30" height="34" viewBox="0 0 30 34"><path d="M15 32V6M6 14L15 4L24 14" fill="none" stroke="var(--fg)" stroke-width="3"/></svg>$\approx \displaystyle\sum_{i\in ML,\,j\in MM} \dfrac{q_i^{ML}\cdot q_j^{MM}}{r_{ij}}$</span>
+      </span>
+      <span class="op">$+$</span>
+      <span>$E_{MM}(\boldsymbol{R}_{MM})$</span>
+    </div>
+  </div>
+</section>
