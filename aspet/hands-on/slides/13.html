@@ -10,6 +10,7 @@
     .shw .card { padding: 20px 30px; }
     .shw .card h3 { margin: 0 0 12px; color: var(--fg); font-size: 30px; }
     .shw .send { font-size: 23px; color: var(--accent-2); }
+    .shw .hint { font-size: 23px; color: var(--muted); }
     .shw .card dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 22px; font-size: 25px; line-height: 1.3; align-items: baseline; }
     .shw .card dt .chip { font-size: 22px; }
     .shw .card dd { margin: 0; }
@@ -22,8 +23,9 @@
     <div class="cols">
       <div class="col">
         <div class="card">
-          <h3>Provided in <span class="mono">homework/</span></h3>
+          <h3>Provided in <span class="mono">emle-homework.tar.gz</span></h3>
           <dl>
+            <dt>unpack</dt><dd>inside <span class="mono">emle-workshop/</span> → <span class="mono">homework/</span></dd>
             <dt><span class="chip">qm/</span></dt><dd>100 DFT calculations of NH₃ + CH₃Cl</dd>
             <dt><span class="chip">box.prm7</span></dt><dd>topology: solute in 1495 TIP3P waters</dd>
             <dt><span class="chip">start/</span></dt><dd>37 relaxed structures, one per window</dd>
@@ -42,7 +44,7 @@
         <h3>Questions</h3>
         <ol>
           <li>What are $\Delta G^\ddagger$ and $\Delta G$ of the reaction? <span class="muted">(80 %)</span><br><span class="send">To send: model, scripts, npz files and final <span class="mono">pmf.dat</span></span></li>
-          <li>Obtain the gas-phase profile for the same reaction. How different is it, and why? <span class="muted">(20 %)</span><br><span class="send">To send: initial structures, the MD script, npz files and final <span class="mono">pmf.dat</span></span></li>
+          <li>Obtain the gas-phase profile for the same reaction. How different is it, and why? <span class="muted">(20 %)</span><br><span class="hint">Hint: keep the Cl–C–N angle ≥ 150° with a flat-bottom restraint (<span class="mono">CustomAngleForce</span>, 2000 kJ mol⁻¹ rad⁻²), else Cl⁻ migrates to the NH₃⁺ hydrogens</span><br><span class="send">To send: initial structures, the MD script, npz files and final <span class="mono">pmf.dat</span></span></li>
         </ol>
       </div>
     </div>
