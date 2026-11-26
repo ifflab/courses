@@ -1,11 +1,16 @@
 // Slide engine: 1920×1080 stage scaled to the window, build steps, keyboard/pointer control.
 // Slides may hook their own animations:
 //   slide.addEventListener('step', e => { e.detail.step, e.detail.dir })  // fired on every step change and on entering
+// <section class="slide" data-hidden>: skipped by sequential navigation, unnumbered, absent from the overview;
+//   reachable only by direct link (#N) or typing its number.
 (() => {
   const deck = document.getElementById('deck');
   if (location.search.includes('shot')) document.body.classList.add('no-anim');
   const slides = [...deck.querySelectorAll(':scope > section.slide')];
   const N = slides.length;
+  const isHidden = i => slides[i].hasAttribute('data-hidden');
+  const vis = slides.filter((s, i) => !isHidden(i));
+  const nextVis = (i, d) => { for (let j = i + d; j >= 0 && j < N; j += d) if (!isHidden(j)) return j; return -1; };
   let cur = 0, step = 0, typed = '';
 
   // collect steps per slide
@@ -27,7 +32,7 @@
   slides.forEach((s, i) => {
     const c = document.createElement('div');
     c.className = 'chrome';
-    c.innerHTML = `<span>${title}</span><span>${i + 1} / ${N}</span>`;
+    c.innerHTML = `<span>${title}</span><span>${isHidden(i) ? '' : `${vis.indexOf(s) + 1} / ${vis.length}`}</span>`;
     s.appendChild(c);
   });
   const prog = document.createElement('div'); prog.id = 'progress'; deck.appendChild(prog);
@@ -51,7 +56,7 @@
       f.classList.toggle('on', f.classList.contains('f') ? step >= a : true);
       f.classList.toggle('gone', step >= o);
     }
-    prog.style.width = `${(100 * (cur + 1)) / N}%`;
+    prog.style.width = `${isHidden(cur) ? 100 : (100 * (vis.indexOf(s) + 1)) / vis.length}%`;
     history.replaceState(null, '', `#${cur + 1}` + (step ? `.${step}` : ''));
     s.dispatchEvent(new CustomEvent('step', { detail: { step, dir } }));
   }
@@ -64,8 +69,8 @@
     render(dir);
     requestAnimationFrame(() => requestAnimationFrame(() => slides[cur].classList.remove('snap')));
   }
-  const next = () => step < slides[cur]._steps ? (step++, render(1)) : cur < N - 1 && go(cur + 1, 0, 1);
-  const prev = () => step > 0 ? (step--, render(-1)) : cur > 0 && go(cur - 1, 'end', -1);
+  const next = () => step < slides[cur]._steps ? (step++, render(1)) : nextVis(cur, 1) >= 0 && go(nextVis(cur, 1), 0, 1);
+  const prev = () => step > 0 ? (step--, render(-1)) : nextVis(cur, -1) >= 0 && go(nextVis(cur, -1), 'end', -1);
 
   function toggleOverview() {
     const on = document.body.classList.toggle('overview');
@@ -82,11 +87,11 @@
     if (blank.className && !['b', '.', 'w', 'B'].includes(k)) { blank.className = ''; }
     switch (k) {
       case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ': case 'Enter': case 'n':
-        if (e.shiftKey && k === 'ArrowRight') go(cur + 1); else next(); break;
+        if (e.shiftKey && k === 'ArrowRight') { if (nextVis(cur, 1) >= 0) go(nextVis(cur, 1)); } else next(); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace': case 'p':
-        if (e.shiftKey && k === 'ArrowLeft') go(cur - 1); else prev(); break;
-      case 'Home': go(0); break;
-      case 'End': go(N - 1, 'end'); break;
+        if (e.shiftKey && k === 'ArrowLeft') { if (nextVis(cur, -1) >= 0) go(nextVis(cur, -1)); } else prev(); break;
+      case 'Home': go(nextVis(-1, 1)); break;
+      case 'End': go(nextVis(N, -1), 'end'); break;
       case 'f':
         document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); break;
       case 'b': case 'B': case '.': blank.className = blank.className === 'black' ? '' : 'black'; break;
@@ -105,7 +110,7 @@
   addEventListener('resize', fit);
   const m = location.hash.match(/^#(\d+)(?:\.(\d+))?/);
   fit();
-  if (m) go(+m[1] - 1, +(m[2] || 0)); else go(0);
+  if (m) go(+m[1] - 1, +(m[2] || 0)); else go(nextVis(-1, 1));
 
   if (window.renderMathInElement) renderMathInElement(deck, {
     delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }, { left: '$', right: '$', display: false }],

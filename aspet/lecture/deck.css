@@ -155,6 +155,7 @@ body.overview #deck { transform: none !important; position: static; width: auto;
 body.overview { overflow: auto; }
 body.overview .slide { position: relative; opacity: 1; visibility: visible; zoom: .16; cursor: pointer; width: 1920px; height: 1080px; outline: 0 solid var(--accent); }
 body.overview .slide.active { outline-width: 24px; }
+body.overview .slide[data-hidden]:not(.active) { display: none; }
 body.overview .f { opacity: 1; transform: none; }
 
 /* print / PDF: one slide per page, all steps shown */
