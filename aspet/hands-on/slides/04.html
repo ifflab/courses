@@ -1,0 +1,46 @@
+<!-- 04 · Setup -->
+<section class="slide s04">
+  <style>
+    .s04 .content { display: grid; grid-template-columns: minmax(0, 1fr) 460px; gap: 50px; }
+    .s04 pre.term { font-size: 21px; line-height: 1.4; padding: 20px 30px; }
+    .s04 ul.tree li { grid-template-columns: 200px 1fr; }
+    .s04 .where { display: flex; gap: 12px; flex-wrap: nowrap; white-space: nowrap; margin-top: 20px; font-size: 22px; align-items: center; }
+    .s04 .fix { margin-top: 20px; padding: 14px 26px; }
+    .s04 .fix dl { margin: 10px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px 26px; font-size: 22px; line-height: 1.3; }
+    .s04 .fix dt { font-weight: 600; }
+    .s04 .fix dd { margin: 0; color: var(--muted); }
+  </style>
+  <header><div class="kicker">Step 0 · Setup</div><h2>Download and install (once)</h2></header>
+  <div class="content">
+    <div>
+      <pre class="term"><span class="c"># 1. get the files</span><span class="cmd">curl -O https://courses.ifflab.xyz/aspet/hands-on/emle-workshop.tar.gz</span><span class="cmd">tar xf emle-workshop.tar.gz</span><span class="cmd">cd emle-workshop</span>
+<span class="c"># 2. install pixi, then open a NEW terminal</span><span class="cmd">curl -fsSL https://pixi.sh/install.sh | bash</span>
+<span class="c"># 3. install the software (5 GB)</span><span class="cmd">pixi install</span><span class="cmd">pixi shell</span><span class="c"># every later command runs inside this shell</span></pre>
+      <div class="where">
+        <span class="label">Runs on</span><span class="chip">Linux</span><span class="chip">macOS (Apple silicon)</span><span class="chip">Windows → WSL</span><span class="chip">CINECA Leonardo login node</span>
+      </div>
+      <div class="card fix">
+        <div class="label">If something fails</div>
+        <dl>
+          <dt><span class="mono">pixi: command not found</span></dt><dd>open a new terminal after installing pixi</dd>
+          <dt><span class="mono">ModuleNotFoundError</span></dt><dd>run <span class="mono">pixi shell</span> in <span class="mono">emle-workshop/</span> first</dd>
+          <dt>Leonardo: run killed</dt><dd>CPU-time limit: submit to the <span class="mono">lrd_all_serial</span> partition</dd>
+          <dt>Warnings (CUDA, JAX, torchani)</dt><dd>harmless, everything runs on CPU</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="f">
+      <div class="label" style="margin-bottom:14px">emle-workshop/</div>
+      <ul class="tree">
+        <li><span>pixi.toml</span><span>software list</span></li>
+        <li><span>qm/</span><span>100 DFT calculations</span></li>
+        <li><span>box.prm7</span><span>system topology</span></li>
+        <li><span>start/</span><span>29 starting structures</span></li>
+        <li><span>us_window.py</span><span>one umbrella window</span></li>
+        <li><span>pmf.py</span><span>free-energy profile</span></li>
+        <li><span>homework/</span><span>Menshutkin reaction</span></li>
+        <li><span>README.md</span><span>these instructions</span></li>
+      </ul>
+    </div>
+  </div>
+</section>

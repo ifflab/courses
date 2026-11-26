@@ -1,0 +1,38 @@
+/* Hands-on additions to ../lecture/deck.css: terminal blocks, step badges, file chips. */
+
+/* terminal: one command per .cmd line; $ prompt drawn by CSS so selecting text gets only the command */
+pre.term { position: relative; margin: 0; font-family: var(--mono); font-size: 30px; line-height: 1.55;
+  background: oklch(0.24 0.02 260); color: oklch(0.95 0.01 85); border-radius: 18px; padding: 26px 34px; white-space: pre; }
+pre.term .cmd { display: block; }
+pre.term .cmd::before { content: "$ "; color: oklch(0.75 0.12 200); user-select: none; }
+pre.term .c { display: block; color: oklch(0.68 0.02 260); user-select: none; }   /* comment line */
+pre.term .o { display: block; color: oklch(0.80 0.10 150); user-select: none; }   /* expected output */
+pre.term .cmd .c, pre.term .cmd .hl { display: inline; }
+pre.term .hl { color: oklch(0.85 0.13 90); }
+
+/* python excerpt on paper */
+pre.py { margin: 0; font-family: var(--mono); font-size: 25px; line-height: 1.5; background: var(--card);
+  border: 1.5px solid var(--border); border-radius: 18px; padding: 22px 30px; white-space: pre; color: var(--fg); }
+pre.py .k { color: var(--accent-2); font-weight: 600; }
+pre.py .s { color: oklch(0.50 0.13 150); }
+pre.py .n { color: var(--muted); }
+pre.py .ml { background: var(--ml-bg); border-radius: 6px; box-shadow: 0 0 0 4px var(--ml-bg); }
+
+/* step badge in the kicker row and in the workflow */
+.step { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--accent);
+  color: #fff; font: 600 32px var(--mono); flex: none; }
+.chip { display: inline-block; font-family: var(--mono); font-size: 24px; padding: 4px 14px; border-radius: 10px;
+  background: var(--mm-bg); border: 1.5px solid color-mix(in oklch, var(--mm) 45%, transparent); color: var(--fg); white-space: nowrap; }
+.chip.ml { background: var(--ml-bg); border-color: color-mix(in oklch, var(--ml) 45%, transparent); }
+.time { font-family: var(--mono); font-size: 22px; color: var(--muted); letter-spacing: .04em; }
+.time::before { content: "⏱ "; }
+
+/* tree of files */
+ul.tree { list-style: none; padding: 0; font-family: var(--mono); font-size: 26px; line-height: 1.5; }
+ul.tree li { margin: 0; display: grid; grid-template-columns: 300px 1fr; gap: 14px; }
+ul.tree li span:last-child { font-family: var(--sans); color: var(--muted); }
+
+svg.plot text, svg.mol text { font-family: var(--sans); }
+pre.term .cmd.cont::before { content: "  "; }  /* continuation line: no prompt */
+/* file tab above a code block */
+.fname { display: inline-block; font-family: var(--mono); font-size: 19px; background: oklch(0.24 0.02 260); color: #fff; padding: 5px 16px; border-radius: 10px 10px 0 0; }

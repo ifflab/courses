@@ -1,0 +1,21 @@
+<!-- 11 · PMF with WHAM -->
+<section class="slide s09">
+  <style>
+    .s09 .content { display: grid; grid-template-columns: 990px minmax(0, 1fr); gap: 40px; align-items: center; }
+    .s09 .col { display: flex; flex-direction: column; gap: 22px; }
+    .s09 pre.term { font-size: 24px; }
+    .s09 pre.py { font-size: 14px; line-height: 1.45; padding: 16px 22px; }
+    .s09 .plot svg { width: 100%; height: auto; display: block; }
+    .s09 .res { font-size: 28px; margin-top: 14px; text-align: center; }
+  </style>
+  <header><div class="kicker">Step 4 · Analysis</div><h2>Combine the windows (WHAM) → F(ξ)</h2></header>
+  <div class="content">
+    <div class="col">
+      <pre class="term"><span class="cmd">python pmf.py us/*.npz</span><!--include figs/pmf_out.html--></pre>
+      <div class="label f">pmf.py: one histogram per window, then the WHAM iterations</div>
+      <pre class="py f" data-f="1"><!--include figs/wham.html--></pre>
+      <div class="callout small f">Symmetric reaction: how close is the reaction free energy to 0, and your profile to its mirror image?</div>
+    </div>
+    <div class="plot"><!--include figs/pmf.svg--><div class="res">writes <span class="chip">pmf.png</span> <span class="chip">pmf.dat</span></div></div>
+  </div>
+</section>

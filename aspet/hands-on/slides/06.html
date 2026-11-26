@@ -1,0 +1,26 @@
+<!-- 05 · Training set -->
+<section class="slide s05">
+  <style>
+    .s05 .content { display: flex; flex-direction: column; gap: 50px; justify-content: center; padding-bottom: 60px; }
+    .s05 .pipe { display: flex; align-items: center; gap: 28px; justify-content: center; }
+    .s05 .box { text-align: center; }
+    .s05 .box .card { padding: 20px 26px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+    .s05 .box .what { font-size: 25px; color: var(--muted); line-height: 1.3; }
+    .s05 .arr { font-size: 52px; color: var(--muted); }
+    .s05 .plus { font-size: 46px; color: var(--muted); }
+    .s05 .x100 { font-family: var(--mono); font-size: 28px; color: var(--accent-2); }
+  </style>
+  <header><div class="kicker">Step 1 · Training set</div><h2>DFT reference data → one extXYZ file</h2></header>
+  <div class="content">
+    <div class="pipe">
+      <div class="box"><div class="card"><span class="chip">N.vac.orca</span><div class="what">ORCA output<br>polarisability $\boldsymbol{\alpha}$</div></div></div>
+      <span class="plus">+</span>
+      <div class="box"><div class="card"><span class="chip">N.h5</span><div class="what">MBIS partitioning<br>charges $q_i$, widths $s_i$</div></div></div>
+      <span class="x100">× 100</span>
+      <span class="arr">→</span>
+      <div class="box f"><div class="card accent"><span class="chip ml">sn2.extxyz</span><div class="what">100 frames: positions,<br>$q_i$, $s_i$, $\boldsymbol{\alpha}$, energy</div></div></div>
+    </div>
+    <pre class="term"><span class="cmd">cd qm</span><span class="cmd">tar cf ../orca.tar *</span><span class="cmd">cd ..</span><span class="cmd">tarball-to-extxyz orca.tar -o sn2.extxyz</span><span class="o">Output file: sn2.extxyz</span></pre>
+    <div class="callout small f">Keep the names <span class="mono">0, 1, 2, …</span> in <span class="mono">qm/</span>: no leading zeros.</div>
+  </div>
+</section>

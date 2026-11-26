@@ -1,0 +1,43 @@
+<!-- 08 · Train EMLE: log, IVM, the two trainings -->
+<section class="slide s08t">
+  <style>
+    .s08t .content { display: grid; grid-template-columns: 820px minmax(0, 1fr); gap: 44px; align-items: start; }
+    .s08t pre.term { font-size: 17.5px; line-height: 1.45; padding: 22px 26px; }
+    .s08t pre.term .cmd { font-size: 24px; margin-bottom: 10px; }
+    .s08t .seg { display: block; border-radius: 8px; margin: 0 -10px; padding: 2px 10px; transition: background .3s, color .3s; color: oklch(0.80 0.02 260); }
+    .s08t .seg + .seg { margin-top: 8px; }
+    .s08t[data-step="1"] .seg.s1, .s08t[data-step="2"] .seg.s2, .s08t[data-step="3"] .seg.s3 { background: oklch(0.38 0.07 200); color: #fff; }
+    .s08t .cards { display: flex; flex-direction: column; gap: 18px; }
+    .s08t .card { padding: 18px 24px; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 4px 16px; align-items: start; }
+    .s08t .card h3, .s08t .card .what { grid-column: 2; }
+    .s08t .card .step { width: 46px; height: 46px; font-size: 24px; grid-row: 1 / span 2; grid-column: 1; }
+    .s08t .card h3 { margin: 4px 0 0; color: var(--fg); font-size: 26px; white-space: nowrap; }
+    .s08t .card .what { font-size: 23px; line-height: 1.35; color: var(--fg); }
+    .s08t .card .what .muted { font-size: 22px; }
+    .s08t .card svg { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+    .s08t .out { font-size: 24px; display: flex; gap: 14px; align-items: center; justify-content: flex-end; }
+  </style>
+  <header><div class="kicker">Step 2 · Train EMLE</div><h2>Fit the embedding model</h2></header>
+  <div class="content">
+    <div>
+      <pre class="term"><span class="cmd">emle-train --extxyz sn2.extxyz sn2_model.mat</span><!--include figs/train_log.html--></pre>
+    </div>
+    <div class="cards">
+      <div class="card f">
+        <span class="step">1</span><h3>IVM: pick reference environments</h3>
+        <div class="what">The most distinct atomic environments (H 10, C 4, Cl 54) become the basis of a Gaussian-process model of atomic parameters.<br><span class="muted">Widths $s_i$ are fitted right away.</span></div>
+      </div>
+      <div class="card f">
+        <span class="step">2</span><h3>Training 1 · charges</h3>
+        <div class="what">Electronegativities $\chi$ (per reference) + $a_\text{QEq}$ so that QEq charges match MBIS $q_i$</div>
+        <!--include figs/train_q.svg-->
+      </div>
+      <div class="card f">
+        <span class="step">3</span><h3>Training 2 · polarisability</h3>
+        <div class="what">Fit the ORCA $\boldsymbol{\alpha}$: first $a_\text{Thole}$, $k_Z$ (per element), then a scale factor per reference<br><span class="muted">Loss ≈ RMSE²; it can jump up before settling.</span></div>
+        <!--include figs/train_a.svg-->
+      </div>
+      <div class="out f" data-f="3"><span class="muted">gives</span><span class="chip ml">sn2_model.mat</span><span class="muted">→ us_window.py</span></div>
+    </div>
+  </div>
+</section>

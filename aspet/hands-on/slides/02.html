@@ -1,0 +1,26 @@
+<!-- 02 · The system -->
+<section class="slide s02">
+  <style>
+    .s02 .content { display: flex; flex-direction: column; gap: 30px; }
+    .s02 svg.box { width: 440px; height: auto; display: block; }
+    .s02 .rx { display: flex; justify-content: center; }
+    .s02 .low { display: flex; gap: 80px; align-items: center; padding-left: 60px; }
+    .s02 .eqn { font-size: 40px; }
+    .s02 .terms { display: grid; grid-template-columns: auto 1fr; gap: 18px 26px; align-items: center; font-size: 30px; margin-top: 26px; }
+  </style>
+  <header><div class="kicker">Goal</div><h2>Free-energy profile F(ξ) of a symmetric S<sub style="font-size:.6em">N</sub>2 reaction</h2></header>
+  <div class="content">
+    <div class="rx"><!--include figs/reaction.svg--></div>
+    <div class="low">
+      <div style="flex:none" class="f"><!--include figs/box.svg--></div>
+      <div class="grow f">
+        <div class="eqn">$E = E^{\text{ML}}_{\text{vac}} + E^{\text{ML/MM}}_{\text{emb}} + E^{\text{MM}}$</div>
+        <div class="terms">
+          <span class="chip ml">AIMNet2</span><span>gas-phase energy of Cl⁻ + CH₃Cl <span class="muted">(pretrained)</span></span>
+          <span class="chip ml">EMLE</span><span>polarisable embedding <b>— you train it</b></span>
+          <span class="chip">TIP3P</span><span>1494 waters</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

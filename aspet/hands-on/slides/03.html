@@ -1,0 +1,53 @@
+<!-- 03 · Workflow: what each step does and what it gives -->
+<section class="slide s03">
+  <style>
+    .s03 .content { display: flex; flex-direction: column; justify-content: center; padding-bottom: 30px; }
+    .s03 .flow { display: flex; flex-direction: column; }
+    .s03 .row { display: grid; grid-template-columns: 64px 260px minmax(0, 1fr) 290px 480px; column-gap: 30px; align-items: stretch; }
+    .s03 .head { font-family: var(--mono); font-size: 18px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-bottom: 14px; }
+    .s03 .cell { padding: 20px 0; border-top: 2px solid var(--border); height: 100%; display: flex; align-items: center; }
+    .s03 .cell.n { border-top: 0; justify-content: center; position: relative; }
+    .s03 .row:nth-child(n+3) .cell.n::before { content: ""; position: absolute; top: -26px; height: 52px; left: 30px; width: 4px; background: var(--border); }
+    .s03 h3 { margin: 0; color: var(--fg); font-size: 32px; }
+    .s03 .what { font-size: 26px; line-height: 1.3; color: var(--fg); }
+    .s03 .cmdl { font-family: var(--mono); font-size: 23px; color: var(--accent-2); background: var(--accent-bg); border-radius: 10px; padding: 6px 12px; }
+    .s03 .get { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: 24px; line-height: 1.25; }
+    .s03 .get .muted { font-size: 23px; }
+  </style>
+  <header><div class="kicker">Workflow</div><h2>Steps</h2></header>
+  <div class="content">
+    <div class="flow">
+      <div class="row"><span></span><span class="head"></span><span class="head">what you do</span><span class="head">command</span><span class="head">what you get</span></div>
+      <div class="row">
+        <div class="cell n"><span class="step">0</span></div><div class="cell"><h3>Setup</h3></div>
+        <div class="cell what"><div>Download the workshop files; install Python, OpenMM, Sire, EMLE and AIMNet2 in a local environment</div></div>
+        <div class="cell"><span class="cmdl">pixi install</span></div>
+        <div class="cell get"><span>a shell with all the software</span><span class="muted">no root needed, nothing outside the folder</span></div>
+      </div>
+      <div class="row f">
+        <div class="cell n"><span class="step">1</span></div><div class="cell"><h3>Training set</h3></div>
+        <div class="cell what"><div>Collect the precomputed DFT results for 100 geometries (<span class="mono">qm/</span>) into one file</div></div>
+        <div class="cell"><span class="cmdl">tarball-to-extxyz</span></div>
+        <div class="cell get"><span class="chip ml">sn2.extxyz</span><span class="muted">geometries + DFT charges and polarisabilities</span></div>
+      </div>
+      <div class="row f">
+        <div class="cell n"><span class="step">2</span></div><div class="cell"><h3>Train EMLE</h3></div>
+        <div class="cell what"><div>Fit the embedding model so that it reproduces the DFT charges and polarisabilities</div></div>
+        <div class="cell"><span class="cmdl">emle-train</span></div>
+        <div class="cell get"><span class="chip ml">sn2_model.mat</span><span class="muted">your EMLE model</span></div>
+      </div>
+      <div class="row f">
+        <div class="cell n"><span class="step">3</span></div><div class="cell"><h3>Umbrella MD</h3></div>
+        <div class="cell what"><div>Run 29 ML/MM simulations in water, each restrained around a different value of ξ</div></div>
+        <div class="cell"><span class="cmdl">us_window.py</span></div>
+        <div class="cell get"><span class="chip">us/win_NN.npz</span><span class="muted">the ξ values sampled in each window</span></div>
+      </div>
+      <div class="row f">
+        <div class="cell n"><span class="step">4</span></div><div class="cell"><h3>PMF</h3></div>
+        <div class="cell what"><div>Combine all windows (WHAM) into one free-energy profile</div></div>
+        <div class="cell"><span class="cmdl">pmf.py</span></div>
+        <div class="cell get"><span class="chip">pmf.png</span><span class="muted">F(ξ) and the reaction barrier</span></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+<svg class="mol" viewBox="0 0 720 300" width="720" height="300">
+<defs><marker id="xi-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--accent-2)"/></marker></defs><path d="M250.0,175.0L275.9,92.6" stroke="#000" stroke-width="4.0"/>
+<path d="M250.0,175.0L244.9,216.2" stroke="#000" stroke-width="4.0"/>
+<path d="M250.0,175.0L307.0,216.2" stroke="#000" stroke-width="4.0"/>
+<path d="M250.0,175.0L120.3,175.0" stroke="#000" stroke-width="4.0"/>
+<circle cx="480.5" cy="175.0" r="24.2" fill="#A9E9AB" stroke="#000" stroke-width="2.0"/>
+<circle cx="244.9" cy="216.2" r="12.6" fill="#FFFFFF" stroke="#000" stroke-width="2.0"/>
+<circle cx="275.9" cy="92.6" r="13.4" fill="#FFFFFF" stroke="#000" stroke-width="2.0"/>
+<circle cx="250.0" cy="175.0" r="20.8" fill="#B4B4B4" stroke="#000" stroke-width="2.0"/>
+<circle cx="307.0" cy="216.2" r="14.3" fill="#FFFFFF" stroke="#000" stroke-width="2.0"/>
+<circle cx="120.3" cy="175.0" r="28.9" fill="#A9E9AB" stroke="#000" stroke-width="2.0"/>
+<text x="120.3" y="265.0" text-anchor="middle" font-size="24" fill="var(--fg)" font-family="var(--mono)">Cl₁ (4)</text>
+<text x="250.0" y="265.0" text-anchor="middle" font-size="24" fill="var(--fg)" font-family="var(--mono)">C (0)</text>
+<text x="480.5" y="265.0" text-anchor="middle" font-size="24" fill="var(--fg)" font-family="var(--mono)">Cl₂ (5)</text>
+<path d="M120.3,46H250.0" stroke="var(--accent-2)" stroke-width="2.5" marker-start="url(#xi-ar)" marker-end="url(#xi-ar)"/><text x="185.2" y="34" text-anchor="middle" font-size="26" fill="var(--accent-2)">d₁</text>
+<path d="M250.0,46H480.5" stroke="var(--accent-2)" stroke-width="2.5" marker-start="url(#xi-ar)" marker-end="url(#xi-ar)"/><text x="365.3" y="34" text-anchor="middle" font-size="26" fill="var(--accent-2)">d₂</text>
+<text x="710" y="288" text-anchor="end" font-size="28" fill="var(--accent-2)">ξ = d₁ − d₂</text>
+</svg>

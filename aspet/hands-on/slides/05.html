@@ -1,0 +1,105 @@
+<!-- 05 · Where the training data come from (precomputed) -->
+<section class="slide s05a">
+  <style>
+    .s05a .content { display: flex; flex-direction: column; gap: 46px; justify-content: center; padding-bottom: 40px; }
+    .s05a .pipe { display: grid; grid-template-columns: 1fr auto 1fr auto 1.15fr auto 1.15fr; align-items: stretch; gap: 0 18px; }
+    .s05a .arr { align-self: center; font-size: 48px; color: var(--muted); }
+    .s05a .card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 26px 22px; }
+    .s05a .ico { height: 130px; display: grid; place-items: center; }
+    .s05a .ico img { height: 120px; }
+    .s05a .mol3d { width: 260px; height: 130px; position: relative; }
+    .s05a .ico img.orca { border-radius: 22px; }
+    .s05a .card h3 { margin: 0; color: var(--fg); font-size: 30px; }
+    .s05a .what { font-size: 25px; color: var(--muted); line-height: 1.3; }
+    .s05a .snips { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .s05a pre.py { font-size: 23px; }
+  </style>
+  <header><div class="kicker">Step 1 · Training set</div><h2>Where the DFT data come from <span class="pill">precomputed</span></h2></header>
+  <div class="content">
+    <div class="pipe">
+      <div class="card">
+        <div class="ico"><div class="mol3d" id="s05a-mol"></div></div>
+        <h3>AIMNet2 MD</h3><div class="what">gas phase<br>Umbrella Sampling</div>
+      </div>
+      <span class="arr f" data-f="1">→</span>
+      <div class="card f" data-f="1">
+        <div class="ico"><svg viewBox="0 0 200 110" width="210" height="116" id="s05a-dots"></svg></div>
+        <h3>100 geometries</h3><div class="what">most diverse,<br>uniform along the RC</div>
+      </div>
+      <span class="arr f" data-f="2">→</span>
+      <div class="card f" data-f="2">
+        <div class="ico"><img class="orca" src="media/orca.png" alt="ORCA"></div>
+        <h3>ORCA 6</h3><div class="what">ωB97M-D3BJ/def2-TZVPP<br>+ polarisability $\boldsymbol{\alpha}$</div>
+        <span class="chip">N.vac.orca</span>
+      </div>
+      <span class="arr f" data-f="3">→</span>
+      <div class="card f" data-f="3">
+        <div class="ico"><img src="media/horton.svg" alt="HORTON"></div>
+        <h3>HORTON</h3><div class="what">MBIS partitioning of the density<br>charges $q_i$, widths $s_i$</div>
+        <span class="chip">N.h5</span>
+      </div>
+    </div>
+    <div class="snips f" data-f="4">
+<pre class="py"><span class="n"># N.inp — ORCA input</span>
+<span class="k">! wB97M-D3BJ def2-TZVPP TightSCF DEFGRID3</span>
+%elprop
+  Polar 1      <span class="n"># polarisability α</span>
+end
+* xyz -1 1  <span class="n">…  *</span></pre>
+<pre class="py"><span class="n"># density → molden file → MBIS</span>
+<span class="k">orca_2mkl</span> N -molden
+<span class="k">horton-wpart.py</span> N.molden.input N.h5 mbis
+    </div>
+  </div>
+  <script>
+    (() => {  // frames scattered along ξ (x); per ξ bin, farthest-point (MaxMin) picks; picks drawn on top
+      const g = document.getElementById('s05a-dots'); let s = 11;
+      const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+      const gauss = () => Math.sqrt(-2 * Math.log(r() + 1e-9)) * Math.cos(2 * Math.PI * r());
+      const pts = [];
+      for (let i = 0; i < 170; i++) pts.push([12 + 176 * r(), Math.min(100, Math.max(10, 55 + 17 * gauss()))]);
+      const nb = 5, x0 = 12, w = 176 / nb, pick = 3;
+      let h = '', on = [];
+      for (let b = 1; b < nb; b++) h += `<path d="M${x0 + b * w},6V104" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+      for (let b = 0; b < nb; b++) {
+        const inb = pts.filter(p => p[0] >= x0 + b * w && p[0] < x0 + (b + 1) * w);
+        const cx = inb.reduce((a, p) => a + p[0], 0) / inb.length, cy = inb.reduce((a, p) => a + p[1], 0) / inb.length;
+        const d = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1]);
+        const sel = [inb.reduce((a, p) => d(p, [cx, cy]) > d(a, [cx, cy]) ? p : a)];   // start: farthest from the bin centre
+        while (sel.length < pick) sel.push(inb.reduce((a, p) => Math.min(...sel.map(q => d(p, q))) > Math.min(...sel.map(q => d(a, q))) ? p : a));
+        on.push(...sel);
+      }
+      for (const p of pts) if (!on.includes(p)) h += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.2" fill="var(--border)"/>`;
+      for (const p of on) h += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="5.5" fill="var(--accent)" stroke="var(--bg)" stroke-width="1.5"/>`;
+      g.innerHTML = h;
+    })();
+  </script>
+  <script src="figs/solute_xyz.js"></script>
+  <script>
+    // one gas-phase geometry of the training set, same look as the 3D box view (VMD colours), transparent background
+    addEventListener('DOMContentLoaded', () => {
+      const el = document.getElementById('s05a-mol');
+      if (!window.$3Dmol || !window.SOLUTE_XYZ) return;
+      // 3Dmol renders via an OffscreenCanvas when available, and that path loses transparency: hide it while creating this viewer
+      const OC = window.OffscreenCanvas; window.OffscreenCanvas = undefined;
+      const v = $3Dmol.createViewer(el, { backgroundColor: 'white', backgroundAlpha: 0, antialias: true });
+      window.OffscreenCanvas = OC;
+      const vmd = { C: '#40bfbf', H: '#ffffff', Cl: '#33cc33' };
+      v.addModel(SOLUTE_XYZ, 'xyz');
+      v.setStyle({}, { sphere: { scale: 0.32, colorscheme: { prop: 'elem', map: vmd } } });
+      const at = v.selectedAtoms({}), C = at.find(a => a.elem === 'C');
+      const half = (a, b, opacity) => {       // bond in two halves, each in its atom's colour
+        const m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, z: (a.z + b.z) / 2 };
+        for (const [p, q, c] of [[a, m, a], [m, b, b]])
+          v.addCylinder({ start: { x: p.x, y: p.y, z: p.z }, end: { x: q.x, y: q.y, z: q.z }, radius: 0.16, color: vmd[c.elem], opacity, fromCap: 1, toCap: 1 });
+      };
+      for (const a of at) {
+        if (a === C) continue;
+        const d = Math.hypot(a.x - C.x, a.y - C.y, a.z - C.z);
+        if (d < 2.0) half(C, a, 1); else if (d < 2.6) half(C, a, 0.5);   // covalent / partial (TS-like) C-X bond
+      }
+      v.setViewStyle({ style: 'outline', color: 'black', width: 0.04 });   // dark rim so white H reads on the light card
+      v.zoomTo(); v.zoom(2.2); v.render();
+    });
+  </script>
+</section>

@@ -1,0 +1,21 @@
+<span class="n"># Reaction coordinate: atoms C (0), Cl1 (4), Cl2 (5)</span>
+xi = mm.CustomCompoundBondForce(3, <span class="s">&quot;distance(p1,p2)-distance(p1,p3)&quot;</span>)
+xi.addBond([0, 4, 5])
+
+<span class="n"># Window centre: xi0 = -1.4, -1.3, ..., +1.4 A</span>
+xi0_A = -1.4 + 0.1 * win
+xi0 = xi0_A * u.angstrom
+
+<span class="n"># Umbrella on xi and walls on both C-Cl</span>
+umbrella = mm.CustomCVForce(<span class="s">&quot;0.5*k*(xi-xi0)^2&quot;</span>)
+umbrella.addCollectiveVariable(<span class="s">&quot;xi&quot;</span>, xi)
+umbrella.addGlobalParameter(<span class="s">&quot;k&quot;</span>, K_US)
+umbrella.addGlobalParameter(<span class="s">&quot;xi0&quot;</span>, xi0)
+wall = mm.CustomBondForce(<span class="s">&quot;step(r-r_wall)*0.5*k_wall*(r-r_wall)^2&quot;</span>)
+wall.addGlobalParameter(<span class="s">&quot;k_wall&quot;</span>, K_WALL)
+wall.addGlobalParameter(<span class="s">&quot;r_wall&quot;</span>, R_WALL)
+wall.addBond(0, 4)
+wall.addBond(0, 5)
+context.getSystem().addForce(umbrella)
+context.getSystem().addForce(wall)
+context.reinitialize(preserveState=<span class="k">True</span>)

@@ -1,0 +1,20 @@
+<span class="k">import</span> os
+<span class="k">import</span> sys
+<span class="k">import</span> numpy as np
+<span class="k">import</span> openmm as mm
+<span class="k">import</span> openmm.unit as u
+<span class="k">import</span> sire as sr
+<span class="k">from</span> emle.calculator <span class="k">import</span> EMLECalculator
+
+K_US = 300 * u.kilocalorie_per_mole / u.angstrom**2     <span class="n"># umbrella force constant</span>
+K_WALL = 600 * u.kilocalorie_per_mole / u.angstrom**2   <span class="n"># wall force constant</span>
+R_WALL = 3.0 * u.angstrom                               <span class="n"># walls keep both C-Cl distances below this</span>
+T = 300 * u.kelvin
+
+win = int(sys.argv[1])                                  <span class="n"># window index, 0 ... 28</span>
+
+<span class="n"># Solute (molecule 0) with AIMNet2 + EMLE, water with TIP3P, starting from the pre-relaxed structure</span>
+mols = sr.load(<span class="s">&quot;box.prm7&quot;</span>, <span class="s">f&quot;start/win_{win:02d}.rst7&quot;</span>)
+calc = EMLECalculator(model=<span class="s">&quot;sn2_model.mat&quot;</span>, backend=<span class="s">&quot;aimnet2&quot;</span>, alpha_mode=<span class="s">&quot;flexible&quot;</span>, qm_charge=-1)
+qm_mols, engine = sr.qm.emle(mols, mols[0], calc, cutoff=<span class="s">&quot;12A&quot;</span>)
+context = qm_mols.dynamics(temperature=<span class="s">&quot;300K&quot;</span>, qm_engine=engine, platform=<span class="s">&quot;CPU&quot;</span>).context()

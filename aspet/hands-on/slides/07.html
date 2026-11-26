@@ -1,0 +1,38 @@
+<!-- 07 · What is in one extXYZ frame -->
+<section class="slide s07x">
+  <style>
+    .s07x .content { display: flex; flex-direction: column; justify-content: center; gap: 34px; padding-bottom: 30px; }
+    /* the file itself = paper card on the right; explanations sit outside it, on the left */
+    .s07x .frame { display: flex; flex-direction: column; }
+    .s07x .fname { margin-left: 230px; align-self: flex-start; font-family: var(--mono); font-size: 20px; background: oklch(0.24 0.02 260); color: #fff; padding: 6px 18px; border-radius: 10px 10px 0 0; }
+    .s07x .xl { display: grid; grid-template-columns: 230px minmax(0, 1fr); align-items: stretch; }
+    .s07x .xl > pre { background: var(--card); border: 1.5px solid var(--border); border-top: 0; border-bottom: 0; padding: 10px 28px; }
+    .s07x .xl:first-of-type > pre { border-top: 1.5px solid var(--border); border-top-right-radius: 18px; padding-top: 20px; }
+    .s07x .xl:nth-last-child(2) > pre { border-bottom: 1.5px solid var(--border); border-radius: 0 0 18px 18px; padding-bottom: 20px; }
+    .s07x .tag { font-family: var(--sans); font-size: 24px; font-style: italic; color: var(--accent-2); text-align: right; line-height: 1.25;
+      padding: 10px 18px 10px 0; margin: 6px 22px 6px 0; border-right: 4px solid var(--accent); display: flex; align-items: center; justify-content: flex-end; }
+    .s07x pre.xyz { margin: 0; font-family: var(--mono); font-size: 18px; line-height: 1.5; white-space: pre; color: var(--fg); }
+    .s07x pre.xyz.wrap { white-space: pre-wrap; }
+    .s07x .xl.colrow > pre { background: none; border: 0; padding: 4px 28px 0; }
+    .s07x .colh, .s07x .colh span { color: var(--accent-2) !important; font-style: italic; }
+    .s07x .sp { font-weight: 600; }
+    .s07x .pos { color: var(--muted); }
+    .s07x .q { color: var(--accent-2); }
+    .s07x .mu { color: oklch(0.50 0.15 300); }
+    .s07x .s { color: oklch(0.55 0.14 50); }
+    .s07x .meta { color: var(--muted); }
+    .s07x .mol { background: var(--hl); border-radius: 4px; box-shadow: 0 0 0 2px var(--hl); }
+    .s07x .leg { display: flex; flex-wrap: wrap; gap: 14px 40px; font-size: 26px; justify-content: center; }
+    .s07x .leg b { font-family: var(--mono); font-weight: 500; }
+  </style>
+  <header><div class="kicker">Step 1 · Training set</div><h2>One frame of sn2.extxyz</h2></header>
+  <div class="content">
+    <div class="frame"><span class="fname">sn2.extxyz</span><!--include figs/extxyz.html--></div>
+    <div class="leg">
+      <span><span class="mol">molecule</span>: energy (eV), charge, polarisability <b>α</b> (bohr³)</span>
+      <span><b class="q">q = q_core + q_val</b> MBIS charges</span>
+      <span><b class="mu">μ</b> atomic dipoles</span>
+      <span><b class="s">s</b> valence widths</span>
+    </div>
+  </div>
+</section>

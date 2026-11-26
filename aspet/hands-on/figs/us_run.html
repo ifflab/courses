@@ -1,0 +1,11 @@
+<span class="n"># Run 2 ps, saving xi every 10 fs</span>
+context.setVelocitiesToTemperature(T)
+xi_values = []
+<span class="k">for</span> step <span class="k">in</span> range(200):
+    context.getIntegrator().step(10)
+    xi_values.append(umbrella.getCollectiveVariableValues(context)[0])   <span class="n"># nm</span>
+xi_values = (np.array(xi_values) * u.nanometer).value_in_unit(u.angstrom)
+
+os.makedirs(<span class="s">&quot;us&quot;</span>, exist_ok=<span class="k">True</span>)
+k_A = K_US.value_in_unit(u.kilocalorie_per_mole / u.angstrom**2)
+np.savez(<span class="s">f&quot;us/win_{win:02d}.npz&quot;</span>, xi=xi_values, xi0=xi0_A, k=k_A)    <span class="n"># A, A, kcal/mol/A^2</span>
