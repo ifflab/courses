@@ -1,26 +1,18 @@
-<!-- 03 · Enzymatic catalysis -->
-<section class="slide s03" id="s03">
+<!-- 03 · Overview -->
+<section class="slide overview-slide">
   <style>
-    .s03 .g { display: grid; grid-template-columns: 700px 1fr; grid-template-rows: 1fr 1fr; gap: 20px 60px; height: 100%; }
-    .s03 figure { justify-content: flex-start; min-height: 0; }
-    .s03 figure img { height: 250px; width: auto; max-width: 100%; }
-    .s03 figcaption { font-size: 30px; color: var(--fg); }
-    .s03 .bal { position: relative; }
-    .s03 .bal img { position: absolute; left: 270px; top: 0; height: 330px; width: auto; }
-    .s03 .bal .t { position: absolute; line-height: 1.25; }
-    .s03 .bal .t b { display: block; font-size: 30px; }
-    .s03 .bal .t span { color: var(--muted); font-size: 28px; }
+    .overview-slide ol.toc { list-style: none; padding: 0; counter-reset: s; font-size: 40px; }
+    .overview-slide ol.toc > li { counter-increment: s; margin-bottom: 34px; display: grid; grid-template-columns: 110px 1fr; }
+    .overview-slide ol.toc > li::before { content: "0" counter(s); font-family: var(--mono); color: var(--accent); font-weight: 500; }
+    .overview-slide ol.toc ul { grid-column: 2; font-size: 32px; color: var(--muted); list-style: none; padding: 0; margin-top: 10px; display: flex; gap: 38px; }
+    .overview-slide ol.toc ul li::before { content: "— "; color: var(--border); }
   </style>
-  <header><div class="kicker">01 · ML potentials · Motivation</div><h2>Enzymatic catalysis</h2></header>
+  <header><div class="kicker">Outline</div><h2>Overview</h2></header>
   <div class="content">
-    <div class="g">
-      <figure><img src="media/image6.png" alt=""><figcaption>Complex reaction mechanisms</figcaption></figure>
-      <figure><img src="media/image8.png" alt="" style="height:200px"><figcaption style="margin-top:46px">QM/MM</figcaption></figure>
-      <figure><img src="media/image7.png" alt="" style="height:290px"><figcaption>Free energy calculations</figcaption></figure>
-      <div class="bal f"><img src="media/image9.png" alt="">
-        <div class="t" style="left:0; top:90px; text-align:right; width:250px"><b>Slow &amp; precise</b><span>DFT, MP2, CC</span></div>
-        <div class="t" style="left:680px; top:215px; width:270px"><b>Fast &amp; approximate</b><span>AM1, PM6, DFTB</span></div>
-      </div>
-    </div>
+    <ol class="toc">
+      <li><b>Intro to ML potentials</b><ul><li>Motivation</li><li>General idea</li><li>Examples</li></ul></li>
+      <li><b>ML/MM</b><ul><li>Motivation</li><li>Types of ML/MM embedding</li><li>Applications</li></ul></li>
+      <li><b>Recap and future directions</b></li>
+    </ol>
   </div>
 </section>

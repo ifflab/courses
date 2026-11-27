@@ -1,32 +1,32 @@
-<!-- 11 · Example: ANI models (TorchANI) -->
+<!-- 11 · Example: ANI models -->
 <section class="slide s11" id="s11">
   <style>
-    .s11 .content { display: flex; flex-direction: column; gap: 28px; }
-    .s11 .paper { background: #fff; padding: 22px 34px; display: flex; align-items: center; gap: 36px; }
-    .s11 .paper .logo { height: 84px; width: auto; }
-    .s11 .paper .dates { height: 52px; width: auto; }
-    .s11 .paper .ttl { flex: 1; min-width: 0; height: auto; }
-    .s11 .res { flex: 1; min-height: 0; display: flex; align-items: center; gap: 40px; }
-    .s11 .mol { flex: none; height: 100%; width: 520px; object-fit: contain; }
-    .s11 .plots { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .s11 .plots .crop { flex: none; width: 100%; aspect-ratio: 999/453; overflow: hidden; position: relative; max-height: 640px; }
-    .s11 .plots .crop img { position: absolute; left: 0; top: 0; width: 100%; }
-    .s11 .plots .label { text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: 28px; font-weight: 600; color: var(--fg); margin-bottom: 8px; }
+    .s11 .content { display: flex; gap: 56px; align-items: center; }
+    .s11 .papers { flex: none; width: 1000px; display: flex; flex-direction: column; gap: 24px; }
+    .s11 .paper { background: #fff; padding: 20px 34px 16px; }
+    .s11 .paper .top { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .s11 .paper .top img { height: 84px; width: auto; }
+    .s11 .paper .ttl { display: block; width: 100%; margin-top: 16px; }
+    .s11 .paper .dates { height: 36px; width: auto; }
+    .s11 .paper .sup { margin-top: 14px; }
+    .s11 .plot { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; }
+    .s11 .plot img { width: 100%; max-height: 800px; }
   </style>
   <header><div class="kicker">01 · ML potentials · Examples</div><h2>Example: ANI models</h2></header>
   <div class="content">
-    <div class="card paper">
-      <img class="logo" src="media/image50.png" alt="JCIM">
-      <img class="dates" src="media/image52.png" alt="">
-      <img class="ttl" src="media/image51.png" alt="TorchANI: A Free and Open Source PyTorch-Based Deep Learning Implementation of the ANI Neural Network Potentials">
-    </div>
-    <div class="res">
-      <img class="mol" src="media/image15.png" alt="">
-      <div class="plots">
-        <div class="label">Hessian components (automatic differentiation)</div>
-        <div class="crop"><img style="top:-9.5%" src="media/image49.png" alt="Hessian components: DFTB+ and ANI-2x vs wB97X/6-31G*"></div>
+    <div class="papers">
+      <div class="card paper">
+        <div class="top"><img src="media/image43.png" alt="Chemical Science"><img class="dates" src="media/image44.png" alt=""></div>
+        <img class="ttl" src="media/image42.png" alt="ANI-1: an extensible neural network potential with DFT accuracy at force field computational cost">
+        <div class="sup">(Supports H, C, N, O)</div>
+      </div>
+      <div class="card paper">
+        <div class="top"><img src="media/image45.png" alt="JCTC"><img class="dates" src="media/image48.png" alt=""></div>
+        <img class="ttl" src="media/image46.png" alt="Extending the Applicability of the ANI Deep Learning Molecular Potential to Sulfur and Halogens">
+        <div class="sup">(Supports H, C, N, O, S, F, Cl)</div>
       </div>
     </div>
+    <div class="plot"><img src="media/image47.png" alt="ANI-1 vs DFT, RMSE 1.8 kcal/mol"></div>
   </div>
-  <div class="refs">Gao et al., <i>J. Chem. Inf. Model.</i>, <b>2020</b>, 60, 7, 3408-3415</div>
+  <div class="refs">Smith et al., <i>Chem. Sci.</i>, <b>2017</b>, 8, 3192; Devereux et al., <i>J. Chem. Theory Comput.</i>, <b>2020</b>, 16, 4192−4202</div>
 </section>

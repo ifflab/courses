@@ -1,32 +1,30 @@
-<!-- 05 · Machine learning potentials -->
+<!-- 05 · Tough case: mechanism of Caspase-1 -->
 <section class="slide s05" id="s05">
   <style>
-    .s05 .left { position: absolute; left: 0; top: 20px; width: 880px; }
-    .s05 .left img { width: 880px; display: block; }
-    .s05 .eq5 { position: absolute; left: 40px; top: 400px; font-size: 72px; }
-    .s05 .w { position: absolute; left: 330px; top: 590px; font-size: 28px; color: var(--muted); }
-    .s05 svg.plot { position: absolute; right: 0; top: 0; }
+    .s05 .top { display: block; width: 1300px; margin: -10px auto 0; }
+    .s05 .bot { display: flex; gap: 56px; align-items: center; margin-top: 14px; }
+    .s05 ul { list-style: none; padding: 0; font-size: 36px; width: 520px; }
+    .s05 li { margin: 0 0 .25em; white-space: nowrap; }
+    .s05 li::before { content: "✗"; color: var(--bad); font-weight: 700; display: inline-block; width: 1.3em; }
+    .s05 li.ok { font-weight: 600; }
+    .s05 li.ok::before { content: "✓"; color: var(--good); }
+    .s05 .gif { height: 330px; width: auto; border-radius: 14px; }
+    .s05 .cost { font-size: 34px; text-align: center; }
   </style>
-  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Machine learning potentials</h2></header>
+  <header><div class="kicker">01 · ML potentials · Motivation</div><h2>Tough case: mechanism of Caspase-1</h2></header>
   <div class="content">
-    <div class="left"><img src="media/image14.png" alt=""></div>
-    <div class="eq5">$E_{mol} = f_{w_1,w_2,\ldots}(\boldsymbol{R})$</div>
-    <svg class="abs" style="left:240px;top:500px" width="260" height="100" viewBox="0 0 260 100"><defs><marker id="s05-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
-      <path d="M180,90 L130,20" stroke="var(--fg)" stroke-width="2.5" fill="none" marker-end="url(#s05-a)"/></svg>
-    <div class="w" style="left:290px;top:610px;font-size:30px;color:var(--fg)">Fitted parameters (“weights”)</div>
-    <svg class="plot" width="760" height="680" viewBox="0 0 760 680">
-      <defs><marker id="s05-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
-      <path d="M60,610 L60,30" stroke="var(--fg)" stroke-width="3" fill="none" marker-end="url(#s05-ax)"/>
-      <path d="M60,610 L720,610" stroke="var(--fg)" stroke-width="3" fill="none" marker-end="url(#s05-ax)"/>
-      <g stroke="var(--muted)" stroke-width="3" fill="none" stroke-dasharray="14 8">
-        <path d="M272.6,147.1 C366.7,117.9 481.6,116.7 579.7,135.4"/>
-        <path d="M140.8,470.0 C143.0,386.6 150.9,281.4 177.0,219.0"/>
-        <path d="M190.9,493.1 L568.3,204.8"/>
-      </g>
-      <g fill="var(--accent-2)"><circle cx="215" cy="170" r="62"/><circle cx="640" cy="150" r="62"/><circle cx="140" cy="532" r="62"/></g>
-      <g fill="#fff" font-family="var(--mono)" font-size="26" font-weight="600" text-anchor="middle"><text x="215" y="180">MLP</text><text x="640" y="160">QM</text><text x="140" y="542">MM</text></g>
-      <text x="390" y="662" text-anchor="middle" font-size="32" font-weight="600" fill="var(--accent-2)">computational cost</text>
-      <text transform="translate(26,320) rotate(-90)" text-anchor="middle" font-size="32" font-weight="600" fill="var(--accent-2)">accuracy</text>
-    </svg>
+    <img class="top" src="media/image11.png" alt="">
+    <div class="bot">
+      <ul>
+        <li class="f">AM1</li>
+        <li class="f">PM3</li>
+        <li class="f">PM6</li>
+        <li class="f">DFTB3</li>
+        <li class="f">GFN2-xTB</li>
+        <li class="f ok">B3LYP-D3/6-31G(d)</li>
+      </ul>
+      <img class="gif" src="media/image12.gif" alt="">
+      <div class="callout f cost grow">96 replicas × 24 cores × 6 days<br><b>≈ 330K CPU hours</b><br><span class="muted">(Deacylation only!)</span></div>
+    </div>
   </div>
 </section>

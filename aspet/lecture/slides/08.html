@@ -1,21 +1,50 @@
-<!-- 08 · Cartesian models are not transferable -->
+<!-- 08 · How to represent a molecular system for ML? (symmetries) -->
 <section class="slide s08" id="s08">
   <style>
-    .s08 .lead { font-size: 38px; margin-bottom: 30px; }
-    .s08 .cols { display: grid; justify-items: center; grid-template-columns: 507px 359px 507px; justify-content: space-evenly; }
-    .s08 .pic { width: 507px; height: 407px; position: relative; overflow: hidden; }
-    .s08 .pic img { position: absolute; width: 507px; left: 0; top: 0; }
-    .s08 .crop { width: 359px; }
-    .s08 .crop img { left: -148px; }
-    .s08 .eq { font-size: 64px; margin-top: 10px; }
+    .s08 .lead { font-size: 38px; margin-bottom: 26px; }
+    .s08 .grid { display: grid; grid-template-columns: 340px 1fr 340px 1fr 340px 1fr 340px; column-gap: 0; row-gap: 10px; align-items: center; justify-items: center; }
+    .s08 .tag { font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--accent-2); height: 40px; }
+    .s08 .box { position: relative; width: 340px; height: 330px; border: 3px solid var(--accent); border-radius: 18px; background: #fff; overflow: hidden; }
+    .s08 .box img { position: absolute; left: 13px; top: 13px; width: 272px; transition: transform .9s ease; }
+    .s08 .m-t { transform: translate(52px, 86px); }
+    .s08 .m-r { transform: translate(4px, 18px) rotate(69deg); }
+    .s08[data-step="0"] .m-t, .s08[data-step="0"] .m-r { transform: none; }
+    .s08 .box svg { position: absolute; inset: 0; }
+    .s08 .ring { transition: transform .9s ease; fill: none; stroke-width: 4; }
+    .s08 .ra { stroke: oklch(0.55 0.2 330); } .s08 .rb { stroke: var(--warn); }
+    .s08 .p-sw .ra { transform: translate(98px, -15px); }
+    .s08 .p-sw .rb { transform: translate(-98px, 15px); }
+    .s08[data-step="0"] .p-sw .ra, .s08[data-step="0"] .p-sw .rb { transform: none; }
+    .s08 .eq { font-size: 60px; height: 84px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .s08 .eq .f { position: absolute; }
   </style>
   <header><div class="kicker">01 · ML potentials · General idea</div><h2>How to represent a molecular system for ML?</h2></header>
   <div class="content">
-    <div class="lead">Models based on Cartesian coordinates are not transferable</div>
-    <div class="cols">
-      <div><div class="pic"><img src="media/image15.png" alt=""></div><div class="eq">$E = f(\boldsymbol{R})$</div></div>
-      <div><div class="pic crop"><img src="media/image31.png" alt=""></div><div class="eq">$E = \,???$</div></div>
-      <div><div class="pic"><img src="media/image30.png" alt=""></div><div class="eq">$E = \,???$</div></div>
+    <div class="lead">Models based on Cartesian coordinates don’t respect physical symmetries</div>
+    <div class="grid">
+      <div></div><div></div><div class="tag">Translation</div><div></div><div class="tag">Rotation</div><div></div><div class="tag">Permutation</div>
+
+      <div class="box"><img src="media/image15.png" alt=""></div><div></div>
+      <div class="box"><img class="m-t" src="media/image15.png" alt=""></div><div></div>
+      <div class="box"><img class="m-r" src="media/image15.png" alt=""></div><div></div>
+      <div class="box p-sw"><img src="media/image15.png" alt="">
+        <svg viewBox="0 0 340 330">
+          <circle class="ring ra" cx="110" cy="224.5" r="17"/>
+          <circle class="ring rb" cx="209" cy="209" r="17"/>
+          <g class="f"><path d="M122 262 Q157 292 195 258" fill="none" stroke="var(--fg)" stroke-width="5" stroke-linecap="round" marker-start="url(#s08-a1)" marker-end="url(#s08-a1)"/></g>
+          <defs><marker id="s08-a1" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
+        </svg>
+      </div>
+
+      <div class="eq">$E$</div><div class="eq">$=$</div><div class="eq">$E$</div><div class="eq">$=$</div><div class="eq">$E$</div><div class="eq">$=$</div><div class="eq">$E$</div>
+      <div class="eq">$\boldsymbol{R}$</div>
+      <div class="eq"><span data-f-out="1">$=$</span><span class="f" data-f="1">$\neq$</span></div>
+      <div class="eq">$\boldsymbol{R}$</div>
+      <div class="eq"><span data-f-out="1">$=$</span><span class="f" data-f="1">$\neq$</span></div>
+      <div class="eq">$\boldsymbol{R}$</div>
+      <div class="eq"><span data-f-out="1">$=$</span><span class="f" data-f="1">$\neq$</span></div>
+      <div class="eq">$\boldsymbol{R}$</div>
     </div>
   </div>
+  <!-- animation (added): on click the molecule is translated, rotated and two identical H atoms (rings) swap indices; the = in the R row turns into ≠ -->
 </section>

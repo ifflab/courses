@@ -1,24 +1,30 @@
-<!-- 17 · Locality of ML potentials -->
-<section class="slide s17" id="s17" data-steps="1">
+<!-- 17 · Learning representation from the structure: data efficiency -->
+<section class="slide s17" id="s17">
   <style>
-    .s17 .content > * { position:absolute; }
-    .s17 svg.pic { left:0; top:0; overflow:visible; }
-    .s17 ul { left:0; top:520px; width:1712px; font-size:40px; margin:0; }
+    .s17 .wrap { display:grid; grid-template-columns: 1040px minmax(0,1fr); gap:64px; height:100%; align-items:center; }
+    .s17 .shots { display:flex; flex-direction:column; gap:70px; }
+    .s17 .shots img { width:1040px; border:1.5px solid var(--border); border-radius:12px; display:block; }
+    .s17 table.data { font-size:28px; width:100%; }
+    .s17 table.data td, .s17 table.data th { padding:10px 8px; }
+    .s17 table.data td:first-child { white-space:nowrap; }
+    .s17 table.data td:first-child { font-weight:600; }
+    .s17 table.data td.n { font-size:40px; font-family:var(--mono); font-weight:500; letter-spacing:-.02em; }
+    .s17 table.data th { text-transform:none; }
+    .s17 tr.hl td.n { color:var(--accent-2); }
   </style>
-  <header><div class="kicker">01 · ML potentials · General idea</div><h2>What is still missing?</h2></header>
-  <div class="content">
-    <svg class="pic" width="1712" height="470" viewBox="0 0 1712 470">
-      <defs><marker id="s17-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
-      <g transform="translate(-10 -50) scale(.72)"><image href="media/image57_base.png" width="1703" height="855"/><circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="3.5"/></g>
-      <g class="f" data-f="1">
-        <g transform="translate(1722.5 -50) scale(-.72 .72)"><image href="media/image57_base.png" width="1703" height="855"/><circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="3.5"/></g>
-        <path d="M500,330 L1210,330" stroke="var(--fg)" stroke-width="4" stroke-dasharray="10 8" fill="none" marker-end="url(#s17-arr)" marker-start="url(#s17-arr)"/>
-        <g stroke="var(--neg)" stroke-width="16" stroke-linecap="round"><path d="M822,295 L892,365M892,295 L822,365"/></g>
-      </g>
-    </svg>
-    <ul>
-      <li>Atomic energies depend only on the neighbours within a cutoff</li>
-      <li class="f" data-f="1">The other molecule is invisible – but Coulomb decays only as $1/r$</li>
-    </ul>
-  </div>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Learning representation from the structure</h2></header>
+  <div class="content"><div class="wrap">
+    <div class="shots">
+      <img src="media/image59.png" alt="Batzner et al., E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials">
+      <img src="media/image60.png" alt="Batatia et al., MACE">
+    </div>
+    <div class="card" style="padding:24px 22px">
+      <table class="data">
+        <tr><th></th><th>structures</th><th>meV/Å</th></tr>
+        <tr><td>Symmetry functions</td><td class="n">1303</td><td class="n">120</td></tr>
+        <tr class="hl"><td>NequIP</td><td class="n">100</td><td class="n">123</td></tr>
+      </table>
+    </div>
+  </div></div>
+  <div class="refs">Batzner et al., <i>Nat. Commun.</i>, <b>2022</b>, 13, 1, 2453; Batatia et al., <i>Adv. NIPS</i>, <b>2022</b></div>
 </section>

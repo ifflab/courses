@@ -1,30 +1,21 @@
-<!-- 09 · Atom-centered symmetry functions -->
+<!-- 09 · Cartesian models are not transferable -->
 <section class="slide s09" id="s09">
   <style>
-    .s09 .content img, .s09 .content .t, .s09 .content .e { position: absolute; }
-    .s09 .t { font-weight: 600; font-size: 30px; text-align: center; }
-    .s09 .e { font-size: 34px; }
-    .s09 svg.arr { position: absolute; left: 0; top: 0; overflow: visible; }
+    .s09 .lead { font-size: 38px; margin-bottom: 30px; }
+    .s09 .cols { display: grid; justify-items: center; grid-template-columns: 507px 359px 507px; justify-content: space-evenly; }
+    .s09 .pic { width: 507px; height: 407px; position: relative; overflow: hidden; }
+    .s09 .pic img { position: absolute; width: 507px; left: 0; top: 0; }
+    .s09 .crop { width: 359px; }
+    .s09 .crop img { left: -148px; }
+    .s09 .eq { font-size: 64px; margin-top: 10px; }
   </style>
-  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Atom-centered symmetry functions</h2></header>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>How to represent a molecular system for ML?</h2></header>
   <div class="content">
-    <img src="media/image39.png" style="left:0;top:0;width:700px" alt="">
-    <img src="media/image40.png" style="left:400px;top:430px;width:200px" alt="">
-    <div class="t" style="left:340px;top:640px;width:320px">Atomic environment</div>
-
-    <img src="media/image41.png" style="left:880px;top:0;width:832px" alt="">
-    <img src="media/image36.png" style="left:880px;top:150px;width:320px" alt="">
-    <div class="t" style="left:880px;top:358px;width:320px">Radial channels</div>
-    <div class="e" style="left:1230px;top:200px;width:482px">$$G^{\mathrm{rad}}_{i,\mu}=\sum_{j\neq i}^{N_{\mathrm{atom}}\in R_\mathrm{c}} f^{\mathrm{rad}}_{\mu}(R_{ij})\,f_\mathrm{c}(R_{ij})$$</div>
-
-    <img src="media/image35.png" style="left:880px;top:410px;width:320px" alt="">
-    <div class="t" style="left:880px;top:640px;width:320px">Angular channels</div>
-    <div class="e" style="left:1230px;top:440px;width:482px">$$\begin{aligned}G^{\mathrm{ang}}_{i,\mu}&=\sum_{i,j,k} f^{\mathrm{ang}}_{\mu}(R_{ij},R_{jk},R_{ik})\cdot\\&\quad f_\mathrm{c}(R_{ij})\,f_\mathrm{c}(R_{ik})\end{aligned}$$</div>
-
-    <svg class="arr" width="1712" height="700">
-      <defs><marker id="s09-ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
-      <g stroke="var(--fg)" stroke-width="5" fill="none"><path d="M630 520 L856 262" marker-end="url(#s09-ah)"/><path d="M630 520 L856 520" marker-end="url(#s09-ah)"/></g>
-    </svg>
+    <div class="lead">Models based on Cartesian coordinates are not transferable</div>
+    <div class="cols">
+      <div><div class="pic"><img src="media/image15.png" alt=""></div><div class="eq">$E = f(\boldsymbol{R})$</div></div>
+      <div><div class="pic crop"><img src="media/image31.png" alt=""></div><div class="eq">$E = \,???$</div></div>
+      <div><div class="pic"><img src="media/image30.png" alt=""></div><div class="eq">$E = \,???$</div></div>
+    </div>
   </div>
-  <div class="refs">Behler and Parrinello, <i>Phys. Rev. Lett.</i>, <b>2007</b>, 98, 146401; Jörg Behler, <i>Chem. Rev.</i>, <b>2021</b>, <i>121</i> (16), 10037–10072</div>
 </section>

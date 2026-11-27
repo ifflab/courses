@@ -1,30 +1,72 @@
-<!-- 16 · Learning representation from the structure: data efficiency -->
+<!-- 16 · Equivariant message passing -->
 <section class="slide s16" id="s16">
   <style>
-    .s16 .wrap { display:grid; grid-template-columns: 1040px minmax(0,1fr); gap:64px; height:100%; align-items:center; }
-    .s16 .shots { display:flex; flex-direction:column; gap:70px; }
-    .s16 .shots img { width:1040px; border:1.5px solid var(--border); border-radius:12px; display:block; }
-    .s16 table.data { font-size:28px; width:100%; }
-    .s16 table.data td, .s16 table.data th { padding:10px 8px; }
-    .s16 table.data td:first-child { white-space:nowrap; }
-    .s16 table.data td:first-child { font-weight:600; }
-    .s16 table.data td.n { font-size:40px; font-family:var(--mono); font-weight:500; letter-spacing:-.02em; }
-    .s16 table.data th { text-transform:none; }
-    .s16 tr.hl td.n { color:var(--accent-2); }
+    .s16 .sub { font-weight:600; font-size:36px; margin-bottom:22px; }
+    .s16 .body { display:grid; grid-template-columns: 700px 907px; gap:38px; align-items:start; }
+    .s16 ol { padding-left:1.5em; font-size:36px; }
+    .s16 ol li { margin-bottom:.5em; line-height:1.35; }
+    .s16 .fig { position:relative; width:907px; height:456px; }
+    .s16 .fig svg { display:block; overflow:visible; }
+    .s16 .fig svg image { mix-blend-mode:normal; }
+    .s16 .halo { fill:#14186b; fill-opacity:.16; stroke:#14186b; stroke-width:4; }
+    .s16 .logo { position:relative; width:664px; height:172px; margin:60px 0 0 205px; }
+    .s16 .logo img { width:664px; height:172px; mix-blend-mode:multiply; }
+    .s16 .logo a { position:absolute; left:285px; top:96px; font-size:30px; }
   </style>
   <header><div class="kicker">01 · ML potentials · General idea</div><h2>Learning representation from the structure</h2></header>
-  <div class="content"><div class="wrap">
-    <div class="shots">
-      <img src="media/image59.png" alt="Batzner et al., E(3)-equivariant graph neural networks for data-efficient and accurate interatomic potentials">
-      <img src="media/image60.png" alt="Batatia et al., MACE">
+  <div class="content">
+    <div class="sub">Equivariant Message Passing Graph Neural Networks</div>
+    <div class="body">
+      <ol>
+        <li class="f up">First messages contain the interatomic vector and the element</li>
+        <li class="f up">Messages are passed to all the neighbors within a cutoff</li>
+        <li class="f up">An NN model gathers the received messages to create a new state of the node (atom)</li>
+        <li class="f up">The new state is passed to the neighbors again</li>
+        <li class="f up">When message passing is finished, the result is predicted from the final state by the readout NN</li>
+      </ol>
+      <div>
+        <div class="fig">
+          <!-- layers split from image57 by _work/split57.py; viewBox = image57 px -->
+          <svg width="907" height="456" viewBox="0 0 1703 855">
+            <image href="media/image57_base.png" width="1703" height="855"/>
+            <image class="f" data-f="1" href="media/image57_msg.png" width="1703" height="855"/>
+            <circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="2.5"/>
+            <circle class="f" data-f="2" data-f-out="5" cx="522.9" cy="527.5" r="162.7" fill="none" stroke="var(--pos)" stroke-width="7"/>
+            <circle class="f halo" data-f="3" data-f-out="5" cx="530" cy="527" r="46"/>
+            <g class="f" data-f="4" data-f-out="5">
+              <circle class="halo" cx="412" cy="493" r="44"/><circle class="halo" cx="605" cy="428" r="44"/>
+              <circle class="halo" cx="545" cy="322" r="44"/><circle class="halo" cx="418" cy="365" r="44"/>
+              <circle class="halo" cx="560" cy="614" r="30"/>
+            </g>
+            <g class="s16-msg"></g>
+            <image class="f" data-f="5" href="media/image57_cut.png" width="1703" height="855"/>
+            <image class="f" data-f="5" href="media/image57_read.png" width="1703" height="855"/>
+            <image class="f" data-f="1" href="media/image57_box.png" width="1703" height="855"/>
+          </svg>
+        </div>
+        <div class="logo"><img src="media/image58.png" alt="Euclidean Neural Networks"><a href="https://github.com/e3nn">https://github.com/e3nn</a></div>
+      </div>
     </div>
-    <div class="card" style="padding:24px 22px">
-      <table class="data">
-        <tr><th></th><th>structures</th><th>meV/Å</th></tr>
-        <tr><td>Symmetry functions</td><td class="n">1303</td><td class="n">120</td></tr>
-        <tr class="hl"><td>NequIP</td><td class="n">100</td><td class="n">123</td></tr>
-      </table>
-    </div>
-  </div></div>
-  <div class="refs">Batzner et al., <i>Nat. Commun.</i>, <b>2022</b>, 13, 1, 2453; Batatia et al., <i>Adv. NIPS</i>, <b>2022</b></div>
+  </div>
+  <!-- notes: none -->
+  <script>
+  (() => {
+    const s = document.getElementById('s16'), g = s.querySelector('.s16-msg'), NS = 'http://www.w3.org/2000/svg';
+    // message arrows in image57 px (outer end, end at the central N atom)
+    const A = [[[447,404],[507,494]], [[420,545],[497,570]], [[527,627],[507,572]], [[622,477],[571,546]], [[535,378],[526,488]]];
+    const fly = (a, b, delay) => {
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', 13); c.setAttribute('fill', '#14186b'); c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 3);
+      g.appendChild(c);
+      c.animate([{ transform: `translate(${a[0]}px,${a[1]}px)`, opacity: 0 }, { opacity: 1, offset: .15 },
+                 { opacity: 1, offset: .85 }, { transform: `translate(${b[0]}px,${b[1]}px)`, opacity: 0 }],
+                { duration: 900, delay, easing: 'ease-in-out', fill: 'both' }).onfinish = () => c.remove();
+    };
+    s.addEventListener('step', e => {
+      if (e.detail.dir <= 0 || document.body.classList.contains('no-anim') || !g.animate) return;
+      if (e.detail.step === 2) A.forEach(([o, i], k) => fly(o, i, 300 + k * 110));
+      if (e.detail.step === 4) A.forEach(([o, i], k) => fly(i, o, 300 + k * 110));
+    });
+  })();
+  </script>
 </section>

@@ -1,72 +1,43 @@
-<!-- 15 · Equivariant message passing -->
-<section class="slide s15" id="s15">
+<!-- 15 · Are symmetry functions perfect? -->
+<section class="slide s15" id="s15" data-steps="1">
   <style>
-    .s15 .sub { font-weight:600; font-size:36px; margin-bottom:22px; }
-    .s15 .body { display:grid; grid-template-columns: 700px 907px; gap:38px; align-items:start; }
-    .s15 ol { padding-left:1.5em; font-size:36px; }
-    .s15 ol li { margin-bottom:.5em; line-height:1.35; }
-    .s15 .fig { position:relative; width:907px; height:456px; }
-    .s15 .fig svg { display:block; overflow:visible; }
-    .s15 .fig svg image { mix-blend-mode:normal; }
-    .s15 .halo { fill:#14186b; fill-opacity:.16; stroke:#14186b; stroke-width:4; }
-    .s15 .logo { position:relative; width:664px; height:172px; margin:60px 0 0 205px; }
-    .s15 .logo img { width:664px; height:172px; mix-blend-mode:multiply; }
-    .s15 .logo a { position:absolute; left:285px; top:96px; font-size:30px; }
+    .s15 .panels { display:flex; gap:94px; height:100%; margin-left:-30px; }
+    .s15 .panel { position:relative; flex:none; height:640px; }
+    .s15 .panel > svg { position:absolute; left:0; top:0; overflow:visible; }
+    .s15 .ttl { position:absolute; left:0; top:-10px; font-weight:600; font-size:36px; line-height:1.15; z-index:1; white-space:nowrap; }
+    .s15 .ttl .mark { background:linear-gradient(transparent 50%, var(--hl) 50%, var(--hl) 87%, transparent 87%); }
+    .s15 .lab { position:absolute; transform:translate(-50%,-50%); font-size:60px; line-height:1; }
+    .s15 .bot { position:absolute; left:527px; top:552px; transform:translate(-50%,-50%); font-size:38px; white-space:nowrap; }
+    .s15 .bmove { transform: translate(1156.5px,451.5px) rotate(0deg); transition: transform 1s cubic-bezier(.45,0,.2,1); }
+    .s15[data-step="1"] .bmove { transform: translate(1636.5px,463.5px) rotate(44.75deg); }
+    @media print { .s15 .bmove { transform: translate(1636.5px,463.5px) rotate(44.75deg); } }
+    .s15 image { mix-blend-mode:multiply; }
+    .s15 image[href*="image55_t"] { mix-blend-mode:normal; }  /* transparent PNG: multiply breaks while the group is transformed */
+    .s15 .katex .accent { color:inherit; }
   </style>
-  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Learning representation from the structure</h2></header>
-  <div class="content">
-    <div class="sub">Equivariant Message Passing Graph Neural Networks</div>
-    <div class="body">
-      <ol>
-        <li class="f up">First messages contain the interatomic vector and the element</li>
-        <li class="f up">Messages are passed to all the neighbors within a cutoff</li>
-        <li class="f up">An NN model gathers the received messages to create a new state of the node (atom)</li>
-        <li class="f up">The new state is passed to the neighbors again</li>
-        <li class="f up">When message passing is finished, the result is predicted from the final state by the readout NN</li>
-      </ol>
-      <div>
-        <div class="fig">
-          <!-- layers split from image57 by _work/split57.py; viewBox = image57 px -->
-          <svg width="907" height="456" viewBox="0 0 1703 855">
-            <image href="media/image57_base.png" width="1703" height="855"/>
-            <image class="f" data-f="1" href="media/image57_msg.png" width="1703" height="855"/>
-            <circle cx="522.9" cy="527.5" r="162.7" fill="none" stroke="rgb(20,80,250)" stroke-width="2.5"/>
-            <circle class="f" data-f="2" data-f-out="5" cx="522.9" cy="527.5" r="162.7" fill="none" stroke="var(--pos)" stroke-width="7"/>
-            <circle class="f halo" data-f="3" data-f-out="5" cx="530" cy="527" r="46"/>
-            <g class="f" data-f="4" data-f-out="5">
-              <circle class="halo" cx="412" cy="493" r="44"/><circle class="halo" cx="605" cy="428" r="44"/>
-              <circle class="halo" cx="545" cy="322" r="44"/><circle class="halo" cx="418" cy="365" r="44"/>
-              <circle class="halo" cx="560" cy="614" r="30"/>
-            </g>
-            <g class="s15-msg"></g>
-            <image class="f" data-f="5" href="media/image57_cut.png" width="1703" height="855"/>
-            <image class="f" data-f="5" href="media/image57_read.png" width="1703" height="855"/>
-            <image class="f" data-f="1" href="media/image57_box.png" width="1703" height="855"/>
-          </svg>
-        </div>
-        <div class="logo"><img src="media/image58.png" alt="Euclidean Neural Networks"><a href="https://github.com/e3nn">https://github.com/e3nn</a></div>
-      </div>
+  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Are symmetry functions perfect?</h2></header>
+  <div class="content"><div class="panels">
+    <div class="panel" style="width:820px">
+      <div class="ttl">Rotationally <span class="mark">equivariant</span> model:</div>
+      <svg width="820" height="640" viewBox="61 175 820 640">
+        <defs><marker id="s15-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#14186b"/></marker></defs>
+        <image href="media/image56.png" x="61" y="175" width="820" height="492"/>
+        <path d="M822 457 H884" stroke="#14186b" stroke-width="3.5" fill="none" marker-end="url(#s15-ah)"/><path d="M571 457 H619" stroke="#14186b" stroke-width="3.5" fill="none" marker-end="url(#s15-ah)"/>
+        <path d="M591 668 V590" stroke="var(--fg)" stroke-width="4.5" fill="none"/><polygon points="591,573 580,597 602,597" fill="var(--fg)"/>
+      </svg>
+      <div class="bot">$f_1,\ \boldsymbol{\vec f}_2,\ \dots\ f_n$</div>
     </div>
-  </div>
+    <div class="panel" style="width:800px">
+      <svg width="800" height="640" viewBox="975 175 800 640">
+        <defs><marker id="s15-st" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker>
+          <marker id="s15-arc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
+        <g class="f" data-f="1"><path d="M1293 343 Q1415 268 1538 343" stroke="var(--fg)" stroke-width="3.5" fill="none" marker-end="url(#s15-arc)"/></g>
+        <g transform="translate(1015 365)"><image href="media/image55_t.png" x="0" y="0" width="283" height="163"/><path d="M135 173 V45 H123 L141.5 7 L160 45 H148 V173Z" fill="oklch(0.88 0.10 85)" stroke="oklch(0.50 0.09 70)" stroke-width="3"/></g>
+        <g class="f" data-f="1"><g class="bmove"><g transform="translate(-141.5 -86.5)"><image href="media/image55_t.png" x="0" y="0" width="283" height="163"/><path d="M135 173 V45 H123 L141.5 7 L160 45 H148 V173Z" fill="oklch(0.88 0.10 85)" stroke="oklch(0.50 0.09 70)" stroke-width="3"/></g></g></g>
+        <g stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s15-st)"><path d="M1211 534 L1255 612"/></g><g class="f" data-f="1" style="transition-delay:.8s"><g stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s15-st)"><path d="M1621 534 L1577 612"/></g></g><path d="M1273 636 h32" stroke="var(--fg)" stroke-width="3.5" marker-end="url(#s15-st)"/><g class="f" data-f="1" style="transition-delay:.8s"><path d="M1523 636 h32" stroke="var(--fg)" stroke-width="3.5" marker-end="url(#s15-st)"/></g>
+      </svg>
+      <div class="lab" style="left:311px;top:499px">$\mathbf f$</div><div class="lab f" data-f="1" style="left:563px;top:499px;transition-delay:.8s">${\mathbf f}^{\prime}$</div>
+    </div>
+  </div></div>
   <!-- notes: none -->
-  <script>
-  (() => {
-    const s = document.getElementById('s15'), g = s.querySelector('.s15-msg'), NS = 'http://www.w3.org/2000/svg';
-    // message arrows in image57 px (outer end, end at the central N atom)
-    const A = [[[447,404],[507,494]], [[420,545],[497,570]], [[527,627],[507,572]], [[622,477],[571,546]], [[535,378],[526,488]]];
-    const fly = (a, b, delay) => {
-      const c = document.createElementNS(NS, 'circle');
-      c.setAttribute('r', 13); c.setAttribute('fill', '#14186b'); c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 3);
-      g.appendChild(c);
-      c.animate([{ transform: `translate(${a[0]}px,${a[1]}px)`, opacity: 0 }, { opacity: 1, offset: .15 },
-                 { opacity: 1, offset: .85 }, { transform: `translate(${b[0]}px,${b[1]}px)`, opacity: 0 }],
-                { duration: 900, delay, easing: 'ease-in-out', fill: 'both' }).onfinish = () => c.remove();
-    };
-    s.addEventListener('step', e => {
-      if (e.detail.dir <= 0 || document.body.classList.contains('no-anim') || !g.animate) return;
-      if (e.detail.step === 2) A.forEach(([o, i], k) => fly(o, i, 300 + k * 110));
-      if (e.detail.step === 4) A.forEach(([o, i], k) => fly(i, o, 300 + k * 110));
-    });
-  })();
-  </script>
 </section>

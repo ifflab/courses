@@ -1,44 +1,44 @@
-<!-- 37 · Generic EMLE model: applications -->
+<!-- 37 · Generic EMLE model -->
 <section class="slide s37" id="s37">
   <style>
-    .s37 header { margin-bottom: 24px; }
-    .s37 .lead { font-family: var(--mono); font-weight: 500; font-size: 34px; margin-bottom: 22px; }
-    .s37 .content { display: flex; flex-direction: column; }
-    .s37 .panels { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 32px; }
-    .s37 .panel { background: oklch(0.97 0.012 250); border: 1.5px solid var(--border); border-radius: 28px; padding: 22px 26px; display: flex; flex-direction: column; align-items: center; min-height: 0; }
-    .s37 .panel h3 { font-size: 32px; margin: 0 0 14px; color: var(--fg); text-align: center; }
-    .s37 .panel img { max-width: 100%; border-radius: 6px; }
-    .s37 .p1 .top { width: 300px; }
-    .s37 .p1 .fes { position: relative; width: 420px; margin-top: 12px; }
-    .s37 .crop { overflow: hidden; position: relative; flex: none; }
-    .s37 .crop img { display: block; max-width: none; position: absolute; }
-    .s37 .p1 .fes span { position: absolute; left: 37%; bottom: 21%; background: #fff; border: 1.5px solid var(--fg); padding: 0 10px; font-size: 24px; }
-    .s37 .p2 .md { font-family: var(--mono); font-weight: 500; font-size: 32px; margin: 6px 0 18px; }
-    .s37 .spec { position: relative; width: 94%; }
-    .s37 .spec i { position: absolute; left: 15.6%; top: 6.3%; width: 25%; height: 11.6%; background: oklch(0.97 0.012 250); }
-    .s37 .p3 .poses { width: 100%; }
-    .s37 .p3 .gdg { width: 100%; margin-top: 12px; }
+    .s37 .content { display: grid; grid-template-columns: 760px minmax(0,1fr); gap: 30px; }
+    .s37 .left { font-size: 28px; line-height: 1.2; display: flex; flex-direction: column; }
+    .s37 .left h3 { font-size: 30px; margin: 0 0 2px; color: var(--fg); }
+    .s37 .left ul { margin: 0 0 4px; }
+    .s37 .left li { margin: 0 0 2px; }
+    .s37 .strike { text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 4px; color: var(--muted); }
+    .s37 .gif { margin-top: auto; margin-bottom: 10px; width: 490px; height: 297px; flex: none; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .s37 .gif img { display: block; width: 490px; margin-top: -30px; }
+    .s37 .right { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .s37 .right img.mols { width: 100%; border: 1.5px solid var(--border); border-radius: 14px; }
+    .s37 table.data td { white-space: nowrap; }
+    .s37 table.data { font-size: 26px; width: 100%; }
+    .s37 table.data td, .s37 table.data th { padding: 10px 12px; }
+    .s37 .total { font-family: var(--mono); font-weight: 500; font-size: 36px; margin-top: 8px; }
+    .s37 .fn { position: absolute; left: 0; bottom: 0; font-size: 18px; color: var(--muted); }
   </style>
   <header><div class="kicker">02 · ML/MM · Physics-based embedding</div><h2>Generic EMLE model</h2></header>
   <div class="content">
-    <div class="lead">Gaussian Process Regression: 897 free parameters</div>
-    <div class="panels">
-      <div class="panel p1">
-        <h3>Conformational FES<sup class="r">1</sup></h3>
-        <img class="top" src="media/image108.png" alt="">
-        <div class="fes"><div class="crop" style="width:100%;aspect-ratio:476/384"><img src="media/image110.png" alt="" style="width:100%;top:-7.3%;left:0"></div><span>&epsilon; = 0.7 kcal/mol</span></div>
-      </div>
-      <div class="panel p2">
-        <h3>Spectral densities<sup class="r">2</sup></h3>
-        <div class="crop" style="width:350px;height:309px"><img src="media/image109.png" alt="" style="height:309px;left:0;top:0"></div>
-        <div class="spec"><img src="media/image111.png" alt="" style="width:100%;display:block;mix-blend-mode:multiply"><i></i></div>
-      </div>
-      <div class="panel p3">
-        <h3>Enzymatic reactions<sup class="r">3</sup></h3>
-        <div class="crop" style="width:100%;aspect-ratio:1092/648"><img src="media/image112.png" alt="" style="width:203.2%;left:-103.2%;top:0"></div>
-        <img class="gdg" src="media/image113.png" alt="">
-      </div>
+    <div class="left">
+      <h3>Dataset:</h3>
+      <ul><li>QM7, 7165 molecules, up to 7 heavy atoms (C/N/O/S)<sup class="r">1</sup></li><li>80% training set / 20% test set</li></ul>
+      <h3>Reference data:</h3>
+      <div>B3LYP/cc-pVTZ (ORCA, <b>in vacuo</b>)</div>
+      <ul style="margin-top:4px"><li>Electronic density</li><li>Molecular polarizability</li><li class="strike">Energy</li></ul>
+      <h3>Model:</h3>
+      <ul><li>Sparse Gaussian Process Regression</li><li>Informative Vector Machine (IVM)</li></ul>
+      <div class="gif f"><img src="media/image107.gif" alt=""></div>
+    </div>
+    <div class="right">
+      <img class="mols" src="media/image106.png" alt="QM7 molecules">
+      <table class="data f">
+        <tr><th></th><th>H</th><th>C</th><th>N</th><th>O</th><th>S</th><th>Total</th></tr>
+        <tr class="hl"><td>Full QM7</td><td>61959</td><td>35761</td><td>6655</td><td>5978</td><td>297</td><td>110650</td></tr>
+        <tr><td>IVM (0.05 threshold)</td><td>92</td><td>155</td><td>99</td><td>75</td><td>24</td><td>445</td></tr>
+      </table>
+      <div class="total f">Total: 897 free parameters</div>
     </div>
   </div>
-  <div class="refs"><sup class="r">1</sup>K. Zinovjev et al., <i>J. Chem. Theory Comput.</i>, <b>2024</b>, 20, 11, 4514-4522; <sup class="r">2</sup>K. Zinovjev and C. Curutchet, <i>J. Phys. Chem. Lett.</i>, <b>2025</b>, 16, 3, 774–781; <sup class="r">3</sup>V. Gradisteanu et al., <i>Chem. Sci.</i>, <b>2026</b>, 17, 8542–8556</div>
+  <div class="refs"><sup class="r">1</sup>http://quantum-machine.org/datasets/#qm7</div>
+  <!-- notes: TODO: instead list trainable parameters -->
 </section>

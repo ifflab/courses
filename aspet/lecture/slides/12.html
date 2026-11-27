@@ -1,33 +1,32 @@
-<!-- 12 · Are symmetry functions perfect? -->
+<!-- 12 · Example: ANI models (TorchANI) -->
 <section class="slide s12" id="s12">
   <style>
-    .s12 .content { display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
-    .s12 .top { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-    .s12 .top .imgs { display: flex; gap: 56px; align-items: center; }
-    .s12 .top img { height: 300px; width: auto; }
-    .s12 .sec { font-weight: 600; font-size: 34px; text-align: center; margin-bottom: 4px; }
-    .s12 .bot { display: flex; flex-direction: column; align-items: center; gap: 28px; }
-    .s12 .bot .r { display: flex; align-items: center; gap: 72px; }
-    .s12 .bot img { height: 250px; width: auto; border: 1.5px solid var(--border); }
-    .s12 .katex-display { margin: 0; }
-    .s12 .bot .eqs { display: flex; flex-direction: column; gap: 8px; font-size: 36px; }
+    .s12 .content { display: flex; flex-direction: column; gap: 28px; }
+    .s12 .paper { background: #fff; padding: 22px 34px; display: flex; align-items: center; gap: 36px; }
+    .s12 .paper .logo { height: 84px; width: auto; }
+    .s12 .paper .dates { height: 52px; width: auto; }
+    .s12 .paper .ttl { flex: 1; min-width: 0; height: auto; }
+    .s12 .res { flex: 1; min-height: 0; display: flex; align-items: center; gap: 40px; }
+    .s12 .mol { flex: none; height: 100%; width: 520px; object-fit: contain; }
+    .s12 .plots { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .s12 .plots .crop { flex: none; width: 100%; aspect-ratio: 999/453; overflow: hidden; position: relative; max-height: 640px; }
+    .s12 .plots .crop img { position: absolute; left: 0; top: 0; width: 100%; }
+    .s12 .plots .label { text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: 28px; font-weight: 600; color: var(--fg); margin-bottom: 8px; }
   </style>
-  <header><div class="kicker">01 · ML potentials · General idea</div><h2>Are symmetry functions perfect?</h2></header>
+  <header><div class="kicker">01 · ML potentials · Examples</div><h2>Example: ANI models</h2></header>
   <div class="content">
-    <div class="top">
-      <div class="sec">Fixed representations</div>
-      <div class="imgs"><img src="media/image36.png" alt="radial symmetry functions"><img src="media/image35.png" alt="angular symmetry functions"></div>
+    <div class="card paper">
+      <img class="logo" src="media/image50.png" alt="JCIM">
+      <img class="dates" src="media/image52.png" alt="">
+      <img class="ttl" src="media/image51.png" alt="TorchANI: A Free and Open Source PyTorch-Based Deep Learning Implementation of the ANI Neural Network Potentials">
     </div>
-    <div class="bot">
-      <div class="sec">Functions of distances (no directional information)</div>
-      <div class="r">
-        <img src="media/image40.png" alt="">
-        <div class="eqs">
-          <div>$$G^{rad}_{i,\mu}=\sum_{j\neq i}^{N_{atom}\in R_c} f^{rad}_\mu(R_{ij})\,f_c(R_{ij})$$</div>
-          <div>$$G^{ang}_{i,\mu}=\sum_{i,j,k} f^{ang}_\mu(R_{ij},R_{jk},R_{ik})\cdot f_c(R_{ij})\,f_c(R_{ik})$$</div>
-        </div>
+    <div class="res">
+      <img class="mol" src="media/image15.png" alt="">
+      <div class="plots">
+        <div class="label">Hessian components (automatic differentiation)</div>
+        <div class="crop"><img style="top:-9.5%" src="media/image49.png" alt="Hessian components: DFTB+ and ANI-2x vs wB97X/6-31G*"></div>
       </div>
     </div>
   </div>
-  <div class="refs">Jörg Behler, <i>Chem. Rev.</i>, <b>2021</b>, <i>121</i> (16), 10037-10072</div>
+  <div class="refs">Gao et al., <i>J. Chem. Inf. Model.</i>, <b>2020</b>, 60, 7, 3408-3415</div>
 </section>

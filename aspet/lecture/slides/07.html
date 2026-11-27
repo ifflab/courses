@@ -1,50 +1,40 @@
-<!-- 07 · How to represent a molecular system for ML? (symmetries) -->
+<!-- 07 · How to represent a molecular system for ML? -->
 <section class="slide s07" id="s07">
   <style>
-    .s07 .lead { font-size: 38px; margin-bottom: 26px; }
-    .s07 .grid { display: grid; grid-template-columns: 340px 1fr 340px 1fr 340px 1fr 340px; column-gap: 0; row-gap: 10px; align-items: center; justify-items: center; }
-    .s07 .tag { font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--accent-2); height: 40px; }
-    .s07 .box { position: relative; width: 340px; height: 330px; border: 3px solid var(--accent); border-radius: 18px; background: #fff; overflow: hidden; }
-    .s07 .box img { position: absolute; left: 13px; top: 13px; width: 272px; transition: transform .9s ease; }
-    .s07 .m-t { transform: translate(52px, 86px); }
-    .s07 .m-r { transform: translate(4px, 18px) rotate(69deg); }
-    .s07[data-step="0"] .m-t, .s07[data-step="0"] .m-r { transform: none; }
-    .s07 .box svg { position: absolute; inset: 0; }
-    .s07 .ring { transition: transform .9s ease; fill: none; stroke-width: 4; }
-    .s07 .ra { stroke: oklch(0.55 0.2 330); } .s07 .rb { stroke: var(--warn); }
-    .s07 .p-sw .ra { transform: translate(98px, -15px); }
-    .s07 .p-sw .rb { transform: translate(-98px, 15px); }
-    .s07[data-step="0"] .p-sw .ra, .s07[data-step="0"] .p-sw .rb { transform: none; }
-    .s07 .eq { font-size: 60px; height: 84px; display: flex; align-items: center; justify-content: center; position: relative; }
-    .s07 .eq .f { position: absolute; }
+    .s07 .col { position: absolute; top: 0; text-align: center; }
+    .s07 .col h3 { color: var(--fg); font-size: 36px; margin: 0; }
+    .s07 .mol { left: 0; width: 440px; }
+    .s07 .mol img { width: 440px; margin-top: 60px; }
+    .s07 .xyz { left: 540px; width: 650px; }
+    .s07 pre { font-family: var(--mono); font-size: 22px; line-height: 1.32; margin: 22px 0 0; text-align: left; background: var(--card); border: 1.5px solid var(--border); border-radius: 14px; padding: 18px 24px; white-space: pre; }
+    .s07 .nn { left: 1280px; width: 427px; top: 165px; height: 340px; overflow: hidden; position: absolute; }
+    .s07 .nn img { position: absolute; width: 1149px; max-width: none; left: -722px; top: -78px; height: auto; }
+    .s07 svg.ar { position: absolute; }
   </style>
   <header><div class="kicker">01 · ML potentials · General idea</div><h2>How to represent a molecular system for ML?</h2></header>
   <div class="content">
-    <div class="lead">Models based on Cartesian coordinates don’t respect physical symmetries</div>
-    <div class="grid">
-      <div></div><div></div><div class="tag">Translation</div><div></div><div class="tag">Rotation</div><div></div><div class="tag">Permutation</div>
-
-      <div class="box"><img src="media/image15.png" alt=""></div><div></div>
-      <div class="box"><img class="m-t" src="media/image15.png" alt=""></div><div></div>
-      <div class="box"><img class="m-r" src="media/image15.png" alt=""></div><div></div>
-      <div class="box p-sw"><img src="media/image15.png" alt="">
-        <svg viewBox="0 0 340 330">
-          <circle class="ring ra" cx="110" cy="224.5" r="17"/>
-          <circle class="ring rb" cx="209" cy="209" r="17"/>
-          <g class="f"><path d="M122 262 Q157 292 195 258" fill="none" stroke="var(--fg)" stroke-width="5" stroke-linecap="round" marker-start="url(#s07-a1)" marker-end="url(#s07-a1)"/></g>
-          <defs><marker id="s07-a1" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
-        </svg>
-      </div>
-
-      <div class="eq">$E$</div><div class="eq">$=$</div><div class="eq">$E$</div><div class="eq">$=$</div><div class="eq">$E$</div><div class="eq">$=$</div><div class="eq">$E$</div>
-      <div class="eq">$\boldsymbol{R}$</div>
-      <div class="eq"><span data-f-out="1">$=$</span><span class="f" data-f="1">$\neq$</span></div>
-      <div class="eq">$\boldsymbol{R}$</div>
-      <div class="eq"><span data-f-out="1">$=$</span><span class="f" data-f="1">$\neq$</span></div>
-      <div class="eq">$\boldsymbol{R}$</div>
-      <div class="eq"><span data-f-out="1">$=$</span><span class="f" data-f="1">$\neq$</span></div>
-      <div class="eq">$\boldsymbol{R}$</div>
-    </div>
+    <div class="col mol"><h3>19 atoms</h3><img src="media/image15.png" alt=""></div>
+    <div class="col xyz"><h3>57 Cartesian coordinates</h3><pre>23.66030120      26.99166621      24.30532686
+22.86468601      27.38072337      24.94072572
+23.80911636      27.65981139      23.45707170
+23.51805210      25.49401797      24.06535379
+22.36938285      24.91197480      23.64495603
+24.49494743      24.46557821      24.25039045
+21.45300769      25.45802106      23.47616331
+22.67052745      23.58817090      23.32902757
+23.97350120      23.26238836      23.73646871
+25.74030208      24.40428914      24.77410642
+21.92294216      22.92496909      23.18280832
+24.51062965      21.99267234      23.98915807
+26.36826610      23.15883602      25.12743608
+26.13580322      25.33232774      25.15975324
+23.96351432      21.08943461      23.76280061
+25.74740695      21.91780545      24.70041791
+27.33888625      23.20899166      25.59837285
+26.15931415      20.93423975      24.87168256
+24.56937885      27.09404792      24.89794580</pre></div>
+    <svg class="ar" style="left:440px;top:318px" width="100" height="30"><defs><marker id="s07-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs><path d="M0,15 L90,15" stroke="var(--fg)" stroke-width="3" marker-end="url(#s07-a)"/></svg>
+    <svg class="ar" style="left:1200px;top:318px" width="100" height="30"><path d="M0,15 L90,15" stroke="var(--fg)" stroke-width="3" marker-end="url(#s07-a)"/></svg>
+    <div class="nn"><img src="media/image14.png" alt=""></div>
   </div>
-  <!-- animation (added): on click the molecule is translated, rotated and two identical H atoms (rings) swap indices; the = in the R row turns into ≠ -->
 </section>

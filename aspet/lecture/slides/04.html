@@ -1,30 +1,26 @@
-<!-- 04 · Tough case: mechanism of Caspase-1 -->
+<!-- 04 · Enzymatic catalysis -->
 <section class="slide s04" id="s04">
   <style>
-    .s04 .top { display: block; width: 1300px; margin: -10px auto 0; }
-    .s04 .bot { display: flex; gap: 56px; align-items: center; margin-top: 14px; }
-    .s04 ul { list-style: none; padding: 0; font-size: 36px; width: 520px; }
-    .s04 li { margin: 0 0 .25em; white-space: nowrap; }
-    .s04 li::before { content: "✗"; color: var(--bad); font-weight: 700; display: inline-block; width: 1.3em; }
-    .s04 li.ok { font-weight: 600; }
-    .s04 li.ok::before { content: "✓"; color: var(--good); }
-    .s04 .gif { height: 330px; width: auto; border-radius: 14px; }
-    .s04 .cost { font-size: 34px; text-align: center; }
+    .s04 .g { display: grid; grid-template-columns: 700px 1fr; grid-template-rows: 1fr 1fr; gap: 20px 60px; height: 100%; }
+    .s04 figure { justify-content: flex-start; min-height: 0; }
+    .s04 figure img { height: 250px; width: auto; max-width: 100%; }
+    .s04 figcaption { font-size: 30px; color: var(--fg); }
+    .s04 .bal { position: relative; }
+    .s04 .bal img { position: absolute; left: 270px; top: 0; height: 330px; width: auto; }
+    .s04 .bal .t { position: absolute; line-height: 1.25; }
+    .s04 .bal .t b { display: block; font-size: 30px; }
+    .s04 .bal .t span { color: var(--muted); font-size: 28px; }
   </style>
-  <header><div class="kicker">01 · ML potentials · Motivation</div><h2>Tough case: mechanism of Caspase-1</h2></header>
+  <header><div class="kicker">01 · ML potentials · Motivation</div><h2>Enzymatic catalysis</h2></header>
   <div class="content">
-    <img class="top" src="media/image11.png" alt="">
-    <div class="bot">
-      <ul>
-        <li class="f">AM1</li>
-        <li class="f">PM3</li>
-        <li class="f">PM6</li>
-        <li class="f">DFTB3</li>
-        <li class="f">GFN2-xTB</li>
-        <li class="f ok">B3LYP-D3/6-31G(d)</li>
-      </ul>
-      <img class="gif" src="media/image12.gif" alt="">
-      <div class="callout f cost grow">96 replicas × 24 cores × 6 days<br><b>≈ 330K CPU hours</b><br><span class="muted">(Deacylation only!)</span></div>
+    <div class="g">
+      <figure><img src="media/image6.png" alt=""><figcaption>Complex reaction mechanisms</figcaption></figure>
+      <figure><img src="media/image8.png" alt="" style="height:200px"><figcaption style="margin-top:46px">QM/MM</figcaption></figure>
+      <figure><img src="media/image7.png" alt="" style="height:290px"><figcaption>Free energy calculations</figcaption></figure>
+      <div class="bal f"><img src="media/image9.png" alt="">
+        <div class="t" style="left:0; top:90px; text-align:right; width:250px"><b>Slow &amp; precise</b><span>DFT, MP2, CC</span></div>
+        <div class="t" style="left:680px; top:215px; width:270px"><b>Fast &amp; approximate</b><span>AM1, PM6, DFTB</span></div>
+      </div>
     </div>
   </div>
 </section>

@@ -1,33 +1,23 @@
-<!-- 43 · Induction energy: underpolarized? -->
-<section class="slide s43" id="s43" data-steps="2">
+<!-- 43 · Free-energy profiles -->
+<section class="slide s43" id="s43">
   <style>
     .s43 h2 { font-size: 44px; }
-    .s43 .content { overflow:visible; }
-    /* pptx figure coordinates (1827 px wide), scaled to the deck */
-    .s43 .pp { position:absolute; left:0; top:0; width:1827px; height:800px; zoom:.821; font-weight:700; font-size:40px; line-height:1.2; }
-    .s43 .pp > * { position:absolute; }
-    .s43 .pp img { mix-blend-mode:multiply; }
-    .s43 .pp svg { left:0; top:0; overflow:visible; }
-    .s43 .pol { background:#fff; box-shadow:0 0 7px rgba(0,0,0,.4); }
-    .s43 .pol img { display:block; width:100%; mix-blend-mode:normal; }
-    .s43 .pol span { position:absolute; left:547px; top:186px; padding:7px 14px; white-space:nowrap; }
-    .s43 .call { background:var(--bg); border:1.5px solid var(--fg); box-shadow:3px 3px 7px rgba(0,0,0,.4); color:#002060; padding:7px 14px; white-space:nowrap; box-sizing:border-box; }
+    .s43 image, .s43 img { mix-blend-mode: multiply; }
+    .s43 .fig { width: 1500px; display: block; }
+    .s43 table.data { position: absolute; right: 0; bottom: -8px; font-size: 24px; }
+    .s43 table.data td, .s43 table.data th { padding: 1px 18px; }
+    .s43 table.data th { font-size: 17px; text-transform: none; }
   </style>
   <header><div class="kicker">02 · ML/MM · Applications</div><h2>Claisen rearrangement in chorismate mutase with ML(EMLE)/MM</h2></header>
   <div class="content">
-    <div class="pp">
-      <img src="media/image124.png" alt="" style="left:0;top:0;width:1827px">
-      <svg width="1827" height="800" viewBox="0 0 1827 800">
-        <defs><marker id="s43ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="var(--fg)"/></marker></defs>
-        <path d="M1010,705.7 L1114.5,522" stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s43ah)"/>
-        <path d="M831.3,705.7 L701.4,503.6" stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s43ah)"/>
-      </svg>
-      <div style="left:579.5px;top:711px;width:714px;text-align:center;padding:7px 0;white-space:nowrap">Always positive… underpolarized?</div>
-      <div class="pol f" data-f="1" style="left:488px;top:4px;width:897px;height:688.5px">
-        <img src="media/image37_ccp.png" alt="Total isotropic polarizability, QM vs EMLE along the reaction">
-        <span>Not really…</span>
-      </div>
-      <div class="call f" data-f="2" style="left:1080px;top:296px;width:658px">Maybe DFT/MM overpolarize?<br>(charge spill-out)</div>
-    </div>
+    <img class="fig" src="media/image124.png" alt="Free-energy profiles and energy components in water and chorismate mutase">
+    <table class="data">
+      <tr><th></th><th>Water Δ<sup>‡</sup>G</th><th>ChoM Δ<sup>‡</sup>G</th><th>ΔΔ<sup>‡</sup>G</th></tr>
+      <tr><td>DFT/MM</td><td>23.3 ± 1.1</td><td>10.8 ± 0.2</td><td>−12.5 ± 1.1</td></tr>
+      <tr><td>ML(EMLE)/MM (flexible α/v)</td><td>25.6 ± 0.8</td><td>12.8 ± 0.6</td><td>−12.8 ± 1.0</td></tr>
+      <tr><td>ML(EMLE)/MM (fixed α/v)</td><td>27.3 ± 1.3</td><td>15.7 ± 0.3</td><td>−11.6 ± 1.3</td></tr>
+      <tr><td>Mechanical embedding</td><td>30.0 ± 1.0</td><td>15.4 ± 0.4</td><td>−14.6 ± 1.1</td></tr>
+      <tr><td>MM embedding</td><td>30.6 ± 1.4</td><td>15.2 ± 0.4</td><td>−15.4 ± 1.5</td></tr>
+    </table>
   </div>
 </section>

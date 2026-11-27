@@ -1,61 +1,34 @@
-<!-- 45 · Putting it all together -->
-<section class="slide s45" id="s45" data-steps="2">
+<!-- 45 · Radial distribution function -->
+<section class="slide s45" id="s45" data-steps="4">
   <style>
-    .s45 .content { display:flex; justify-content:center; align-items:flex-start; margin-top:-20px; }
-    .s45 svg { overflow:visible; }
-    .s45 svg text { font-family:var(--sans); fill:var(--fg); }
-    .s45 .frame { fill:none; stroke:var(--fg); stroke-width:2; }
-    .s45 .grid { stroke:var(--muted); stroke-width:1.5; stroke-dasharray:3 9; stroke-linecap:round; }
-    .s45 .tk { font-size:28px; font-weight:600; fill:var(--muted); }
-    .s45 .ax { font-size:44px; font-weight:700; }
-    .s45 .ae { font-size:30px; fill:var(--muted); }
-    .s45 .bx rect { stroke-width:3; fill:var(--bg); stroke:var(--muted); transition:fill .5s, stroke .5s; }
-    .s45 .bx text { font-size:32px; font-weight:500; }
-    /* knowledge-source colour appears at step 1 */
-    .s45:not([data-step="0"]) .bx.t rect { fill:oklch(0.84 0.15 150); stroke:var(--good); }
-    .s45:not([data-step="0"]) .bx.m rect { fill:oklch(0.89 0.15 95); stroke:oklch(0.62 0.14 80); }
-    .s45:not([data-step="0"]) .bx.d rect { fill:oklch(0.76 0.14 28); stroke:var(--bad); }
-    .s45 .bx.q rect { fill:oklch(0.84 0.15 150); stroke:var(--good); }
-    .s45 .rt { fill:var(--good-bg); }
-    .s45 .rm { fill:var(--warn-bg); }
-    .s45 .rd { fill:var(--bad-bg); }
-    .s45 .bl { stroke:var(--muted); stroke-width:1.5; fill:none; }
-    .s45 .bn { font-size:48px; font-weight:700; }
-    .s45 .bs { font-size:28px; font-weight:600; fill:var(--muted); }
+    .s45 .ml-blob { fill-opacity: .08; }
+    .s45 h2 { font-size: 44px; }
+    .s45 .abs { position: absolute; }
+    .s45 .stg { left: 68px; top: -30px; width: 1712px; height: 830px; transform: scale(.92); transform-origin: 0 0; background: var(--bg); }
+    .s45 svg image { mix-blend-mode: multiply; }
+    .s45 img.plot { mix-blend-mode: multiply; }
+    .s45 .lbl { position: absolute; text-align: center; font-size: 36px; line-height: 1.2; white-space: nowrap; }
+    .s45 .ttl { left: 478px; width: 845px; top: 87px; height: 76px; line-height: 76px; text-align: center; font-weight: 600; font-size: 40px; white-space: nowrap; }
+    .s45 .plot { left: 409px; top: 171px; width: 889px; }
+    .s45 .cover { left: 1025px; top: 647px; width: 239px; height: 101px; background: var(--bg); }
+    .s45 .note { left: 3px; top: 796px; width: 650px; text-align: center; font-weight: 600; font-size: 36px; line-height: 1.2; }
   </style>
-  <header><div class="kicker">03 · Recap</div><h2>Putting it all together…</h2></header>
+  <header><div class="kicker">02 · ML/MM · Applications</div><h2>Claisen rearrangement in chorismate mutase with ML(EMLE)/MM</h2></header>
   <div class="content">
-<svg viewBox="104 130 1712 810" width="1600" height="757">
-  <!-- diagonal bands: transferability lost towards the fast + precise corner (step 1) -->
-  <g class="f" data-f="1">
-    <path class="rt" d="M230,150 L560,150 L1264,790 L230,790 Z"/>
-    <path class="rm" d="M560,150 L1080,150 L1784,790 L1264,790 Z"/>
-    <path class="rd" d="M1080,150 L1790,150 L1790,790 L1784,790 Z"/>
-    <path class="bl" d="M560,150 L1264,790"/><path class="bl" d="M1080,150 L1784,790"/>
-    <text x="250" y="738" class="bn">Transferable</text><text x="250" y="778" class="bs">physics-based</text>
-    <text x="880" y="205" text-anchor="middle" class="bn">Partly transferable</text><text x="880" y="243" text-anchor="middle" class="bs">physics + data</text>
-    <text x="1772" y="360" text-anchor="end" class="bn">System-specific</text><text x="1772" y="400" text-anchor="end" class="bs">data-driven</text>
-  </g>
-  <rect class="frame" x="230" y="150" width="1560" height="640"/>
-  <!-- log-speed ticks: 0.1 and 10 ns/day -->
-  <path class="grid" d="M542,150 V790"/><path class="grid" d="M1166,150 V790"/>
-  <text class="tk" x="542" y="832" text-anchor="middle">0.1</text>
-  <text class="tk" x="1166" y="832" text-anchor="middle">10</text>
-  <text class="ax" x="1010" y="905" text-anchor="middle">Speed (ns/day, log scale)</text>
-  <text class="ae" x="240" y="832" text-anchor="start">Slow</text>
-  <text class="ae" x="1780" y="832" text-anchor="end">Fast</text>
-  <text class="ax" transform="translate(150 470) rotate(-90)" text-anchor="middle">Accuracy</text>
-  <text class="ae" transform="translate(205 150) rotate(-90)" text-anchor="end">Precise</text>
-  <text class="ae" transform="translate(205 790) rotate(-90)" text-anchor="start">Approximate</text>
-
-  <g class="bx t"><rect x="290" y="206" width="180" height="57" rx="28.5"/><text x="380" y="246" text-anchor="middle">QM/MM</text></g>
-  <g class="bx m"><rect x="863" y="287" width="282" height="87" rx="34"/><text x="1004" y="324" text-anchor="middle">Physics-based</text><text x="1004" y="360" text-anchor="middle">ML/MM</text></g>
-  <g class="bx m"><rect x="1030" y="470" width="395" height="99" rx="34"/><text x="1227.5" y="512" text-anchor="middle">“Simple”</text><text x="1227.5" y="548" text-anchor="middle">Physics-based ML/MM</text></g>
-  <g class="bx m"><rect x="1337" y="687" width="282" height="58" rx="29"/><text x="1478" y="727" text-anchor="middle">MM embedding</text></g>
-  <g class="bx t"><rect x="724" y="597" width="261" height="84" rx="34"/><text x="854.5" y="632" text-anchor="middle">Semiempirical</text><text x="854.5" y="668" text-anchor="middle">QM/MM</text></g>
-  <g class="bx d"><rect x="1389" y="170" width="282" height="58" rx="29"/><text x="1530" y="210" text-anchor="middle">Direct ML/MM</text></g>
-  <g class="bx q f" data-f="2"><rect x="1692" y="170" width="87" height="58" rx="29"/><text x="1735.5" y="210" text-anchor="middle">?</text></g>
-
-</svg>
+   <div class="abs stg">
+    <div class="abs ttl">Radial distribution function (Cho – O<sub style="font-size:.6em">H2O</sub>)</div>
+    <img class="abs plot" src="media/image126.png" alt="Radial distribution function Cho to water oxygen">
+    <div class="abs cover"></div>
+    <svg class="abs" style="left:0;top:0;overflow:visible" width="1712" height="830" viewBox="0 0 1712 830">
+      <defs><marker id="s45-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#000"/></marker></defs>
+      <g class="f" data-f="1"><image href="media/image125.png" x="66.5" y="90.7" width="247.4" height="329.4"/><path class="ml-blob" d="M176.6,189.2C167.9,189.9 148.4,189.1 140.7,194.5C133.0,200.0 129.3,216.9 130.4,222.0C131.4,227.1 146.0,218.5 146.9,225.1C147.8,231.8 135.6,254.4 135.7,262.0C135.7,269.5 147.7,264.2 147.2,270.4C146.8,276.7 129.3,293.5 133.2,299.4C137.1,305.4 162.3,309.5 170.7,306.3C179.0,303.1 175.8,284.2 183.1,280.1C190.5,276.0 207.2,279.7 215.0,281.7C222.8,283.6 223.2,293.7 230.0,291.6C236.7,289.6 255.6,274.8 255.6,269.2C255.5,263.5 234.3,266.1 229.7,257.6C225.0,249.1 226.3,225.2 227.8,218.0C229.3,210.7 237.2,217.5 238.7,213.9C240.2,210.3 239.8,200.4 236.8,196.4C233.9,192.5 225.9,193.6 220.9,190.2C215.9,186.7 211.6,175.7 206.9,175.8C202.1,175.9 197.6,188.6 192.5,190.8C187.5,193.0 185.2,188.6 176.6,189.2Z"/><path d="M334,255 L710.5,379.7" stroke="#000" stroke-width="6" fill="none" marker-end="url(#s45-ah)"/></g>
+      <g class="f" data-f="3"><image href="media/image125.png" x="1340.2" y="0.5" width="247.4" height="329.4"/><path class="ml-blob" d="M1451.5,47.1C1432.8,49.8 1407.0,44.4 1395.2,56.3C1383.4,68.3 1383.5,95.8 1380.8,118.8C1378.1,141.9 1373.4,173.5 1378.8,194.7C1384.1,215.9 1397.3,240.2 1413.1,245.9C1428.9,251.6 1454.5,231.1 1473.6,229.0C1492.6,227.0 1516.8,238.5 1527.4,233.6C1538.0,228.8 1532.2,211.2 1537.1,199.8C1542.0,188.5 1556.8,187.5 1556.6,165.5C1556.3,143.4 1543.8,88.4 1535.6,67.6C1527.4,46.8 1521.1,43.8 1507.4,40.4C1493.7,37.1 1470.2,44.5 1451.5,47.1Z"/><path d="M1338,192.5 L830,337.8" stroke="#000" stroke-width="6" fill="none" marker-end="url(#s45-ah)"/></g>
+      <g class="f" data-f="2"><image href="media/image125.png" x="1338.4" y="368.9" width="247.4" height="329.4"/><path class="ml-blob" d="M1448.5,467.5C1439.9,468.1 1420.3,467.3 1412.6,472.8C1404.9,478.2 1401.3,495.1 1402.3,500.2C1403.4,505.3 1418.0,496.7 1418.9,503.4C1419.8,510.0 1407.6,532.6 1407.6,540.2C1407.7,547.7 1419.6,542.4 1419.2,548.6C1418.8,554.9 1401.2,571.7 1405.1,577.7C1409.0,583.6 1434.3,587.8 1442.6,584.5C1450.9,581.3 1447.7,562.4 1455.1,558.3C1462.5,554.2 1479.1,557.9 1486.9,559.9C1494.7,561.8 1495.2,571.9 1501.9,569.9C1508.7,567.8 1527.6,553.0 1527.5,547.4C1527.5,541.7 1506.2,544.4 1501.6,535.8C1497.0,527.3 1498.2,503.5 1499.7,496.2C1501.3,488.9 1509.2,495.7 1510.7,492.1C1512.2,488.5 1511.8,478.6 1508.8,474.6C1505.8,470.7 1497.9,471.8 1492.9,468.4C1487.9,465.0 1483.6,453.9 1478.8,454.0C1474.1,454.1 1469.5,466.8 1464.5,469.0C1459.4,471.2 1457.2,466.8 1448.5,467.5Z"/><path d="M1316,544 L949,499" stroke="#000" stroke-width="6" fill="none" marker-end="url(#s45-ah)"/></g>
+    </svg>
+    <div class="lbl f" data-f="1" style="left:37px; top:411px; width:269px">DFT/MM (Cho)</div>
+    <div class="lbl f" data-f="3" style="left:1285px; top:281px; width:365px">DFT/MM (Cho+H<sub style="font-size:.6em">2</sub>O)</div>
+    <div class="lbl f" data-f="2" style="left:1285px; top:648px; width:384px">ML(EMLE)/MM (Cho)</div>
+    <div class="abs note f up" data-f="4">ML/MM model trained on gas phase data reduces a QM/MM artifact!</div>
+   </div>
   </div>
 </section>

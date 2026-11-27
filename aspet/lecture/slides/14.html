@@ -1,5 +1,5 @@
 <!-- 14 · Are symmetry functions perfect? -->
-<section class="slide s14" id="s14" data-steps="1">
+<section class="slide s14" id="s14" data-steps="2">
   <style>
     .s14 .panels { display:flex; gap:94px; height:100%; margin-left:-30px; }
     .s14 .panel { position:relative; flex:none; height:640px; }
@@ -7,9 +7,9 @@
     .s14 .ttl { position:absolute; left:0; top:-10px; font-weight:600; font-size:36px; line-height:1.15; z-index:1; white-space:nowrap; }
     .s14 .ttl .mark { background:linear-gradient(transparent 50%, var(--hl) 50%, var(--hl) 87%, transparent 87%); }
     .s14 .lab { position:absolute; transform:translate(-50%,-50%); font-size:60px; line-height:1; }
-    .s14 .bot { position:absolute; left:527px; top:552px; transform:translate(-50%,-50%); font-size:38px; white-space:nowrap; }
+    .s14 .bot { position:absolute; left:527px; top:545px; transform:translate(-50%,-50%); font-size:38px; white-space:nowrap; }
     .s14 .bmove { transform: translate(1156.5px,451.5px) rotate(0deg); transition: transform 1s cubic-bezier(.45,0,.2,1); }
-    .s14[data-step="1"] .bmove { transform: translate(1636.5px,463.5px) rotate(44.75deg); }
+    .s14[data-step="2"] .bmove { transform: translate(1636.5px,463.5px) rotate(44.75deg); }
     @media print { .s14 .bmove { transform: translate(1636.5px,463.5px) rotate(44.75deg); } }
     .s14 image { mix-blend-mode:multiply; }
     .s14 image[href*="image55_t"] { mix-blend-mode:normal; }  /* transparent PNG: multiply breaks while the group is transformed */
@@ -18,25 +18,25 @@
   <header><div class="kicker">01 · ML potentials · General idea</div><h2>Are symmetry functions perfect?</h2></header>
   <div class="content"><div class="panels">
     <div class="panel" style="width:820px">
-      <div class="ttl">Rotationally <span class="mark">equivariant</span> model:</div>
+      <div class="ttl">Rotationally <span class="mark">invariant</span> model:</div>
       <svg width="820" height="640" viewBox="61 175 820 640">
         <defs><marker id="s14-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#14186b"/></marker></defs>
         <image href="media/image56.png" x="61" y="175" width="820" height="492"/>
-        <path d="M822 457 H884" stroke="#14186b" stroke-width="3.5" fill="none" marker-end="url(#s14-ah)"/><path d="M571 457 H619" stroke="#14186b" stroke-width="3.5" fill="none" marker-end="url(#s14-ah)"/>
+        <path d="M822 457 H884" stroke="#14186b" stroke-width="3.5" fill="none" marker-end="url(#s14-ah)"/><g class="f" data-f="1" stroke="var(--neg)" stroke-width="11" stroke-linecap="round"><path d="M631 441 L783 595 M783 441 L631 595"/></g>
         <path d="M591 668 V590" stroke="var(--fg)" stroke-width="4.5" fill="none"/><polygon points="591,573 580,597 602,597" fill="var(--fg)"/>
       </svg>
-      <div class="bot">$f_1,\ \boldsymbol{\vec f}_2,\ \dots\ f_n$</div>
+      <div class="bot">$f_1,\ f_2,\ \dots\ f_n$</div>
     </div>
     <div class="panel" style="width:800px">
       <svg width="800" height="640" viewBox="975 175 800 640">
         <defs><marker id="s14-st" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker>
           <marker id="s14-arc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
-        <g class="f" data-f="1"><path d="M1293 343 Q1415 268 1538 343" stroke="var(--fg)" stroke-width="3.5" fill="none" marker-end="url(#s14-arc)"/></g>
+        <g class="f" data-f="2"><path d="M1293 343 Q1415 268 1538 343" stroke="var(--fg)" stroke-width="3.5" fill="none" marker-end="url(#s14-arc)"/></g>
         <g transform="translate(1015 365)"><image href="media/image55_t.png" x="0" y="0" width="283" height="163"/><path d="M135 173 V45 H123 L141.5 7 L160 45 H148 V173Z" fill="oklch(0.88 0.10 85)" stroke="oklch(0.50 0.09 70)" stroke-width="3"/></g>
-        <g class="f" data-f="1"><g class="bmove"><g transform="translate(-141.5 -86.5)"><image href="media/image55_t.png" x="0" y="0" width="283" height="163"/><path d="M135 173 V45 H123 L141.5 7 L160 45 H148 V173Z" fill="oklch(0.88 0.10 85)" stroke="oklch(0.50 0.09 70)" stroke-width="3"/></g></g></g>
-        <g stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s14-st)"><path d="M1211 534 L1255 612"/></g><g class="f" data-f="1" style="transition-delay:.8s"><g stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s14-st)"><path d="M1621 534 L1577 612"/></g></g><path d="M1273 636 h32" stroke="var(--fg)" stroke-width="3.5" marker-end="url(#s14-st)"/><g class="f" data-f="1" style="transition-delay:.8s"><path d="M1523 636 h32" stroke="var(--fg)" stroke-width="3.5" marker-end="url(#s14-st)"/></g>
+        <g class="f" data-f="2"><g class="bmove"><g transform="translate(-141.5 -86.5)"><image href="media/image55_t.png" x="0" y="0" width="283" height="163"/><path d="M135 173 V45 H123 L141.5 7 L160 45 H148 V173Z" fill="oklch(0.88 0.10 85)" stroke="oklch(0.50 0.09 70)" stroke-width="3"/></g></g></g>
+        <g stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s14-st)"><path d="M1210 533 L1308 611"/></g><g class="f" data-f="2" style="transition-delay:.8s"><g stroke="var(--fg)" stroke-width="4" fill="none" marker-end="url(#s14-st)"><path d="M1525 534 L1427 610"/></g></g>
       </svg>
-      <div class="lab" style="left:311px;top:499px">$\mathbf f$</div><div class="lab f" data-f="1" style="left:563px;top:499px;transition-delay:.8s">${\mathbf f}^{\prime}$</div>
+      <div class="lab" style="left:393px;top:472px">$\mathbf f$</div>
     </div>
   </div></div>
   <!-- notes: none -->

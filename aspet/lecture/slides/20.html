@@ -1,64 +1,21 @@
 <!-- 20 · MLPs vs MM forcefields -->
 <section class="slide s20" id="s20">
   <style>
-    .s20 .sol { display: flex; gap: 60px; align-items: center; margin-top: 8px; }
-    .s20 .fig { position: relative; width: 520px; height: 458px; flex: none; }
-    .s20 .fig svg { position: absolute; inset: 0; }
+    .s20 .content > * { position: absolute; }
+    .s20 .a { font-weight: 600; font-size: 46px; line-height: 1.2; }
   </style>
   <header><div class="kicker">02 · ML/MM · Motivation</div><h2>MLPs vs MM forcefields</h2></header>
   <div class="content">
-    <h3 style="color:var(--fg);font-size:40px">Issues with MLPs</h3>
-    <ul class="small" style="font-size:34px">
-      <li>MLPs are still at least <b>2 orders of magnitude</b> slower than MM FFs</li>
-      <li>Generic MLPs for condensed phases are not well-tested</li>
-      <li>Need to break bonds? Reactive MLPs need to be retrained (risk of artifacts in non-reactive parts)</li>
-    </ul>
-    <div class="sol f up" style="margin-top:30px">
-      <div class="grow">
-        <h3 style="color:var(--accent-2);font-size:40px;margin-bottom:24px">Solution: ML/MM</h3>
-        <ul style="font-size:34px">
-          <li>Apply ML only to the reactive region</li>
-          <li>Keep MM for the rest (take advantage of well-tested MM FFs)</li>
-        </ul>
-      </div>
-      <div class="fig">
-        <svg viewBox="0 0 411 362" width="520" height="458" style="overflow:hidden">
-<defs>
-  <radialGradient id="fade18" cx=".5" cy=".5" r=".707"><stop offset="0" style="stop-color:var(--bg)"/><stop offset=".42" style="stop-color:var(--bg)"/><stop offset=".61" style="stop-color:var(--bg);stop-opacity:0"/></radialGradient>
-  <radialGradient id="glow18" cx=".5" cy=".5" r=".707"><stop offset="0" stop-color="#FFFFBE"/><stop offset=".67" style="stop-color:var(--bg)"/></radialGradient>
-</defs>
-<image href="media/image4.png" x="0" y="0" width="411" height="362"/>
-<ellipse cx="210" cy="192" rx="253" ry="233.5" fill="url(#fade18)"/>
-<image href="media/image5.svg" x="27" y="55" width="366" height="299"/>
-<path d="M184.0,124.8L246.6,124.8L309.2,194.5L246.6,264.2L184.0,264.2L121.4,229.4L121.4,159.7Z" fill="url(#glow18)" stroke="none" stroke-width="0.00"/>
-<path d="M150.0,175.0C150.0,180.4 145.7,184.8 140.2,184.8C134.8,184.8 130.4,180.4 130.4,175.0C130.4,169.6 134.8,165.2 140.2,165.2C145.7,165.2 150.0,169.6 150.0,175.0Z" fill="#E6E6E6" stroke="#000" stroke-width="3.00"/>
-<path d="M150.0,220.6C150.0,226.0 145.7,230.4 140.2,230.4C134.8,230.4 130.4,226.0 130.4,220.6C130.4,215.2 134.8,210.8 140.2,210.8C145.7,210.8 150.0,215.2 150.0,220.6Z" fill="#E6E6E6" stroke="#000" stroke-width="3.00"/>
-<path d="M195.7,152.1C195.7,157.5 191.3,161.9 185.9,161.9C180.5,161.9 176.1,157.5 176.1,152.1C176.1,146.7 180.5,142.3 185.9,142.3C191.3,142.3 195.7,146.7 195.7,152.1Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
-<path d="M195.7,197.8C195.7,203.2 191.3,207.6 185.9,207.6C180.5,207.6 176.1,203.2 176.1,197.8C176.1,192.4 180.5,188.0 185.9,188.0C191.3,188.0 195.7,192.4 195.7,197.8Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
-<path d="M195.7,243.5C195.7,248.9 191.3,253.2 185.9,253.2C180.5,253.2 176.1,248.9 176.1,243.5C176.1,238.0 180.5,233.7 185.9,233.7C191.3,233.7 195.7,238.0 195.7,243.5Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
-<path d="M241.4,152.1C241.4,157.5 237.0,161.9 231.6,161.9C226.1,161.9 221.8,157.5 221.8,152.1C221.8,146.7 226.1,142.3 231.6,142.3C237.0,142.3 241.4,146.7 241.4,152.1Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
-<path d="M241.4,197.8C241.4,203.2 237.0,207.6 231.6,207.6C226.1,207.6 221.8,203.2 221.8,197.8C221.8,192.4 226.1,188.0 231.6,188.0C237.0,188.0 241.4,192.4 241.4,197.8Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
-<path d="M241.4,243.5C241.4,248.9 237.0,253.2 231.6,253.2C226.1,253.2 221.8,248.9 221.8,243.5C221.8,238.0 226.1,233.7 231.6,233.7C237.0,233.7 241.4,238.0 241.4,243.5Z" fill="#C8F4F4" stroke="#000" stroke-width="3.00"/>
-<path d="M287.0,197.8C287.0,203.2 282.6,207.6 277.2,207.6C271.8,207.6 267.4,203.2 267.4,197.8C267.4,192.4 271.8,188.0 277.2,188.0C282.6,188.0 287.0,192.4 287.0,197.8Z" fill="#A9E9AB" stroke="#000" stroke-width="3.00"/>
-<path d="M195.7,152.1L221.8,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M221.8,152.1L195.7,197.8L221.8,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M195.7,243.4L221.8,152.1" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M221.8,197.8L195.7,243.4L221.8,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M241.4,152.1L267.4,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M241.4,197.8L267.4,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M241.4,243.4L267.4,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M195.7,152.1L221.8,152.1" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M195.7,197.8L221.8,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M195.7,152.1L221.8,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M176.1,152.1L150.0,175.0L176.1,197.8" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M150.0,175.0L176.1,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M150.0,220.6L176.1,152.1" fill="none" stroke="#000000" stroke-width="1.50"/>
-<path d="M176.1,197.8L150.0,220.6L176.1,243.4" fill="none" stroke="#000000" stroke-width="1.50"/>
-<text x="67" y="74" font-family="var(--mono)" font-size="36" font-weight="700" fill="var(--fg)">MM</text>
-<text x="240" y="293" font-family="var(--mono)" font-size="36" font-weight="700" fill="var(--accent-2)">ML</text>
-
-        </svg>
-      </div>
-    </div>
+    <img src="media/image50.png" style="left:0;top:0;width:300px">
+    <img src="media/image62.png" style="left:0;top:96px;width:270px">
+    <img src="media/image61.png" style="left:330px;top:20px;width:1250px">
+    <img src="media/image63.png" style="left:330px;top:225px;height:500px">
+    <svg style="left:0;top:0;overflow:visible" width="1712" height="760" viewBox="0 0 1712 760">
+      <defs><marker id="s20-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--fg)"/></marker></defs>
+      <path d="M1040,575 L880,645" stroke="var(--fg)" stroke-width="5" fill="none" marker-end="url(#s20-arr)"/>
+    </svg>
+    <div class="a" style="left:1070px;top:520px">7 ns/day</div>
+    <div class="a f" style="left:1070px;top:660px">MM: 1 µs/day</div>
   </div>
+  <div class="refs">Pickering et al., <i>J. Chem. Inf. Model.</i>, <b>2025</b>, 65 (21), 11656–11671</div>
 </section>

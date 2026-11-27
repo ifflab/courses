@@ -1,18 +1,21 @@
-<!-- 02 · Overview -->
-<section class="slide overview-slide">
+<!-- 02 · Contact (from Riga.pptx slide 51) -->
+<section class="slide s02" id="s02">
   <style>
-    .overview-slide ol.toc { list-style: none; padding: 0; counter-reset: s; font-size: 40px; }
-    .overview-slide ol.toc > li { counter-increment: s; margin-bottom: 34px; display: grid; grid-template-columns: 110px 1fr; }
-    .overview-slide ol.toc > li::before { content: "0" counter(s); font-family: var(--mono); color: var(--accent); font-weight: 500; }
-    .overview-slide ol.toc ul { grid-column: 2; font-size: 32px; color: var(--muted); list-style: none; padding: 0; margin-top: 10px; display: flex; gap: 38px; }
-    .overview-slide ol.toc ul li::before { content: "— "; color: var(--border); }
+    /* collage laid out in the original pptx points (905.5 × 440), scaled to fit the content box */
+    .s02 .col { position: absolute; left: 50%; top: 0; width: 905.5px; height: 440px; transform: translateX(-50%) scale(1.72); transform-origin: 50% 0; }
+    .s02 .col img { position: absolute; object-fit: cover; mix-blend-mode: normal; }
+    .s02 .col .links { position: absolute; left: 2.2px; top: 130.5px; font-size: 24px; line-height: 1.2; }
   </style>
-  <header><div class="kicker">Outline</div><h2>Overview</h2></header>
+  <header><div class="kicker">About us</div><h2>Contact</h2></header>
   <div class="content">
-    <ol class="toc">
-      <li><b>Intro to ML potentials</b><ul><li>Motivation</li><li>General idea</li><li>Examples</li></ul></li>
-      <li><b>ML/MM</b><ul><li>Motivation</li><li>Types of ML/MM embedding</li><li>Applications</li></ul></li>
-      <li><b>Recap and future directions</b></li>
-    </ol>
+    <div class="col">
+      <img src="media/riga_team.jpg" alt="" style="left:587.8px; top:0.9px; width:317.2px; height:211.5px">
+      <img src="media/riga_building.jpg" alt="" style="left:587.8px; top:225.1px; width:317.2px; height:192.2px">
+      <img src="media/riga_cac.jpg" alt="" style="left:0px; top:217.8px; width:290.2px; height:193.5px">
+      <img src="media/riga_ifflab_banner.png" alt="Intelligent Force Fields Lab" style="left:2.2px; top:0px; width:481.2px; height:127.5px">
+      <img src="media/riga_fallas.jpg" alt="" style="left:215.9px; top:159.8px; width:290.2px; height:154.8px">
+      <img src="media/riga_beach.jpg" alt="" style="left:433.8px; top:247px; width:288.2px; height:192.2px">
+      <div class="links"><a href="https://ifflab.xyz">ifflab.xyz</a><br><a href="mailto:kirill.zinovjev@uv.es">kirill.zinovjev@uv.es</a></div>
+    </div>
   </div>
 </section>
