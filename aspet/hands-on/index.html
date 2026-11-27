@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hands-on: ML/MM free-energy profile</title>
 <link rel="stylesheet" href="../lecture/vendor/katex/dist/katex.min.css">
-<link rel="stylesheet" href="../lecture/deck.css?v=1795732005">
-<link rel="stylesheet" href="handson.css?v=1795732005">
+<link rel="stylesheet" href="../lecture/deck.css?v=1795769291">
+<link rel="stylesheet" href="handson.css?v=1795769291">
 <script defer src="../lecture/vendor/katex/dist/katex.min.js"></script>
 <script defer src="../lecture/vendor/katex/dist/contrib/auto-render.min.js"></script>
 <script defer src="vendor/3dmol/3Dmol-min.js"></script>
-<script defer src="../lecture/deck.js?v=1795732005"></script>
+<script defer src="../lecture/deck.js?v=1795769291"></script>
 </head>
 <body data-footer="K. Zinovjev · Hybrid ML/MM simulations · Hands-on · Aspet 2026">
 <div id="deck">
@@ -827,35 +827,181 @@ np.savez(<span class="s">f&quot;us/win_{win:02d}.npz&quot;</span>, xi=xi_values,
 </section>
 
 
-<!-- 11 · PMF with WHAM -->
-<section class="slide s09">
+<!-- 12 · pmf.py 1/3: constants and one histogram per window -->
+<section class="slide sp1">
   <style>
-    .s09 .content { display: grid; grid-template-columns: 990px minmax(0, 1fr); gap: 40px; align-items: center; }
-    .s09 .col { display: flex; flex-direction: column; gap: 22px; }
-    .s09 pre.term { font-size: 24px; }
-    .s09 pre.py { font-size: 14px; line-height: 1.45; padding: 16px 22px; }
-    .s09 .plot svg { width: 100%; height: auto; display: block; }
-    .s09 .res { font-size: 28px; margin-top: 14px; text-align: center; }
+    .sp1 .content { display: grid; grid-template-columns: minmax(0, 1fr) 540px; gap: 40px; align-items: center; }
+    .sp1 pre.py { font-size: 15.5px; line-height: 1.5; padding: 20px 26px; border-top-left-radius: 0; }
+    .sp1 .col { display: flex; flex-direction: column; gap: 22px; }
+    .sp1 .fig svg { width: 540px; height: auto; display: block; }
+    .sp1 .notes { display: flex; flex-direction: column; gap: 12px; font-size: 23px; }
+    .sp1 .npz { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: 24px; }
   </style>
-  <header><div class="kicker">Step 4 · Analysis</div><h2>Combine the windows (WHAM) → F(ξ)</h2></header>
+  <header><div class="kicker">Step 4 · Analysis · pmf.py 1/3</div><h2>Constants and one histogram per window</h2></header>
   <div class="content">
     <div class="col">
-      <pre class="term"><span class="cmd">python pmf.py us/*.npz</span><span class="o">barrier = 36.9 kcal/mol, reaction free energy = -0.8 kcal/mol</span></pre>
-      <div class="label f">pmf.py: one histogram per window, then the WHAM iterations</div>
-      <pre class="py f" data-f="1"><span class="k">def</span> wham(hist, xi, xi0, k):
+      <div class="npz"><span>input:</span><span class="chip">us/win_NN.npz</span><span>= 200 values of ξ + ξ₀ + k</span></div>
+      <div><span class="fname">pmf.py</span><pre class="py"><span class="s">&quot;&quot;&quot;Free-energy profile F(xi) with WHAM from the umbrella windows given on the command line.</span>
+<span class="s">Usage: python pmf.py us/*.npz   -&gt;  pmf.dat, pmf.png&quot;&quot;&quot;</span>
+<span class="k">import</span> sys
+<span class="k">import</span> numpy as np
+<span class="k">import</span> matplotlib.pyplot as plt
+
+KT = 0.0019872 * 300.0                          <span class="n"># kcal/mol</span>
+BIN_WIDTH = 0.05                                <span class="n"># A; a window spreads over sd = sqrt(KT/k) = 0.045 A at k = 300</span>
+
+<span class="k">def</span> histogram(xi_values, bins):
+<span class="s">    &quot;&quot;&quot;Number of xi samples of one window in each bin&quot;&quot;&quot;</span>
+    counts, _ = np.histogram(xi_values, bins)
+    <span class="k">return</span> counts</pre></div>
+    </div>
+    <div class="col">
+      <div class="fig"><svg class="plot" viewBox="0 0 600 400" width="600" height="400">
+<g class="axes" font-size="20" fill="var(--muted)">
+<path d="M76,10V324H590" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M92.1,324v10" stroke="var(--fg)" stroke-width="2"/><text x="92.1" y="364" text-anchor="middle">−1.5</text>
+<path d="M172.4,324v10" stroke="var(--fg)" stroke-width="2"/><text x="172.4" y="364" text-anchor="middle">−1</text>
+<path d="M252.7,324v10" stroke="var(--fg)" stroke-width="2"/><text x="252.7" y="364" text-anchor="middle">−0.5</text>
+<path d="M333.0,324v10" stroke="var(--fg)" stroke-width="2"/><text x="333.0" y="364" text-anchor="middle">0</text>
+<path d="M413.3,324v10" stroke="var(--fg)" stroke-width="2"/><text x="413.3" y="364" text-anchor="middle">0.5</text>
+<path d="M493.6,324v10" stroke="var(--fg)" stroke-width="2"/><text x="493.6" y="364" text-anchor="middle">1</text>
+<path d="M573.9,324v10" stroke="var(--fg)" stroke-width="2"/><text x="573.9" y="364" text-anchor="middle">1.5</text>
+<path d="M76,324.0h-10" stroke="var(--fg)" stroke-width="2"/><text x="58" y="333.0" text-anchor="end">0</text>
+<path d="M76,261.2h-10" stroke="var(--fg)" stroke-width="2"/><text x="58" y="270.2" text-anchor="end">20</text>
+<path d="M76,198.4h-10" stroke="var(--fg)" stroke-width="2"/><text x="58" y="207.4" text-anchor="end">40</text>
+<path d="M76,135.6h-10" stroke="var(--fg)" stroke-width="2"/><text x="58" y="144.6" text-anchor="end">60</text>
+<path d="M76,72.8h-10" stroke="var(--fg)" stroke-width="2"/><text x="58" y="81.8" text-anchor="end">80</text>
+<path d="M76,10.0h-10" stroke="var(--fg)" stroke-width="2"/><text x="58" y="19.0" text-anchor="end">100</text>
+<text x="333.0" y="392" text-anchor="middle" fill="var(--fg)">ξ (Å)</text>
+<text transform="translate(26 167.0) rotate(-90)" text-anchor="middle" fill="var(--fg)">samples per bin</text>
+</g>
+<path d="M105.8,324.0V198.4H113.9V97.9H121.9V116.8H129.9V258.1H138.0V320.9H146.0V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M105.8,324.0V320.9H113.9V286.3H121.9V69.7H129.9V50.8H138.0V264.3H146.0V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M113.9,324.0V302.0H121.9V236.1H129.9V104.2H138.0V107.3H146.0V245.5H154.0V324.0H162.1V320.9H170.1V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M129.9,324.0V292.6H138.0V192.1H146.0V75.9H154.0V170.1H162.1V273.8H170.1V311.4H178.1V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M138.0,324.0V320.9H146.0V280.0H154.0V145.0H162.1V91.6H170.1V173.3H178.1V308.3H186.2V320.9H194.2V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M154.0,324.0V320.9H162.1V226.7H170.1V69.7H178.1V138.7H186.2V251.8H194.2V308.3H202.2V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M162.1,324.0V320.9H170.1V302.0H178.1V182.7H186.2V66.5H194.2V167.0H202.2V276.9H210.3V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M178.1,324.0V305.2H186.2V229.8H194.2V88.5H202.2V116.8H210.3V264.3H218.3V311.4H226.3V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M186.2,324.0V317.7H194.2V298.9H202.2V170.1H210.3V60.2H218.3V151.3H226.3V317.7H234.3V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M194.2,324.0V314.6H202.2V295.7H210.3V226.7H218.3V148.2H226.3V66.5H234.3V264.3H242.4V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M202.2,324.0V320.9H210.3V317.7H218.3V248.6H226.3V179.6H234.3V151.3H242.4V189.0H250.4V248.6H258.4V308.3H266.5V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M226.3,324.0V317.7H234.3V292.6H242.4V242.4H250.4V195.3H258.4V189.0H266.5V176.4H274.5V267.5H282.5V295.7H290.6V311.4H298.6V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M258.4,324.0V286.3H266.5V211.0H274.5V182.7H282.5V132.5H290.6V242.4H298.6V289.5H306.6V302.0H314.7V317.7H322.7V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M274.5,324.0V302.0H282.5V189.0H290.6V223.5H298.6V204.7H306.6V195.3H314.7V251.8H322.7V295.7H330.7V305.2H338.8V320.9H346.8V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M298.6,324.0V317.7H306.6V286.3H314.7V242.4H322.7V198.4H330.7V163.9H338.8V189.0H346.8V254.9H354.8V311.4H362.8V324.0" fill="var(--neg)" fill-opacity="0.35" stroke="var(--neg)" stroke-width="2.5"/>
+<path d="M338.8,324.0V302.0H346.8V251.8H354.8V232.9H362.8V170.1H370.9V176.4H378.9V220.4H386.9V286.3H395.0V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M354.8,324.0V308.3H362.8V239.2H370.9V223.5H378.9V138.7H386.9V167.0H395.0V239.2H403.0V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M386.9,324.0V283.2H395.0V204.7H403.0V220.4H411.0V163.9H419.1V182.7H427.1V261.2H435.1V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M403.0,324.0V273.8H411.0V138.7H419.1V132.5H427.1V157.6H435.1V289.5H443.2V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M419.1,324.0V305.2H427.1V157.6H435.1V107.3H443.2V145.0H451.2V276.9H459.2V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M427.1,324.0V314.6H435.1V232.9H443.2V85.4H451.2V97.9H459.2V264.3H467.3V320.9H475.3V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M435.1,324.0V317.7H443.2V270.6H451.2V170.1H459.2V135.6H467.3V160.7H475.3V286.3H483.3V302.0H491.3V320.9H499.4V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M451.2,324.0V317.7H459.2V264.3H467.3V54.0H475.3V97.9H483.3V264.3H491.3V317.7H499.4V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M467.3,324.0V270.6H475.3V170.1H483.3V182.7H491.3V132.5H499.4V242.4H507.4V317.7H515.4V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M467.3,324.0V320.9H475.3V317.7H483.3V251.8H491.3V173.3H499.4V79.1H507.4V214.1H515.4V292.6H523.5V314.6H531.5V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M491.3,324.0V280.0H499.4V251.8H507.4V123.0H515.4V141.9H523.5V214.1H531.5V308.3H539.5V320.9H547.6V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M507.4,324.0V283.2H515.4V135.6H523.5V110.5H531.5V170.1H539.5V292.6H547.6V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M515.4,324.0V317.7H523.5V204.7H531.5V54.0H539.5V151.3H547.6V273.8H555.6V314.6H563.6V324.0" fill="var(--accent-2)" fill-opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+<path d="M523.5,324.0V302.0H531.5V185.8H539.5V63.4H547.6V145.0H555.6V298.9H563.6V320.9H571.7V324.0" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="333.0" y="28.0" text-anchor="middle" font-size="20" fill="var(--neg)">window 14 (ξ₀ = 0)</text>
+</svg>
+</div>
+      <div class="notes">
+        <span>Common bins of 0.05 Å, about one standard deviation of a window</span>
+        <span>Neighbouring windows must overlap, or WHAM cannot connect them</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 13 · pmf.py 2/3: the WHAM equations -->
+<section class="slide sp2">
+  <style>
+    .sp2 .content { display: grid; grid-template-columns: minmax(0, 1fr) 540px; gap: 40px; align-items: center; }
+    .sp2 pre.py { font-size: 16px; line-height: 1.6; padding: 20px 26px; border-top-left-radius: 0; }
+    .sp2 pre.py .e1, .sp2 .eq.e1 { background: oklch(0.93 0.05 200); }
+    .sp2 pre.py .e2, .sp2 .eq.e2 { background: oklch(0.93 0.06 150); }
+    .sp2 pre.py .e3, .sp2 .eq.e3 { background: oklch(0.93 0.06 85); }
+    .sp2 pre.py .e4, .sp2 .eq.e4 { background: oklch(0.93 0.05 20); }
+    .sp2 pre.py [class^="e"] { display: inline-block; width: calc(100% + 20px); margin-left: -10px; padding-left: 10px; border-radius: 6px; }
+    .sp2 .eqs { display: flex; flex-direction: column; gap: 16px; }
+    .sp2 .eq { border-radius: 14px; padding: 12px 22px; font-size: 30px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; }
+    .sp2 .eq small { font-size: 21px; color: var(--muted); text-align: right; line-height: 1.25; }
+    .sp2 .loop { font-size: 23px; color: var(--accent-2); padding-left: 10px; }
+    .sp2 .legend { font-size: 22px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+  </style>
+  <header><div class="kicker">Step 4 · Analysis · pmf.py 2/3</div><h2>WHAM: remove the bias, combine the windows</h2></header>
+  <div class="content">
+    <div><span class="fname">pmf.py</span><pre class="py"><span class="k">def</span> wham(hist, xi, xi0, k):
 <span class="s">    &quot;&quot;&quot;Free energy (kcal/mol, minimum = 0) at bin centres xi from the window histograms</span>
 <span class="s">    (window x bin) of umbrellas with centres xi0 and force constants k.&quot;&quot;&quot;</span>
-    bias = np.exp(-0.5 * k[:, None] * (xi - xi0[:, None]) ** 2 / KT)   <span class="n"># Boltzmann factor of each umbrella</span>
-    N = hist.sum(axis=1)
+<span class="e1">    bias = np.exp(-0.5 * k[:, None] * (xi - xi0[:, None]) ** 2 / KT)   <span class="n"># Boltzmann factor of each umbrella</span></span>
+    N = hist.sum(axis=1)                        <span class="n"># number of samples in each window</span>
     Z = np.ones(len(hist))                      <span class="n"># window partition functions</span>
+    <span class="n"># WHAM equations, solved by iteration: the unbiased probability P of each bin combines all windows,</span>
+    <span class="n"># each window weighted by its number of samples and its bias; Z then follows from P</span>
     <span class="k">for</span> _ <span class="k">in</span> range(10000):
-        P = hist.sum(axis=0) / ((N / Z) @ bias)
-        Z = bias @ P
-    F = -KT * np.log(P)
-    <span class="k">return</span> F - F.min()</pre>
-      <div class="callout small f">Symmetric reaction: how close is the reaction free energy to 0, and your profile to its mirror image?</div>
+<span class="e2">        P = hist.sum(axis=0) / ((N / Z) @ bias)</span>
+<span class="e3">        Z = bias @ P</span>
+<span class="e4">    F = -KT * np.log(P)                         <span class="n"># free energy from probability</span></span>
+    <span class="k">return</span> F - F.min()</pre></div>
+    <div class="eqs">
+      <div class="eq e1"><span>$c_{ij} = e^{-k_i(\xi_j-\xi_{0,i})^2/2k_BT}$</span><small>bias factor of<br>window i in bin j</small></div>
+      <div class="eq e2"><span>$P_j = \dfrac{\sum_i n_{ij}}{\sum_i N_i\,c_{ij}/Z_i}$</span><small>unbiased<br>probability</small></div>
+      <div class="eq e3"><span>$Z_i = \sum_j c_{ij}\,P_j$</span><small>partition function<br>of window i</small></div>
+      <div class="loop">↻ P needs Z, Z needs P: iterate to self-consistency</div>
+      <div class="eq e4"><span>$F_j = -k_BT\ln P_j$</span><small>free energy</small></div>
+      <div class="legend">i: window, j: bin, $n_{ij}$: <span class="mono">hist</span>, $N_i$: samples in window i</div>
     </div>
-    <div class="plot"><svg class="plot" viewBox="0 0 1040 640" width="1040" height="640">
+  </div>
+</section>
+
+
+<!-- 14 · pmf.py 3/3: run it, F(xi), barrier, plot -->
+<section class="slide sp3">
+  <style>
+    .sp3 .content { display: grid; grid-template-columns: 1000px minmax(0, 1fr); gap: 40px; align-items: start; }
+    .sp3 pre.py { font-size: 16px; line-height: 1.45; padding: 18px 24px; border-top-left-radius: 0; white-space: pre-wrap; }
+    .sp3 pre.term { font-size: 23px; padding: 20px 28px; white-space: pre-wrap; }
+    .sp3 pre.term .nw { display: inline-block; }
+    .sp3 .col { display: flex; flex-direction: column; gap: 18px; }
+    .sp3 .plot svg { width: 100%; height: auto; display: block; }
+    .sp3 .res { font-size: 24px; text-align: center; }
+    .sp3 .callout { font-size: 23px; }
+  </style>
+  <header><div class="kicker">Step 4 · Analysis · pmf.py 3/3</div><h2>Run it: F(ξ), barrier, plot</h2></header>
+  <div class="content">
+    <div><span class="fname">pmf.py</span><pre class="py"><span class="n"># Read the windows: xi samples, window centre xi0 and force constant k</span>
+windows = [np.load(f) for f in sys.argv[1:]]
+samples = [w[<span class="s">&quot;xi&quot;</span>] for w in windows]
+xi0 = np.array([w[<span class="s">&quot;xi0&quot;</span>] for w in windows])
+k = np.array([w[<span class="s">&quot;k&quot;</span>] for w in windows])
+
+<span class="n"># Histogram of each window on common bins covering all samples</span>
+all_xi = np.concatenate(samples)
+bins = np.arange(all_xi.min(), all_xi.max() + BIN_WIDTH, BIN_WIDTH)
+xi = 0.5 * (bins[1:] + bins[:-1])              <span class="n"># bin centres</span>
+hist = np.array([histogram(s, bins) for s in samples])
+sampled = hist.sum(axis=0) &gt; 0                  <span class="n"># drop empty bins</span>
+xi, hist = xi[sampled], hist[:, sampled]
+
+<span class="n"># Free-energy profile, then barrier and reaction free energy relative to the reactant minimum</span>
+F = wham(hist, xi, xi0, k)
+ts = np.argmax(F)                               <span class="n"># transition state: highest point</span>
+F_reactant, F_product = F[:ts].min(), F[ts:].min()   <span class="n"># lowest points before and after it</span>
+print(<span class="s">f&quot;barrier = {F[ts] - F_reactant:.1f} kcal/mol, reaction free energy = {F_product - F_reactant:.1f} kcal/mol&quot;</span>)
+
+<span class="n"># Save the profile as a table and as a plot</span>
+np.savetxt(<span class="s">&quot;pmf.dat&quot;</span>, np.column_stack([xi, F]), fmt=<span class="s">&quot;%.3f&quot;</span>, header=<span class="s">&quot;xi (A)  F (kcal/mol)&quot;</span>)
+plt.plot(xi, F)
+plt.xlabel(<span class="s">&quot;xi (A)&quot;</span>)
+plt.ylabel(<span class="s">&quot;F (kcal/mol)&quot;</span>)
+plt.savefig(<span class="s">&quot;pmf.png&quot;</span>, dpi=150)</pre></div>
+    <div class="col">
+      <pre class="term"><span class="cmd">python pmf.py us/*.npz</span><span class="o">barrier = 36.9 kcal/mol, <span class="nw">reaction free energy = -0.8 kcal/mol</span></span></pre>
+      <div class="plot"><svg class="plot" viewBox="0 0 1040 640" width="1040" height="640">
 <defs><marker id="hs-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--neg)"/></marker></defs><g class="axes" font-size="26" fill="var(--muted)">
 <path d="M100,30V550H1010" fill="none" stroke="var(--fg)" stroke-width="2"/>
 <path d="M128.4,550v10" stroke="var(--fg)" stroke-width="2"/><text x="128.4" y="590" text-anchor="middle">−1.5</text>
@@ -937,12 +1083,15 @@ np.savez(<span class="s">f&quot;us/win_{win:02d}.npz&quot;</span>, xi=xi_values,
 <circle cx="956.3" cy="507.7" r="4.5" fill="var(--bg)" stroke="var(--accent-2)" stroke-width="2.5"/>
 <circle cx="970.5" cy="496.1" r="4.5" fill="var(--bg)" stroke="var(--accent-2)" stroke-width="2.5"/>
 </svg>
-<div class="res">writes <span class="chip">pmf.png</span> <span class="chip">pmf.dat</span></div></div>
+</div>
+      <div class="res">writes <span class="chip">pmf.png</span> <span class="chip">pmf.dat</span></div>
+      <div class="callout">Symmetric reaction: how close is the reaction free energy to 0, and your profile to its mirror image?</div>
+    </div>
   </div>
 </section>
 
 
-<!-- 13 · Homework: Menshutkin reaction -->
+<!-- 15 · Homework: Menshutkin reaction -->
 <section class="slide shw" data-hidden>
   <style>
     .shw .content { display: flex; flex-direction: column; gap: 14px; }

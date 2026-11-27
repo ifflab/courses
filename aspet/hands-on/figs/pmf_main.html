@@ -1,0 +1,26 @@
+<span class="n"># Read the windows: xi samples, window centre xi0 and force constant k</span>
+windows = [np.load(f) for f in sys.argv[1:]]
+samples = [w[<span class="s">&quot;xi&quot;</span>] for w in windows]
+xi0 = np.array([w[<span class="s">&quot;xi0&quot;</span>] for w in windows])
+k = np.array([w[<span class="s">&quot;k&quot;</span>] for w in windows])
+
+<span class="n"># Histogram of each window on common bins covering all samples</span>
+all_xi = np.concatenate(samples)
+bins = np.arange(all_xi.min(), all_xi.max() + BIN_WIDTH, BIN_WIDTH)
+xi = 0.5 * (bins[1:] + bins[:-1])              <span class="n"># bin centres</span>
+hist = np.array([histogram(s, bins) for s in samples])
+sampled = hist.sum(axis=0) &gt; 0                  <span class="n"># drop empty bins</span>
+xi, hist = xi[sampled], hist[:, sampled]
+
+<span class="n"># Free-energy profile, then barrier and reaction free energy relative to the reactant minimum</span>
+F = wham(hist, xi, xi0, k)
+ts = np.argmax(F)                               <span class="n"># transition state: highest point</span>
+F_reactant, F_product = F[:ts].min(), F[ts:].min()   <span class="n"># lowest points before and after it</span>
+print(<span class="s">f&quot;barrier = {F[ts] - F_reactant:.1f} kcal/mol, reaction free energy = {F_product - F_reactant:.1f} kcal/mol&quot;</span>)
+
+<span class="n"># Save the profile as a table and as a plot</span>
+np.savetxt(<span class="s">&quot;pmf.dat&quot;</span>, np.column_stack([xi, F]), fmt=<span class="s">&quot;%.3f&quot;</span>, header=<span class="s">&quot;xi (A)  F (kcal/mol)&quot;</span>)
+plt.plot(xi, F)
+plt.xlabel(<span class="s">&quot;xi (A)&quot;</span>)
+plt.ylabel(<span class="s">&quot;F (kcal/mol)&quot;</span>)
+plt.savefig(<span class="s">&quot;pmf.png&quot;</span>, dpi=150)

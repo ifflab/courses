@@ -1,0 +1,13 @@
+<span class="k">def</span> wham(hist, xi, xi0, k):
+<span class="s">    &quot;&quot;&quot;Free energy (kcal/mol, minimum = 0) at bin centres xi from the window histograms</span>
+<span class="s">    (window x bin) of umbrellas with centres xi0 and force constants k.&quot;&quot;&quot;</span>
+<span class="e1">    bias = np.exp(-0.5 * k[:, None] * (xi - xi0[:, None]) ** 2 / KT)   <span class="n"># Boltzmann factor of each umbrella</span></span>
+    N = hist.sum(axis=1)                        <span class="n"># number of samples in each window</span>
+    Z = np.ones(len(hist))                      <span class="n"># window partition functions</span>
+    <span class="n"># WHAM equations, solved by iteration: the unbiased probability P of each bin combines all windows,</span>
+    <span class="n"># each window weighted by its number of samples and its bias; Z then follows from P</span>
+    <span class="k">for</span> _ <span class="k">in</span> range(10000):
+<span class="e2">        P = hist.sum(axis=0) / ((N / Z) @ bias)</span>
+<span class="e3">        Z = bias @ P</span>
+<span class="e4">    F = -KT * np.log(P)                         <span class="n"># free energy from probability</span></span>
+    <span class="k">return</span> F - F.min()

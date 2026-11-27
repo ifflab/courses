@@ -1,0 +1,13 @@
+<span class="s">&quot;&quot;&quot;Free-energy profile F(xi) with WHAM from the umbrella windows given on the command line.</span>
+<span class="s">Usage: python pmf.py us/*.npz   -&gt;  pmf.dat, pmf.png&quot;&quot;&quot;</span>
+<span class="k">import</span> sys
+<span class="k">import</span> numpy as np
+<span class="k">import</span> matplotlib.pyplot as plt
+
+KT = 0.0019872 * 300.0                          <span class="n"># kcal/mol</span>
+BIN_WIDTH = 0.05                                <span class="n"># A; a window spreads over sd = sqrt(KT/k) = 0.045 A at k = 300</span>
+
+<span class="k">def</span> histogram(xi_values, bins):
+<span class="s">    &quot;&quot;&quot;Number of xi samples of one window in each bin&quot;&quot;&quot;</span>
+    counts, _ = np.histogram(xi_values, bins)
+    <span class="k">return</span> counts

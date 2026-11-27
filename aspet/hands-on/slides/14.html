@@ -1,0 +1,23 @@
+<!-- 14 · pmf.py 3/3: run it, F(xi), barrier, plot -->
+<section class="slide sp3">
+  <style>
+    .sp3 .content { display: grid; grid-template-columns: 1000px minmax(0, 1fr); gap: 40px; align-items: start; }
+    .sp3 pre.py { font-size: 16px; line-height: 1.45; padding: 18px 24px; border-top-left-radius: 0; white-space: pre-wrap; }
+    .sp3 pre.term { font-size: 23px; padding: 20px 28px; white-space: pre-wrap; }
+    .sp3 pre.term .nw { display: inline-block; }
+    .sp3 .col { display: flex; flex-direction: column; gap: 18px; }
+    .sp3 .plot svg { width: 100%; height: auto; display: block; }
+    .sp3 .res { font-size: 24px; text-align: center; }
+    .sp3 .callout { font-size: 23px; }
+  </style>
+  <header><div class="kicker">Step 4 · Analysis · pmf.py 3/3</div><h2>Run it: F(ξ), barrier, plot</h2></header>
+  <div class="content">
+    <div><span class="fname">pmf.py</span><pre class="py"><!--include figs/pmf_main.html--></pre></div>
+    <div class="col">
+      <pre class="term"><span class="cmd">python pmf.py us/*.npz</span><!--include figs/pmf_out.html--></pre>
+      <div class="plot"><!--include figs/pmf.svg--></div>
+      <div class="res">writes <span class="chip">pmf.png</span> <span class="chip">pmf.dat</span></div>
+      <div class="callout">Symmetric reaction: how close is the reaction free energy to 0, and your profile to its mirror image?</div>
+    </div>
+  </div>
+</section>

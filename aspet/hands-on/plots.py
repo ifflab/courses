@@ -86,7 +86,7 @@ defs = ('<defs><marker id="hs-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWi
         '<path d="M0,0L10,5L0,10z" fill="var(--neg)"/></marker></defs>')
 (out / 'pmf.svg').write_text(svg(fr.W, fr.H, defs + '\n'.join(o), 'plot'))
 # what pmf.py prints, for the terminal block on the PMF slide
-(out / 'pmf_out.html').write_text(f'<span class="o">barrier = {bar:.1f} kcal/mol, reaction free energy = {dG:.1f} kcal/mol</span>')
+(out / 'pmf_out.html').write_text(f'<span class="o">barrier = {bar:.1f} kcal/mol, <span class="nw">reaction free energy = {dG:.1f} kcal/mol</span></span>')   # .nw: wraps as one piece
 
 
 # ---------- umbrella sampling: bias potentials + sampled histograms (slide "Run ... all windows") ----------
@@ -398,32 +398,52 @@ def mini(f, xlim, ylim, xt, xlabel, mark, W=330, H=250):
                                         [(1.8, '1.8'), (3.0, '3 Å')], 'd(C–Cl)', 'wall'))
 
 
-# ---------- the wham() function of pmf.py (slide "Combine the windows") ----------
-src = (here / 'data/pmf.py').read_text().splitlines()
-i0 = next(i for i, l in enumerate(src) if l.startswith('def wham'))
-i1 = next(i for i in range(i0 + 1, len(src)) if src[i] and not src[i].startswith(' '))
-fn = [l for l in src[i0:i1] if l.strip()]
-doc = [i for i, l in enumerate(fn) if '"""' in l]
-doc = set(range(doc[0], doc[-1] + 1)) if doc else set()   # docstring lines are shown as one string
-(out / 'wham.html').write_text('\n'.join(f'<span class="s">{html.escape(l)}</span>' if i in doc else
-                                         py(l).replace('def ', '<span class="k">def</span> ', 1).replace('return', '<span class="k">return</span>')
-                                         for i, l in enumerate(fn)))
+# ---------- pmf.py, syntax-coloured, in three parts (slides "pmf.py" 1-3) ----------
+pcode = (here / 'data/pmf.py').read_text().splitlines()
+def pyfile(lines, hl={}):
+    """Syntax-colour lines of pmf.py; docstring blocks as one string; lines starting with a key of hl get that class."""
+    o, doc = [], False
+    for l in lines:
+        q = l.count('"""')
+        if doc or q:
+            h = f'<span class="s">{html.escape(l)}</span>'
+            if q == 1: doc = not doc
+        else:
+            h = py(l)
+            h = re.sub(r'^(\s*)(def|return)\b', r'\1<span class="k">\2</span>', h)
+        c = next((c for k_, c in hl.items() if l.strip().startswith(k_)), None)
+        o.append(f'<span class="{c}">{h}</span>' if c else h)
+    return '\n'.join(o)
+def ppart(first, stop=None, hl={}):
+    """Lines of pmf.py from the one starting with `first` up to (not including) the one starting with `stop`."""
+    i0 = next(i for i, l in enumerate(pcode) if l.startswith(first))
+    i1 = next((i for i in range(i0 + 1, len(pcode)) if stop and pcode[i].startswith(stop)), len(pcode))
+    ls = pcode[i0:i1]
+    while ls and not ls[-1].strip(): ls.pop()
+    ls = [l for i, l in enumerate(ls) if l.strip() or (i and ls[i - 1].strip())]   # one blank line between blocks
+    return pyfile(ls, hl)
+(out / 'pmf_head.html').write_text(ppart('"""', 'def wham'))                     # docstring, constants, histogram()
+(out / 'pmf_wham.html').write_text(ppart('def wham', '# Read',                   # WHAM; equation lines tinted
+    {'bias =': 'e1', 'P =': 'e2', 'Z = bias': 'e3', 'F = -KT': 'e4'}))
+(out / 'pmf_main.html').write_text(ppart('# Read'))                             # read, histogram, F, barrier, save
 
 
-# reaction coordinate: reactant complex with atom indices and the two distances
-W, H, s_ = 720, 300, 80
-m, P = molecule(250, 175, s_, 'R', labels=False)
-C_, Cl1, Cl2 = P[1], P[0], P[2]
-o = [m]
-for (e, x, y, z, lab), txt in ((Cl1, 'Cl₁ (4)'), (C_, 'C (0)'), (Cl2, 'Cl₂ (5)')):
-    o.append(f'<text x="{F(x)}" y="{F(y + 90)}" text-anchor="middle" font-size="24" fill="var(--fg)" font-family="var(--mono)">{txt}</text>')
-for a, b, lab, yy in ((Cl1, C_, 'd₁', 46), (C_, Cl2, 'd₂', 46)):
-    o.append(f'<path d="M{F(a[1])},{yy}H{F(b[1])}" stroke="var(--accent-2)" stroke-width="2.5" marker-start="url(#xi-ar)" marker-end="url(#xi-ar)"/>'
-             f'<text x="{F((a[1] + b[1]) / 2)}" y="{yy - 12}" text-anchor="middle" font-size="26" fill="var(--accent-2)">{lab}</text>')
-o.append(f'<text x="{W - 10}" y="{H - 12}" text-anchor="end" font-size="28" fill="var(--accent-2)">ξ = d₁ − d₂</text>')
-defs = ('<defs><marker id="xi-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">'
-        '<path d="M0,0L10,5L0,10z" fill="var(--accent-2)"/></marker></defs>')
-(out / 'xi.svg').write_text(svg(W, H, defs + '\n'.join(o), 'mol'))
+# window histograms on the common bins of pmf.py (slide "pmf.py 1/3")
+bw = 0.05
+allx = np.concatenate([x for _, x in wins])
+bins = np.arange(allx.min(), allx.max() + bw, bw)
+H = np.array([np.histogram(x, bins)[0] for _, x in wins])
+fr = Frame(600, 400, (-1.6, 1.6), (0, 10 * math.ceil(H.max() / 10) + 10), m=(76, 10, 10, 76))
+o = [fr.axes([-1.5, -1, -0.5, 0, 0.5, 1, 1.5], range(0, int(fr.ylim[1]) + 1, 20), 'ξ (Å)', 'samples per bin', fs=20)]
+for i, h in enumerate(H):
+    m = np.nonzero(h)[0]
+    a, b = m[0], m[-1] + 1
+    d = f'M{F(fr.x(bins[a]))},{F(fr.y(0))}' + ''.join(f'V{F(fr.y(h[j]))}H{F(fr.x(bins[j + 1]))}' for j in range(a, b)) + f'V{F(fr.y(0))}'
+    hi = i == 14
+    col = 'var(--neg)' if hi else ('var(--accent)' if i % 2 == 0 else 'var(--accent-2)')
+    o.append(f'<path d="{d}" fill="{col}" fill-opacity="{.35 if hi else .12}" stroke="{col}" stroke-width="{2.5 if hi else 1.5}"/>')
+o.append(f'<text x="{F(fr.x(0))}" y="{F(fr.y(fr.ylim[1]) + 18)}" text-anchor="middle" font-size="20" fill="var(--neg)">window 14 (ξ₀ = 0)</text>')
+(out / 'pmf_hist.svg').write_text(svg(fr.W, fr.H, '\n'.join(o), 'plot'))
 
 
 # ---------- solvated system for the 3Dmol viewer (slide "Parameters and the ML/MM system") ----------
